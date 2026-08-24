@@ -1,0 +1,19 @@
+# Credenciales y datos sensibles - NUNCA subir
+.env
+.env.*
+!.env.example
+config/conexion.php
+config/conexion.local.php
+config/conexion.ilm.php
+
+# Uploads de usuarios (fotos de perfil, etc.)
+uploads/
+
+# Backups
+*.zip
+*.bak
+
+# Sistema / editor
+Thumbs.db
+.DS_Store
+*.log
