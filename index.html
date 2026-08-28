@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#00B359">
-<title>aprilon Â· GestiÃ³n de rutas</title>
+<title>aprilon · Gestión de rutas</title>
 
-<!-- TipografÃ­a Manrope (Google Fonts) â€” geomÃ©trica y redondeada, distinta a Inter -->
+<!-- Tipografía Manrope (Google Fonts) — geométrica y redondeada, distinta a Inter -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
   --brand-grad:linear-gradient(135deg,#00B359 0%,#00d468 50%,#00c564 100%);
   --brand-grad-soft:linear-gradient(135deg,#00b359 0%,#00c564 100%);
 
-  /* superficies y texto â€” modo claro */
+  /* superficies y texto — modo claro */
   --bg:#f4f5f2;
   --surface:#ffffff;
   --surface-2:#fafbf9;
@@ -56,16 +56,18 @@
   --warn:#f0a020;
   --warn-soft:#fdf4e3;
 
-  /* sombras suaves con tinte de marca â€” reemplaza el diseÃ±o plano original */
-  --sh-1:0 1px 2px rgba(17,17,16,.04), 0 2px 8px rgba(17,17,16,.05);
-  --sh-2:0 6px 16px rgba(17,17,16,.07), 0 2px 6px rgba(17,17,16,.05);
-  --sh-3:0 24px 60px rgba(17,17,16,.16), 0 8px 20px rgba(17,17,16,.08);
-  --sh-brand:0 10px 26px rgba(0,179,89,.32), 0 2px 8px rgba(0,179,89,.18);
+  /* sin sombras (pedido explícito 2026-08-26) — antes tenían valores reales
+     desde el rediseño 2026-08-12; se dejan las variables en none en vez de
+     borrarlas porque las usan decenas de reglas en toda la hoja de estilos */
+  --sh-1:none;
+  --sh-2:none;
+  --sh-3:none;
+  --sh-brand:none;
 
   --r-xs:10px; --r-sm:14px; --r-md:20px; --r-lg:28px; --r-xl:36px; --r-blob:42% 58% 61% 39%/45% 40% 60% 55%;
 
-  /* vidrio ("liquid glass" estilo iOS) â€” paneles translÃºcidos con blur en vez
-     de rellenos sÃ³lidos, para que el verde de marca se vea como un tinte de
+  /* vidrio ("liquid glass" estilo iOS) — paneles translúcidos con blur en vez
+     de rellenos sólidos, para que el verde de marca se vea como un tinte de
      fondo y no oscurezca superficies grandes */
   --glass-bg:rgba(255,255,255,.55);
   --glass-bg-strong:rgba(255,255,255,.78);
@@ -96,10 +98,10 @@
   --warn:#ffc466;
   --warn-soft:#3a2f17;
 
-  --sh-1:0 1px 2px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.24);
-  --sh-2:0 6px 18px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.3);
-  --sh-3:0 24px 60px rgba(0,0,0,.55), 0 8px 20px rgba(0,0,0,.35);
-  --sh-brand:0 10px 26px rgba(0,179,89,.28), 0 2px 10px rgba(0,0,0,.35);
+  --sh-1:none;
+  --sh-2:none;
+  --sh-3:none;
+  --sh-brand:none;
 
   --glass-bg:rgba(35,36,34,.55);
   --glass-bg-strong:rgba(35,36,34,.78);
@@ -107,7 +109,7 @@
 }
 
 /* ============================================================
-   LOGO DE MARCA (aprilon) Â· incrustado una sola vez
+   LOGO DE MARCA (aprilon) · incrustado una sola vez
    ============================================================ */
 :root{--logo:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbgAAACMCAYAAAAOVry8AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTMwQjE2N0Q5NzM3MTFFOThDRjBENUNCNUMyMkFBNTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTMwQjE2N0U5NzM3MTFFOThDRjBENUNCNUMyMkFBNTAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMzBCMTY3Qjk3MzcxMUU5OENGMEQ1Q0I1QzIyQUE1MCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxMzBCMTY3Qzk3MzcxMUU5OENGMEQ1Q0I1QzIyQUE1MCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkGgT8IAAC8vSURBVHja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")}
 .brand-logo{background:var(--logo) no-repeat left center;background-size:contain;flex:none}
@@ -151,9 +153,9 @@ input{font-family:inherit}
 }
 .page{display:block}
 
-/* ---------- SIDEBAR (sÃ³lo desktop, oculto por defecto) ----------
-   Panel de vidrio esmerilado ("liquid glass"): translÃºcido con blur, deja
-   ver el tinte verde del fondo detrÃ¡s en vez de ser un relleno sÃ³lido oscuro. */
+/* ---------- SIDEBAR (sólo desktop, oculto por defecto) ----------
+   Panel de vidrio esmerilado ("liquid glass"): translúcido con blur, deja
+   ver el tinte verde del fondo detrás en vez de ser un relleno sólido oscuro. */
 .sidebar{
   display:none;flex-direction:column;width:264px;flex:none;padding:26px 18px;
   background:var(--glass-bg);
@@ -179,7 +181,7 @@ input{font-family:inherit}
 .sb-user .sb-urole{font-size:.78rem;color:var(--text-2)}
 .sb-foot .btn{padding:11px 14px;font-size:.9rem}
 
-/* Los estilos de escritorio (â‰¥980px) viven al final de la hoja para ganar en la cascada */
+/* Los estilos de escritorio (≥980px) viven al final de la hoja para ganar en la cascada */
 
 /* ============================================================
    PANTALLAS
@@ -216,7 +218,7 @@ input{font-family:inherit}
 .spacer{flex:1}
 
 /* ============================================================
-   AVATAR (squircle en vez de cÃ­rculo â€” distinto del diseÃ±o original)
+   AVATAR (squircle en vez de círculo — distinto del diseño original)
    ============================================================ */
 .avatar{
   width:42px;height:42px;border-radius:var(--r-sm);flex:none;
@@ -254,7 +256,7 @@ input{font-family:inherit}
 .btn:active{transform:scale(.975)}
 button:disabled{opacity:.6;cursor:not-allowed}
 .btn-primary{background:var(--brand-grad);color:#fff}
-/* brillo "glossy" arriba del botÃ³n â€” el reflejo tÃ­pico del liquid glass */
+/* brillo "glossy" arriba del botón — el reflejo típico del liquid glass */
 .btn-primary::before{
   content:"";position:absolute;inset:0 0 55% 0;
   background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0));
@@ -287,6 +289,22 @@ button:disabled{opacity:.6;cursor:not-allowed}
 }
 .card.flat{box-shadow:none}
 .section-title{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin:0 0 12px}
+
+/* "Agregar punto": tabs para elegir entre dirección nueva y punto guardado
+   (rediseño 2026-08-26, reemplaza las dos secciones apiladas con dos botones
+   "Agregar a la ruta" distintos que se leían inconsistentes) */
+.segmented{display:flex;background:var(--bg);border-radius:999px;padding:4px;gap:4px;margin-bottom:18px}
+.seg-btn{
+  flex:1;border:none;background:transparent;cursor:pointer;
+  padding:10px 6px;border-radius:999px;font-size:.85rem;font-weight:700;
+  color:var(--text-2);transition:.15s var(--ease);font-family:inherit;
+}
+.seg-btn.active{background:var(--surface);color:var(--brand)}
+.empty-state-mini{
+  background:var(--bg);border:1px dashed var(--border-strong);border-radius:var(--r-md);
+  padding:16px;text-align:center;color:var(--text-3);font-size:.82rem;line-height:1.5;
+}
+.empty-state-mini a{color:var(--brand);font-weight:700;text-decoration:none}
 
 /* ============================================================
    SPLASH
@@ -360,7 +378,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 [data-theme="dark"] .hint code{background:rgba(0,179,89,.18)}
 
 /* ============================================================
-   SELECTOR DE DÃA
+   SELECTOR DE DÍA
    ============================================================ */
 .day-strip{display:flex;gap:9px;overflow-x:auto;padding:4px 20px 6px;scrollbar-width:none}
 .day-strip::-webkit-scrollbar{display:none}
@@ -377,7 +395,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .day-pill.active .d-dot{background:#fff}
 
 /* ============================================================
-   MÃ‰TRICAS
+   MÉTRICAS
    ============================================================ */
 .metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .metric{padding:16px;border-radius:var(--r-lg)}
@@ -424,7 +442,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .point .p-acts{display:flex;gap:2px;flex:none}
 .point .p-acts .icon-btn{width:34px;height:34px;font-size:.9rem}
 
-/* estado vacÃ­o */
+/* estado vacío */
 .empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:42px 24px;color:var(--text-2)}
 .empty .e-ico{width:70px;height:70px;border-radius:22px;background:var(--surface-3);display:grid;place-items:center;font-size:1.6rem;color:var(--text-3);margin-bottom:16px}
 .empty .e-t{font-weight:700;color:var(--text);font-size:1rem;margin-bottom:4px}
@@ -434,13 +452,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
    MAPA SVG
    ============================================================ */
 .map-card{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh-1);position:relative}
-/* la regla ".map-card svg{width:100%;height:auto}" que habÃ­a acÃ¡ era para un SVG
-   decorativo de mapa que ya no existe en el HTML (se reemplazÃ³ por Leaflet real).
-   Como Leaflet tambiÃ©n dibuja un <svg> internamente dentro de .map-card, esa regla
+/* la regla ".map-card svg{width:100%;height:auto}" que había acá era para un SVG
+   decorativo de mapa que ya no existe en el HTML (se reemplazó por Leaflet real).
+   Como Leaflet también dibuja un <svg> internamente dentro de .map-card, esa regla
    le forzaba width:100%/height:auto SIN que su contenedor (.leaflet-overlay-pane,
-   position:absolute sin ancho propio) tuviera un ancho de referencia â€” el <svg> de
-   Leaflet terminaba midiendo 0Ã—0, y con eso la polyline de la ruta (lÃ­neas) nunca se
-   veÃ­a en NINGÃšN mapa de la app, aunque los pines sÃ­ (son Ã­conos HTML, no SVG). */
+   position:absolute sin ancho propio) tuviera un ancho de referencia — el <svg> de
+   Leaflet terminaba midiendo 0×0, y con eso la polyline de la ruta (líneas) nunca se
+   veía en NINGÚN mapa de la app, aunque los pines sí (son íconos HTML, no SVG). */
 .map-badge{
   position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:7px;
   padding:7px 12px;border-radius:999px;background:var(--surface);box-shadow:var(--sh-2);
@@ -459,7 +477,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
   width:40px;height:40px;border:none;border-radius:12px;cursor:pointer;
   background:var(--surface);color:var(--brand);font-size:1rem;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 10px rgba(0,0,0,.18);
+  box-shadow:none;
 }
 .map-locate:active{transform:scale(.94)}
 
@@ -477,14 +495,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .route-pin .rp-inner{
   width:30px;height:30px;border-radius:50% 50% 50% 2px;transform:rotate(45deg);
   display:flex;align-items:center;justify-content:center;
-  border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);
+  border:2.5px solid #fff;
 }
 .route-pin .rp-inner span{transform:rotate(-45deg);color:#fff;font-weight:800;font-size:.8rem;font-family:Inter,sans-serif}
-/* punto "estÃ¡s acÃ¡" */
+/* punto "estás acá" */
 .user-pin{background:transparent;border:none}
 .user-pin .up-dot{
   width:18px;height:18px;border-radius:50%;background:#1a73e8;border:3px solid #fff;
-  box-shadow:0 0 0 4px rgba(26,115,232,.25),0 1px 4px rgba(0,0,0,.35);
 }
 
 /* ============================================================
@@ -727,7 +744,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .notif-badge.hidden{display:none}
 
 /* ============================================================
-   IMPREVISTO Â· BOTÃ“N Y SHEET (conductor)
+   IMPREVISTO · BOTÓN Y SHEET (conductor)
    ============================================================ */
 .btn-alert{
   background:var(--warn-soft);color:#9a6312;border:1.5px solid rgba(240,160,32,.4);
@@ -772,7 +789,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .incident .ic-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--text-3)}
 
 /* ============================================================
-   JEFE Â· ADMINISTRADORES
+   JEFE · ADMINISTRADORES
    ============================================================ */
 .admin-row{
   display:flex;align-items:center;gap:13px;padding:14px 15px;background:var(--surface);
@@ -805,7 +822,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .avatar.has-photo{color:transparent}
 
 /* ============================================================
-   JEFE Â· CONTRASEÃ‘AS DE TRABAJADORES
+   JEFE · CONTRASEÑAS DE TRABAJADORES
    ============================================================ */
 .btn-reset{
   display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;
@@ -838,7 +855,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .ph-role.boss{background:#fdf1d6;color:#9a6312}
 [data-theme="dark"] .ph-role.boss{background:rgba(176,125,18,.22);color:#f0c66b}
 
-/* resumen global de operaciÃ³n (jefe) */
+/* resumen global de operación (jefe) */
 .op-day{
   display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:var(--r-md);
   background:var(--surface);border:1px solid var(--border);
@@ -854,7 +871,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 :focus-visible{outline:2.5px solid var(--brand);outline-offset:2px;border-radius:6px}
 
 /* ============================================================
-   ESCRITORIO (â‰¥980px) Â· pantalla completa
+   ESCRITORIO (≥980px) · pantalla completa
    Va al final para ganar en la cascada sobre las reglas base.
    ============================================================ */
 @media (min-width:980px){
@@ -876,17 +893,17 @@ button:disabled{opacity:.6;cursor:not-allowed}
     position:relative;flex:1;min-width:0;height:100%;min-height:0;
     border-radius:0;box-shadow:none;border:none;overflow:hidden;
   }
-  /* en escritorio se navega por el menÃº lateral: ocultamos la barra inferior */
+  /* en escritorio se navega por el menú lateral: ocultamos la barra inferior */
   .bottomnav{display:none}
   /* el toggle de tema vive en el sidebar, evitamos duplicarlo en los headers */
   .topbar .switch,.hero .switch{display:none}
   /* login centrado en pantalla completa */
   #login .login-body{max-width:440px;margin:0 auto;width:100%}
   /* el contenido fluye en bloque y hace scroll; los hijos no se comprimen
-     (asÃ­ el hero conserva su alto y no recorta la caja de stats) */
+     (así el hero conserva su alto y no recorta la caja de stats) */
   .content > *{flex-shrink:0;width:100%;max-width:760px;margin-left:auto;margin-right:auto}
   /* botones que son hijos directos de .content (p.ej. "Mi ruta"): bloque para que los
-     mÃ¡rgenes automÃ¡ticos los centren igual que el mapa y las tarjetas */
+     márgenes automáticos los centren igual que el mapa y las tarjetas */
   .content > .btn{display:flex}
   .content > .hero{max-width:none}
   /* banner verde del conductor: fondo a todo el ancho, contenido centrado */
@@ -896,7 +913,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 </style>
 </head>
 <body>
-<div id="offlineBanner" class="offline-banner"><i class="fa-solid fa-wifi-slash"></i> Sin conexiÃ³n â€” mostrando el mapa guardado</div>
+<div id="offlineBanner" class="offline-banner"><i class="fa-solid fa-wifi-slash"></i> Sin conexión — mostrando el mapa guardado</div>
 <div class="device-bg">
 <div class="page" id="page">
 
@@ -914,11 +931,11 @@ button:disabled{opacity:.6;cursor:not-allowed}
       <div class="sb-user">
         <div class="avatar" id="sbAvatar" style="width:38px;height:38px;font-size:.85rem">L</div>
         <div class="sb-uinfo">
-          <div class="sb-uname" id="sbName">â€”</div>
-          <div class="sb-urole" id="sbRole">â€”</div>
+          <div class="sb-uname" id="sbName">—</div>
+          <div class="sb-urole" id="sbRole">—</div>
         </div>
       </div>
-      <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesiÃ³n</button>
+      <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
     </div>
   </aside>
 
@@ -928,7 +945,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
   <section class="screen active" id="splash">
     <div class="splash-inner">
       <div class="brand-logo white center" role="img" aria-label="aprilon" style="width:207px;height:66px;animation:logoPulse 2.4s var(--ease) infinite"></div>
-      <div class="splash-tag">GestiÃ³n inteligente de rutas</div>
+      <div class="splash-tag">Gestión inteligente de rutas</div>
       <div class="progress"><i id="splashBar"></i></div>
     </div>
   </section>
@@ -946,8 +963,8 @@ button:disabled{opacity:.6;cursor:not-allowed}
       <div class="brand-mark">
         <div class="brand-logo" role="img" aria-label="aprilon" style="width:145px;height:46px"></div>
       </div>
-      <h1 class="login-h1">IniciÃ¡ sesiÃ³n</h1>
-      <p class="login-sub">IngresÃ¡ a tu cuenta para gestionar las rutas del dÃ­a.</p>
+      <h1 class="login-h1">Iniciá sesión</h1>
+      <p class="login-sub">Ingresá a tu cuenta para gestionar las rutas del día.</p>
 
       <div class="field">
         <label for="email">Usuario</label>
@@ -958,37 +975,37 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </div>
 
       <div class="field" style="margin-bottom:8px">
-        <label for="pass">ContraseÃ±a</label>
+        <label for="pass">Contraseña</label>
         <div class="input-wrap">
           <i class="fa-solid fa-lock lead"></i>
-          <input class="input" id="pass" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" autocomplete="off">
-          <button class="eye" type="button" onclick="togglePass(this)" aria-label="Mostrar contraseÃ±a"><i class="fa-solid fa-eye"></i></button>
+          <input class="input" id="pass" type="password" placeholder="••••••••" autocomplete="off">
+          <button class="eye" type="button" onclick="togglePass(this)" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye"></i></button>
         </div>
       </div>
 
       <div class="row-between" style="margin-bottom:18px">
         <span></span>
-        <button class="btn-ghost btn-sm" onclick="openForgot()">Â¿Olvidaste tu contraseÃ±a?</button>
+        <button class="btn-ghost btn-sm" onclick="openForgot()">¿Olvidaste tu contraseña?</button>
       </div>
 
-      <div class="form-error" id="loginError"><i class="fa-solid fa-circle-exclamation"></i> <span id="loginErrorMsg">Usuario o contraseÃ±a incorrectos.</span></div>
+      <div class="form-error" id="loginError"><i class="fa-solid fa-circle-exclamation"></i> <span id="loginErrorMsg">Usuario o contraseña incorrectos.</span></div>
 
       <button class="btn btn-primary" id="btnLogin" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Ingresar</button>
 
       <div class="hint" id="demoCredsBox" style="display:none">
         <b><i class="fa-solid fa-database"></i> Conectado a la base de datos.</b><br>
-        Usuarios de prueba: <code>jefe</code>, <code>ventas</code>, <code>expedicion</code>. ContraseÃ±a comÃºn: <code>aprilon2026</code>.
+        Usuarios de prueba: <code>jefe</code>, <code>ventas</code>, <code>expedicion</code>. Contraseña común: <code>aprilon2026</code>.
       </div>
     </div>
   </section>
 
-  <!-- ====================== ADMIN Â· DASHBOARD ====================== -->
+  <!-- ====================== ADMIN · DASHBOARD ====================== -->
   <section class="screen" id="adminDash">
     <div class="topbar">
       <div class="avatar" id="adminAvatar" data-avatar-role="admin" style="cursor:pointer" onclick="openUserSheet()" title="Cuenta">A</div>
       <div>
-        <div class="tb-title" id="dashGreet">Hola, AdministraciÃ³n</div>
-        <div class="tb-sub" id="dashDate">â€”</div>
+        <div class="tb-title" id="dashGreet">Hola, Administración</div>
+        <div class="tb-sub" id="dashDate">—</div>
       </div>
       <span class="spacer"></span>
       <button class="icon-btn has-badge" onclick="openIncidents()" title="Imprevistos" aria-label="Imprevistos">
@@ -1003,8 +1020,9 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
     <div class="content">
       <div style="padding:16px 0 4px">
-        <p class="section-title" style="padding:0 20px">PlanificÃ¡ la ruta del dÃ­a</p>
+        <p class="section-title" style="padding:0 20px">Planificá la ruta del día</p>
         <div class="day-strip" id="dayStrip"></div>
+        <input type="date" id="calFuturoInput" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none" onchange="seleccionarDiaFuturo(this.value)">
       </div>
 
       <div class="pad" style="padding-top:8px">
@@ -1044,26 +1062,22 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== ADMIN Â· AGREGAR PUNTO ====================== -->
+  <!-- ====================== ADMIN · AGREGAR PUNTO ====================== -->
   <section class="screen" id="addPoint">
     <div class="topbar">
       <button class="icon-btn" onclick="navAdmin('adminDash')"><i class="fa-solid fa-arrow-left"></i></button>
       <div>
         <div class="tb-title">Agregar punto</div>
-        <div class="tb-sub" id="addPointDay">â€”</div>
+        <div class="tb-sub" id="addPointDay">—</div>
       </div>
     </div>
 
     <div class="content pad">
       <div class="map-card">
         <div id="addMap" class="leaflet-map"></div>
-        <button class="map-locate" onclick="centerOnMe('addMap')" title="Centrar en mi ubicaciÃ³n" aria-label="Centrar en mi ubicaciÃ³n"><i class="fa-solid fa-location-crosshairs"></i></button>
+        <button class="map-locate" onclick="centerOnMe('addMap')" title="Centrar en mi ubicación" aria-label="Centrar en mi ubicación"><i class="fa-solid fa-location-crosshairs"></i></button>
         <div class="map-badge"><i class="fa-solid fa-map-location-dot"></i> Vista de la ruta</div>
       </div>
-
-      <button class="btn btn-secondary" style="margin-top:14px" onclick="openFullscreenMap(state.published[state.selectedDay],'Vista de la ruta')">
-        <i class="fa-solid fa-expand"></i> Pantalla completa
-      </button>
 
       <div class="banner" style="margin-top:18px;cursor:default">
         <div class="b-ico"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -1073,22 +1087,45 @@ button:disabled{opacity:.6;cursor:not-allowed}
         </div>
       </div>
 
-      <p class="section-title" style="margin-top:22px">Agregar punto guardado</p>
-      <div class="field">
-        <label>Puntos guardados</label>
-        <div class="input-wrap"><i class="fa-solid fa-address-book lead"></i>
-          <select class="input" id="selectPuntoGuardado"><option value="">ElegÃ­ un punto guardadoâ€¦</option></select></div>
+      <div class="segmented" style="margin-top:22px">
+        <button type="button" class="seg-btn active" id="addPointTabNueva" onclick="setAddPointTab('nueva')">Dirección nueva</button>
+        <button type="button" class="seg-btn" id="addPointTabGuardado" onclick="setAddPointTab('guardado')">Punto guardado</button>
       </div>
+
+      <div id="addPointPanelNueva">
+        <div class="field">
+          <label>Alias (opcional)</label>
+          <div class="input-wrap"><i class="fa-solid fa-tag lead"></i>
+            <input class="input" id="aliasInput" type="text" placeholder="Ej: Depósito Central"></div>
+        </div>
+        <div class="field" style="position:relative">
+          <label>Dirección</label>
+          <div class="input-wrap"><i class="fa-solid fa-location-dot lead"></i>
+            <input class="input" id="direccionInput" type="text" placeholder="Calle, altura, ciudad" autocomplete="off" oninput="onDireccionInput()"></div>
+          <div id="direccionSugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);z-index:5;max-height:220px;overflow-y:auto"></div>
+        </div>
+      </div>
+
+      <div id="addPointPanelGuardado" style="display:none">
+        <div class="field" id="puntoGuardadoWrap">
+          <label>Puntos guardados</label>
+          <div class="input-wrap" id="selectPuntoGuardadoWrap"><i class="fa-solid fa-address-book lead"></i>
+            <select class="input" id="selectPuntoGuardado"><option value="">Elegí un punto guardado…</option></select></div>
+          <div class="empty-state-mini" id="puntoGuardadoEmpty" style="display:none">
+            Todavía no guardaste ningún punto.<br>
+            <a href="#" onclick="goPlacesAgenda();return false">Cargalos desde Agenda de lugares →</a>
+          </div>
+        </div>
+      </div>
+
       <div class="field">
-        <label>Email de verificaciÃ³n (opcional)</label>
+        <label>Email de verificación (opcional)</label>
         <div class="input-wrap"><i class="fa-solid fa-envelope lead"></i>
-          <input class="input" id="emailVerifInput" type="email" placeholder="Email del dueÃ±o/encargado del negocio" autocomplete="off"></div>
+          <input class="input" id="emailVerifInput" type="email" placeholder="Email del dueño/encargado del negocio" autocomplete="off"></div>
       </div>
-      <p class="sub" style="margin:-4px 0 12px;font-size:.78rem">Si lo completÃ¡s, cuando publiques la ruta le va a llegar una palabra por email. El conductor va a tener que pedÃ­rsela para poder completar esa entrega.</p>
-      <button class="btn btn-primary" id="btnAgregarDeAgenda" onclick="agregarDesdeAgenda()">
+      <button class="btn btn-primary" id="btnAgregarPunto" onclick="onAgregarPuntoClick()">
         <i class="fa-solid fa-plus"></i> Agregar a la ruta
       </button>
-      <p class="sub" id="agendaEmptyHint" style="display:none;margin:10px 2px 0">TodavÃ­a no hay puntos en la agenda. Cargalos desde <b>Agenda de lugares</b>, en el menÃº lateral.</p>
 
       <div style="margin-top:24px">
         <div class="row-between" style="margin-bottom:12px">
@@ -1101,12 +1138,12 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
     <div class="publish-bar">
       <button class="btn btn-primary" id="btnCalcularRuta" onclick="onCalcularRuta()">
-        <i class="fa-solid fa-route"></i> Calcular ruta Ã³ptima
+        <i class="fa-solid fa-route"></i> Calcular ruta óptima
       </button>
     </div>
   </section>
 
-  <!-- ====================== ADMIN Â· AGENDA DE LUGARES ====================== -->
+  <!-- ====================== ADMIN · AGENDA DE LUGARES ====================== -->
   <section class="screen" id="placesAgenda">
     <div class="topbar">
       <button class="icon-btn" onclick="navAdmin('adminDash')"><i class="fa-solid fa-arrow-left"></i></button>
@@ -1121,10 +1158,10 @@ button:disabled{opacity:.6;cursor:not-allowed}
       <div class="field">
         <label>Alias</label>
         <div class="input-wrap"><i class="fa-solid fa-tag lead"></i>
-          <input class="input" id="agendaAlias" type="text" placeholder="Ej: DepÃ³sito Central"></div>
+          <input class="input" id="agendaAlias" type="text" placeholder="Ej: Depósito Central"></div>
       </div>
       <div class="field" style="position:relative">
-        <label>DirecciÃ³n</label>
+        <label>Dirección</label>
         <div class="input-wrap"><i class="fa-solid fa-location-dot lead"></i>
           <input class="input" id="agendaDireccion" type="text" placeholder="Calle, altura, ciudad" autocomplete="off" oninput="onAgendaDireccionInput()"></div>
         <div id="agendaDireccionSugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-2);z-index:5;max-height:220px;overflow-y:auto"></div>
@@ -1140,13 +1177,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </div>
   </section>
 
-  <!-- ====================== ADMIN Â· HISTORIAL DE RUTAS ====================== -->
+  <!-- ====================== ADMIN · HISTORIAL DE RUTAS ====================== -->
   <section class="screen" id="rutasHistorial">
     <div class="topbar">
       <button class="icon-btn" onclick="navAdmin('adminDash')"><i class="fa-solid fa-arrow-left"></i></button>
       <div>
         <div class="tb-title">Historial de rutas</div>
-        <div class="tb-sub">Rutas publicadas en dÃ­as anteriores</div>
+        <div class="tb-sub">Rutas publicadas en días anteriores</div>
       </div>
       <span class="spacer"></span>
       <button class="btn-ghost btn-sm" onclick="confirmarBorrarRutasHoy()" style="color:var(--danger);font-weight:700" title="Borrar rutas de hoy"><i class="fa-solid fa-calendar-xmark"></i></button>
@@ -1156,7 +1193,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </div>
   </section>
 
-  <!-- ====================== ADMIN Â· PERFIL ====================== -->
+  <!-- ====================== ADMIN · PERFIL ====================== -->
   <section class="screen" id="adminProfile">
     <div class="topbar">
       <div class="tb-title">Perfil</div>
@@ -1164,8 +1201,8 @@ button:disabled{opacity:.6;cursor:not-allowed}
     <div class="content">
       <div class="profile-head">
         <div class="avatar lg" data-avatar-role="admin">A</div>
-        <div class="ph-name" id="adminPhName">Equipo de AdministraciÃ³n</div>
-        <div class="ph-role"><i class="fa-solid fa-shield-halved"></i> Administrador Â· cuenta compartida</div>
+        <div class="ph-name" id="adminPhName">Equipo de Administración</div>
+        <div class="ph-role"><i class="fa-solid fa-shield-halved"></i> Administrador · cuenta compartida</div>
         <div class="ph-mail" id="adminPhMail">administracion@aprilon.com</div>
       </div>
       <div class="pad" style="padding-top:0">
@@ -1180,7 +1217,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
             <label class="switch"><input type="checkbox" checked onchange="toast(this.checked?'Notificaciones activadas':'Notificaciones desactivadas','info')"><span class="track"></span><span class="thumb"></span></label>
           </div>
         </div>
-        <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesiÃ³n</button>
+        <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
       </div>
     </div>
     <nav class="bottomnav">
@@ -1190,7 +1227,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== CONDUCTOR Â· BIENVENIDA ====================== -->
+  <!-- ====================== CONDUCTOR · BIENVENIDA ====================== -->
   <section class="screen" id="driverHome">
     <div class="content" style="padding-bottom:8px">
       <div class="hero">
@@ -1198,7 +1235,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
           <div class="avatar" data-avatar-role="driver" style="box-shadow:none;background:rgba(255,255,255,.2);cursor:pointer" onclick="openUserSheet()" title="Cuenta">D</div>
           <div>
             <div class="h-greet" id="driverGreet">Bienvenido de vuelta</div>
-            <div class="h-name" id="driverHeroName">â€”</div>
+            <div class="h-name" id="driverHeroName">—</div>
           </div>
           <span class="spacer"></span>
           <label class="switch" title="Modo oscuro">
@@ -1206,7 +1243,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
             <span class="track"></span><span class="thumb"></span>
           </label>
         </div>
-        <div style="position:relative;z-index:2;font-size:.85rem;opacity:.9;margin-bottom:14px" id="driverDate">â€”</div>
+        <div style="position:relative;z-index:2;font-size:.85rem;opacity:.9;margin-bottom:14px" id="driverDate">—</div>
         <div class="hero-stats">
           <div class="hero-stat"><div class="hs-val" id="hsStops">5</div><div class="hs-lab">Paradas</div></div>
           <div class="hero-stat"><div class="hs-val" id="hsTime">2h 35m</div><div class="hs-lab">Tiempo est.</div></div>
@@ -1215,21 +1252,21 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </div>
 
       <div class="pad">
-        <button class="btn btn-primary" style="margin-bottom:12px" onclick="navDriver('driverRoute')"><i class="fa-solid fa-play"></i> Comenzar ruta del dÃ­a</button>
+        <button class="btn btn-primary" style="margin-bottom:12px" onclick="navDriver('driverRoute')"><i class="fa-solid fa-play"></i> Comenzar ruta del día</button>
         <button class="btn btn-alert" style="margin-bottom:20px" onclick="openImprevisto()"><i class="fa-solid fa-triangle-exclamation"></i> Reportar imprevisto</button>
 
-        <p class="section-title">PrÃ³xima parada</p>
+        <p class="section-title">Próxima parada</p>
         <div class="card nextstop" id="nextStopCard" onclick="navDriver('driverRoute')">
           <div class="ns-ico"><i class="fa-solid fa-location-arrow"></i></div>
           <div class="ns-info">
-            <div class="ns-tag">A continuaciÃ³n</div>
-            <div class="ns-name" id="nsName">â€”</div>
-            <div class="ns-addr" id="nsAddr">â€”</div>
+            <div class="ns-tag">A continuación</div>
+            <div class="ns-name" id="nsName">—</div>
+            <div class="ns-addr" id="nsAddr">—</div>
           </div>
-          <div class="ns-eta"><div class="e-t" id="nsEta">â€”</div><div class="e-l">ETA</div></div>
+          <div class="ns-eta"><div class="e-t" id="nsEta">—</div><div class="e-l">ETA</div></div>
         </div>
 
-        <p class="section-title" style="margin-top:22px">Resumen del dÃ­a</p>
+        <p class="section-title" style="margin-top:22px">Resumen del día</p>
         <div class="summary-row">
           <div class="summary-chip">
             <div class="sc-ico done"><i class="fa-solid fa-check"></i></div>
@@ -1250,21 +1287,21 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== CONDUCTOR Â· ORDEN DEL DÃA ====================== -->
+  <!-- ====================== CONDUCTOR · ORDEN DEL DÍA ====================== -->
   <section class="screen" id="driverRoute">
     <div class="topbar">
       <button class="icon-btn" onclick="navDriver('driverHome')"><i class="fa-solid fa-arrow-left"></i></button>
       <div>
-        <div class="tb-title">Orden del dÃ­a</div>
-        <div class="tb-sub" id="routeDate">â€”</div>
+        <div class="tb-title">Orden del día</div>
+        <div class="tb-sub" id="routeDate">—</div>
       </div>
     </div>
 
     <div class="content pad">
       <div class="map-card">
         <div id="routeMap" class="leaflet-map"></div>
-        <button class="map-locate" onclick="centerOnMe('routeMap')" title="Centrar en mi ubicaciÃ³n" aria-label="Centrar en mi ubicaciÃ³n"><i class="fa-solid fa-location-crosshairs"></i></button>
-        <div class="map-badge"><i class="fa-solid fa-route"></i> Recorrido del dÃ­a</div>
+        <button class="map-locate" onclick="centerOnMe('routeMap')" title="Centrar en mi ubicación" aria-label="Centrar en mi ubicación"><i class="fa-solid fa-location-crosshairs"></i></button>
+        <div class="map-badge"><i class="fa-solid fa-route"></i> Recorrido del día</div>
       </div>
 
       <button class="btn btn-secondary fsm-mobile-only" style="margin-top:14px" onclick="iniciarNavegacionConductor()">
@@ -1280,9 +1317,9 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </button>
 
       <div class="route-meta">
-        <div class="rm-chip"><div class="rm-ico" style="color:var(--brand)"><i class="fa-solid fa-clock"></i></div><div class="rm-val" id="routeTime">â€”</div><div class="rm-lab">Tiempo est.</div></div>
-        <div class="rm-chip"><div class="rm-ico" style="color:var(--brand)"><i class="fa-solid fa-road"></i></div><div class="rm-val" id="routeDist">â€”</div><div class="rm-lab">Distancia</div></div>
-        <div class="rm-chip"><div class="rm-ico" style="color:var(--brand)"><i class="fa-solid fa-map-pin"></i></div><div class="rm-val" id="routeStopsCount">â€”</div><div class="rm-lab">Paradas</div></div>
+        <div class="rm-chip"><div class="rm-ico" style="color:var(--brand)"><i class="fa-solid fa-clock"></i></div><div class="rm-val" id="routeTime">—</div><div class="rm-lab">Tiempo est.</div></div>
+        <div class="rm-chip"><div class="rm-ico" style="color:var(--brand)"><i class="fa-solid fa-road"></i></div><div class="rm-val" id="routeDist">—</div><div class="rm-lab">Distancia</div></div>
+        <div class="rm-chip"><div class="rm-ico" style="color:var(--brand)"><i class="fa-solid fa-map-pin"></i></div><div class="rm-val" id="routeStopsCount">—</div><div class="rm-lab">Paradas</div></div>
       </div>
 
       <div class="card progress-card">
@@ -1303,7 +1340,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== CONDUCTOR Â· PERFIL ====================== -->
+  <!-- ====================== CONDUCTOR · PERFIL ====================== -->
   <section class="screen" id="driverProfile">
     <div class="topbar"><div class="tb-title">Perfil</div></div>
     <div class="content">
@@ -1325,7 +1362,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
             <label class="switch"><input type="checkbox" checked onchange="toast(this.checked?'Notificaciones activadas':'Notificaciones desactivadas','info')"><span class="track"></span><span class="thumb"></span></label>
           </div>
         </div>
-        <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesiÃ³n</button>
+        <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
       </div>
     </div>
     <nav class="bottomnav">
@@ -1335,13 +1372,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== JEFE Â· PANEL GENERAL ====================== -->
+  <!-- ====================== JEFE · PANEL GENERAL ====================== -->
   <section class="screen" id="bossDash">
     <div class="topbar">
       <div class="avatar" id="bossAvatar" data-avatar-role="boss" style="cursor:pointer;background:linear-gradient(135deg,#d9a425 0%,#f0c66b 100%)" onclick="openUserSheet()" title="Cuenta">R</div>
       <div>
-        <div class="tb-title" id="bossGreet">Buenos dÃ­as, Ricardo</div>
-        <div class="tb-sub" id="bossDate">â€”</div>
+        <div class="tb-title" id="bossGreet">Buenos días, Ricardo</div>
+        <div class="tb-sub" id="bossDate">—</div>
       </div>
       <span class="spacer"></span>
       <button class="icon-btn has-badge" onclick="openIncidents()" title="Imprevistos" aria-label="Imprevistos">
@@ -1386,7 +1423,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </div>
       <div id="bossAdminPreview" style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px"></div>
 
-      <p class="section-title">OperaciÃ³n de la semana</p>
+      <p class="section-title">Operación de la semana</p>
       <div id="bossOpSummary" style="display:flex;flex-direction:column;gap:9px"></div>
     </div>
 
@@ -1398,21 +1435,21 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== JEFE Â· USUARIOS Y ROLES ====================== -->
+  <!-- ====================== JEFE · USUARIOS Y ROLES ====================== -->
   <section class="screen" id="bossAdmins">
     <div class="topbar">
       <button class="icon-btn" onclick="navBoss('bossDash')"><i class="fa-solid fa-arrow-left"></i></button>
       <div>
         <div class="tb-title">Gestionar usuarios</div>
-        <div class="tb-sub" id="bossAdminsSub">â€”</div>
+        <div class="tb-sub" id="bossAdminsSub">—</div>
       </div>
     </div>
 
     <div class="content pad">
-      <p class="section-title">Cuenta de AdministraciÃ³n (compartida)</p>
+      <p class="section-title">Cuenta de Administración (compartida)</p>
       <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;font-size:.82rem;color:var(--text-2);line-height:1.5;margin-bottom:12px;display:flex;gap:10px">
         <i class="fa-solid fa-circle-info" style="color:var(--brand);margin-top:2px"></i>
-        <span>Todo el equipo de administraciÃ³n comparte esta Ãºnica cuenta. No se crean cuentas individuales de administrador.</span>
+        <span>Todo el equipo de administración comparte esta única cuenta. No se crean cuentas individuales de administrador.</span>
       </div>
       <div id="bossVentasCard" style="margin-bottom:24px"></div>
 
@@ -1431,25 +1468,25 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== JEFE Â· CONTRASEÃ‘AS DE TRABAJADORES ====================== -->
+  <!-- ====================== JEFE · CONTRASEÑAS DE TRABAJADORES ====================== -->
   <section class="screen" id="bossPasswords">
     <div class="topbar">
       <button class="icon-btn" onclick="navBoss('bossDash')"><i class="fa-solid fa-arrow-left"></i></button>
       <div>
-        <div class="tb-title">ContraseÃ±as</div>
-        <div class="tb-sub" id="bossPwdSub">â€”</div>
+        <div class="tb-title">Contraseñas</div>
+        <div class="tb-sub" id="bossPwdSub">—</div>
       </div>
     </div>
 
     <div class="content pad">
       <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:13px 15px;font-size:.84rem;color:var(--text-2);line-height:1.5;margin-bottom:22px;display:flex;gap:11px">
         <i class="fa-solid fa-shield-halved" style="color:var(--brand);margin-top:2px"></i>
-        <span>RestablecÃ© las credenciales de acceso de cualquier trabajador. Se genera una contraseÃ±a temporal que el trabajador deberÃ¡ cambiar al iniciar sesiÃ³n.</span>
+        <span>Restablecé las credenciales de acceso de cualquier trabajador. Se genera una contraseña temporal que el trabajador deberá cambiar al iniciar sesión.</span>
       </div>
 
       <div id="pwdRequests" style="display:none"></div>
 
-      <p class="section-title">Cuenta de AdministraciÃ³n (compartida)</p>
+      <p class="section-title">Cuenta de Administración (compartida)</p>
       <div id="pwdAdminList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px"></div>
 
       <p class="section-title">Conductores</p>
@@ -1464,13 +1501,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </nav>
   </section>
 
-  <!-- ====================== JEFE Â· PERFIL ====================== -->
+  <!-- ====================== JEFE · PERFIL ====================== -->
   <section class="screen" id="bossProfile">
     <div class="topbar"><div class="tb-title">Perfil</div></div>
     <div class="content">
       <div class="profile-head">
         <div class="avatar lg" data-avatar-role="boss" style="background:linear-gradient(135deg,#d9a425 0%,#f0c66b 100%)">R</div>
-        <div class="ph-name" id="bossPhName">Ricardo MÃ©ndez</div>
+        <div class="ph-name" id="bossPhName">Ricardo Méndez</div>
         <div class="ph-role boss"><i class="fa-solid fa-crown"></i> Jefe</div>
         <div class="ph-mail" id="bossPhMail">ricardo@aprilon.com</div>
       </div>
@@ -1482,7 +1519,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
           </div>
           <div class="menu-item" onclick="navBoss('bossPasswords')">
             <div class="mi-ico"><i class="fa-solid fa-key"></i></div>
-            <div class="mi-label">ContraseÃ±as de trabajadores</div><i class="fa-solid fa-chevron-right mi-arrow"></i>
+            <div class="mi-label">Contraseñas de trabajadores</div><i class="fa-solid fa-chevron-right mi-arrow"></i>
           </div>
           <div class="menu-item" onclick="openIncidents()">
             <div class="mi-ico"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -1493,7 +1530,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
             <div class="mi-label">Editar perfil</div><i class="fa-solid fa-chevron-right mi-arrow"></i>
           </div>
         </div>
-        <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesiÃ³n</button>
+        <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
       </div>
     </div>
     <nav class="bottomnav">
@@ -1511,14 +1548,14 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
   <div id="toast-wrap"></div>
 
-  <!-- ====================== MAPA Â· PANTALLA COMPLETA ====================== -->
+  <!-- ====================== MAPA · PANTALLA COMPLETA ====================== -->
   <div class="fullscreen-map" id="fullscreenMap">
     <div class="fsm-topbar">
       <button class="icon-btn" onclick="closeFullscreenMap()" aria-label="Cerrar"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="fsm-title" id="fsmTitle">Ruta</div>
     </div>
     <div id="fsmMapEl" class="fsm-map-el"></div>
-    <button class="map-locate fsm-locate" onclick="centerOnMe('fsmMapEl')" title="Centrar en mi ubicaciÃ³n" aria-label="Centrar en mi ubicaciÃ³n"><i class="fa-solid fa-location-crosshairs"></i></button>
+    <button class="map-locate fsm-locate" onclick="centerOnMe('fsmMapEl')" title="Centrar en mi ubicación" aria-label="Centrar en mi ubicación"><i class="fa-solid fa-location-crosshairs"></i></button>
     <button class="btn btn-primary fsm-navigate" onclick="navegarConGoogleMaps()"><i class="fa-solid fa-diamond-turn-right"></i> Navegar con Google Maps</button>
   </div>
 
@@ -1530,23 +1567,23 @@ button:disabled{opacity:.6;cursor:not-allowed}
 /* ============================================================
    DATOS Y ESTADO
    ============================================================ */
-const DIAS=['domingo','lunes','martes','miÃ©rcoles','jueves','viernes','sÃ¡bado'];
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
 const DAY_DEFS=[
   {key:'lun',name:'Lun',full:'lunes'},
   {key:'mar',name:'Mar',full:'martes'},
-  {key:'mie',name:'MiÃ©',full:'miÃ©rcoles'},
+  {key:'mie',name:'Mié',full:'miércoles'},
   {key:'jue',name:'Jue',full:'jueves'},
   {key:'vie',name:'Vie',full:'viernes'},
-  {key:'sab',name:'SÃ¡b',full:'sÃ¡bado'},
+  {key:'sab',name:'Sáb',full:'sábado'},
 ];
 const JS_TO_KEY={1:'lun',2:'mar',3:'mie',4:'jue',5:'vie',6:'sab',0:'lun'};
 
-/* puntos guardados por el admin (apodo + direcciÃ³n real, geocodificados por
-   el backend contra Google) â€” se cargan de puntos_guardados_listar.php
-   dentro de state.puntosGuardados (definido mÃ¡s abajo). */
-/* bÃºsqueda de coordenadas por id de punto guardado (fuente Ãºnica de verdad) */
+/* puntos guardados por el admin (apodo + dirección real, geocodificados por
+   el backend contra Google) — se cargan de puntos_guardados_listar.php
+   dentro de state.puntosGuardados (definido más abajo). */
+/* búsqueda de coordenadas por id de punto guardado (fuente única de verdad) */
 function coordFor(id){
   const s=state.puntosGuardados.find(x=>x.id===id);
   return s?{lat:s.lat,lng:s.lng}:null;
@@ -1554,9 +1591,10 @@ function coordFor(id){
 
 const today=new Date();
 const todayKey=JS_TO_KEY[today.getDay()];
-/* fecha real (AAAA-MM-DD) de la semana actual para un dÃ­a del selector,
+/* fecha real (AAAA-MM-DD) de la semana actual para un día del selector,
    para poder guardar/consultar rutas contra el backend por fecha */
 function fechaParaDia(key){
+  if(key==='custom')return state.customFecha; // fecha elegida a mano en el calendario (pedido 2026-08-26), fuera de la semana actual
   const idx=DAY_DEFS.findIndex(d=>d.key===key);
   const d=new Date(today);
   d.setDate(d.getDate()-((d.getDay()+6)%7)+idx); // lunes de esta semana + offset
@@ -1567,6 +1605,8 @@ const state={
   theme:'light',
   role:null,
   selectedDay:todayKey,
+  customFecha:null, // fecha AAAA-MM-DD elegida con el calendario de "programar a futuro", cuando selectedDay==='custom'
+  addPointTab:'nueva', // tab activa en "Agregar punto": 'nueva' o 'guardado'
   published:{lun:[],mar:[],mie:[],jue:[],vie:[],sab:[]},
   puntosGuardados:[],
   incidents:[],
@@ -1575,19 +1615,19 @@ const state={
   impType:null,
 };
 
-/* ADMINISTRADOR Â· una sola cuenta compartida para todo el equipo de administraciÃ³n */
+/* ADMINISTRADOR · una sola cuenta compartida para todo el equipo de administración */
 state.admins=[
-  {name:'Equipo de AdministraciÃ³n', mail:'administracion@aprilon.com', user:'admin', zone:'Todas las zonas', active:true, shared:true},
+  {name:'Equipo de Administración', mail:'administracion@aprilon.com', user:'admin', zone:'Todas las zonas', active:true, shared:true},
 ];
 
-/* CONDUCTORES Â· cada trabajador de reparto tiene su propia cuenta individual */
+/* CONDUCTORES · cada trabajador de reparto tiene su propia cuenta individual */
 state.drivers=[
   {name:'Diego Sosa',     user:'diego',  zone:'Ruta CABA Centro', active:true},
-  {name:'MartÃ­n Quiroga', user:'martin', zone:'Ruta Zona Sur',    active:true},
+  {name:'Martín Quiroga', user:'martin', zone:'Ruta Zona Sur',    active:true},
   {name:'Nahuel Ortiz',   user:'nahuel', zone:'Ruta Zona Norte',  active:false},
 ];
 
-/* solicitudes de restablecimiento que los trabajadores envÃ­an al jefe */
+/* solicitudes de restablecimiento que los trabajadores envían al jefe */
 state.pwdRequests=[];
 
 /* imprevistos reportados por conductores: se cargan de verdad desde
@@ -1605,18 +1645,21 @@ let rutaResumen={distancia_m:0,duracion_seg:0};
    ============================================================ */
 function greeting(){
   const h=new Date().getHours();
-  if(h<12)return'Buenos dÃ­as';
+  if(h<12)return'Buenos días';
   if(h<20)return'Buenas tardes';
   return'Buenas noches';
 }
 function fechaLarga(d=new Date()){return `${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}`;}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 function incidentsForDay(day){return state.incidents.filter(i=>i.day===day);}
-/* Un imprevisto deja de mostrarse cuando ya fue marcado como leÃ­do Y su dÃ­a ya pasÃ³
-   (es decir, no es el dÃ­a de hoy). Los no leÃ­dos siempre se muestran. */
+/* Un imprevisto deja de mostrarse cuando ya fue marcado como leído Y su día ya pasó
+   (es decir, no es el día de hoy). Los no leídos siempre se muestran. */
 function incidentVisible(i){return !i.read || i.day===todayKey;}
 function visibleIncidents(){return state.incidents.filter(incidentVisible);}
-function dayName(key){const d=DAY_DEFS.find(x=>x.key===key);return d?d.full:key;}
+function dayName(key){
+  if(key==='custom')return state.customFecha?cap(new Date(state.customFecha+'T00:00:00').toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'})):'día programado';
+  const d=DAY_DEFS.find(x=>x.key===key);return d?d.full:key;
+}
 function $(id){return document.getElementById(id);}
 
 /* ============================================================
@@ -1629,7 +1672,7 @@ function toggleTheme(on){
 }
 
 /* ============================================================
-   NAVEGACIÃ“N
+   NAVEGACIÓN
    ============================================================ */
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1673,7 +1716,7 @@ async function navBoss(id,btn){
    USUARIO / SIDEBAR
    ============================================================ */
 /* ============================================================
-   API Â· conexiÃ³n con el backend PHP (config/conexion.php + api/*.php)
+   API · conexión con el backend PHP (config/conexion.php + api/*.php)
    ============================================================ */
 const API_BASE='api/';
 let sessionUser=null; // usuario real devuelto por el backend tras el login
@@ -1684,7 +1727,7 @@ async function apiGet(endpoint){
     const r=await fetch(API_BASE+endpoint,{credentials:'include'});
     return await r.json();
   }catch(e){
-    return {ok:false, error:'No se pudo conectar con el servidor. Â¿EstÃ¡ corriendo el backend (Apache/MySQL de XAMPP)?'};
+    return {ok:false, error:'No se pudo conectar con el servidor. ¿Está corriendo el backend (Apache/MySQL de XAMPP)?'};
   }
 }
 async function apiPost(endpoint,body){
@@ -1696,11 +1739,11 @@ async function apiPost(endpoint,body){
     });
     return await r.json();
   }catch(e){
-    return {ok:false, error:'No se pudo conectar con el servidor. Â¿EstÃ¡ corriendo el backend (Apache/MySQL de XAMPP)?'};
+    return {ok:false, error:'No se pudo conectar con el servidor. ¿Está corriendo el backend (Apache/MySQL de XAMPP)?'};
   }
 }
 /* aplica el usuario devuelto por el backend a USERS[rol] para que el resto
-   de la app (avatar, saludo, perfil) muestre los datos reales sin tocar mÃ¡s cÃ³digo */
+   de la app (avatar, saludo, perfil) muestre los datos reales sin tocar más código */
 function aplicarUsuarioSesion(u){
   sessionUser=u;
   const role=ROLE_MAP[u.rol];
@@ -1716,7 +1759,7 @@ function aplicarUsuarioSesion(u){
 function primerNombre(nombre){return (nombre||'').trim().split(/\s+/)[0]||'';}
 function saludoNombre(){
   if(!sessionUser)return'Jefe';
-  return sessionUser.rol==='administrador' ? 'AdministraciÃ³n' : primerNombre(sessionUser.nombre);
+  return sessionUser.rol==='administrador' ? 'Administración' : primerNombre(sessionUser.nombre);
 }
 function actualizarEncabezadoPerfil(){
   const u=USERS[state.role]; if(!u)return;
@@ -1726,7 +1769,7 @@ function actualizarEncabezadoPerfil(){
   const m=$(ids[1]); if(m)m.textContent=u.mail;
 }
 /* mapea el usuario del backend (usuarios_listar.php) a la forma que ya usan
-   las pantallas del jefe (ventasCardHTML, expedicionRowHTML, workerRowHTMLâ€¦) */
+   las pantallas del jefe (ventasCardHTML, expedicionRowHTML, workerRowHTML…) */
 function mapUsuario(u){
   return {id:u.id, name:u.nombre, user:u.usuario, zone:u.zona||'',
           active:u.activo, tempPwd:u.password_temporal||null, shared:u.rol==='administrador'};
@@ -1759,7 +1802,7 @@ async function cargarIncidentes(){
     const d=new Date(String(i.creado_en).replace(' ','T'));
     return {
       id:i.id, driver:i.conductor, type:i.tipo, detail:i.detalle||'Sin detalle adicional.',
-      time:isNaN(d)?'â€”':d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
+      time:isNaN(d)?'—':d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
       day:isNaN(d)?todayKey:JS_TO_KEY[d.getDay()],
       read:i.leido,
     };
@@ -1769,8 +1812,8 @@ async function cargarIncidentes(){
 async function cargarDatosJefe(){await Promise.all([cargarUsuarios(),cargarSolicitudes(),cargarIncidentes()]);}
 
 /* ============================================================
-   PUNTOS GUARDADOS Y RUTAS Â· conexiÃ³n real con Google Routes API
-   vÃ­a el backend (api/puntos_guardados_*.php, api/ruta_*.php)
+   PUNTOS GUARDADOS Y RUTAS · conexión real con Google Routes API
+   vía el backend (api/puntos_guardados_*.php, api/ruta_*.php)
    ============================================================ */
 async function cargarPuntosGuardados(){
   const data=await apiGet('puntos_guardados_listar.php');
@@ -1786,7 +1829,7 @@ async function crearPuntoGuardado(apodo,direccion,lat,lng,id){
 }
 async function calcularRutaDelDia(){
   const pub=state.published[state.selectedDay];
-  if(pub.length<2){toast('AgregÃ¡ al menos 2 puntos para calcular la ruta','warn');return null;}
+  if(pub.length<2){toast('Agregá al menos 2 puntos para calcular la ruta','warn');return null;}
   const paradas=pub.map(p=>({nombre:p.name,direccion:p.address,lat:p.lat,lng:p.lng,email_verificacion:p.email_verificacion||null}));
   return apiPost('ruta_calcular.php',{paradas});
 }
@@ -1812,8 +1855,8 @@ async function cargarRutaConductor(fecha){
   driverStops=det.paradas.map(p=>({
     id:p.id, name:p.nombre, address:p.direccion, lat:p.lat, lng:p.lng,
     status:ESTADO_MAP[p.estado]||'pending', note:null,
-    eta:p.duracion_tramo_seg!=null?formatearDuracion(p.duracion_tramo_seg):'â€”',
-    dist:p.distancia_tramo_m!=null?formatearDistancia(p.distancia_tramo_m):'â€”',
+    eta:p.duracion_tramo_seg!=null?formatearDuracion(p.duracion_tramo_seg):'—',
+    dist:p.distancia_tramo_m!=null?formatearDistancia(p.distancia_tramo_m):'—',
     requiereVerificacion:!!p.requiere_verificacion,
   }));
   precargarTilesRuta(driverStops); // no bloquea: guarda el mapa de la zona para poder verlo offline
@@ -1822,34 +1865,34 @@ async function cargarRutaConductor(fecha){
 /* ============================================================
    COMPARTIR RUTA COMO TEXTO (features #4 de las recomendaciones)
    Para cuando el admin o el conductor quieren mandar la ruta por WhatsApp
-   a mano â€” no reemplaza nada de la app, es solo un texto plano armado.
+   a mano — no reemplaza nada de la app, es solo un texto plano armado.
    ============================================================ */
-let rutaParaCompartir=null; // {paradas, resumen:{distancia_m,duracion_seg}, fechaTxt} â€” la Ãºltima ruta publicada que vio el admin
-let rutaPublicadaActualId=null; // id de la ruta publicada del dÃ­a que se estÃ¡ viendo, solo si todavÃ­a no arrancÃ³ (estado 'publicada')
+let rutaParaCompartir=null; // {paradas, resumen:{distancia_m,duracion_seg}, fechaTxt} — la última ruta publicada que vio el admin
+let rutaPublicadaActualId=null; // id de la ruta publicada del día que se está viendo, solo si todavía no arrancó (estado 'publicada')
 function textoRutaCompartible(paradas,resumen,fechaTxt){
-  const lineas=paradas.map((p,i)=>`${i+1}. ${p.nombre||p.name} â€” ${p.direccion||p.address}`);
-  let txt=`Ruta Aprilon Â· ${fechaTxt}\n${lineas.join('\n')}`;
+  const lineas=paradas.map((p,i)=>`${i+1}. ${p.nombre||p.name} — ${p.direccion||p.address}`);
+  let txt=`Ruta Aprilon · ${fechaTxt}\n${lineas.join('\n')}`;
   if(resumen&&(resumen.distancia_m||resumen.duracion_seg)){
-    txt+=`\n\n${formatearDistancia(resumen.distancia_m)} Â· ${formatearDuracion(resumen.duracion_seg)}`;
+    txt+=`\n\n${formatearDistancia(resumen.distancia_m)} · ${formatearDuracion(resumen.duracion_seg)}`;
   }
   return txt;
 }
 async function compartirTexto(texto,titulo){
   if(navigator.share){
-    try{ await navigator.share({title:titulo||'Ruta Aprilon',text:texto}); return; }catch(e){/* el usuario cancelÃ³ el share nativo, o no estÃ¡ soportado: cae a copiar */}
+    try{ await navigator.share({title:titulo||'Ruta Aprilon',text:texto}); return; }catch(e){/* el usuario canceló el share nativo, o no está soportado: cae a copiar */}
   }
   fallbackCopy(texto,()=>toast('Ruta copiada al portapapeles','ok'));
 }
 function compartirRutaActual(){
-  if(!rutaParaCompartir){toast('TodavÃ­a no hay una ruta publicada para compartir','warn');return;}
+  if(!rutaParaCompartir){toast('Todavía no hay una ruta publicada para compartir','warn');return;}
   compartirTexto(textoRutaCompartible(rutaParaCompartir.paradas,rutaParaCompartir.resumen,rutaParaCompartir.fechaTxt));
 }
 function despublicarRutaActual(){
   if(!rutaPublicadaActualId){toast('Esta ruta ya no se puede despublicar','warn');return;}
   const id=rutaPublicadaActualId;
   confirmarAccion(
-    'Â¿Despublicar esta ruta?',
-    'ExpediciÃ³n va a dejar de verla y se va a borrar junto con sus verificaciones de entrega pendientes. Vas a poder recalcular y publicar una nueva para este dÃ­a.',
+    '¿Despublicar esta ruta?',
+    'Expedición va a dejar de verla y se va a borrar junto con sus verificaciones de entrega pendientes. Vas a poder recalcular y publicar una nueva para este día.',
     'Despublicar',
     ()=>despublicarRutaConfirmado(id)
   );
@@ -1862,8 +1905,8 @@ async function despublicarRutaConfirmado(id){
 }
 function confirmarBorrarRutasHoy(){
   confirmarAccion(
-    'Â¿Borrar todas las rutas de hoy?',
-    'Se van a borrar todas las rutas publicadas para el dÃ­a de hoy, sin importar su estado (incluso si ya arrancaron o terminaron), junto con sus paradas y verificaciones. Esta acciÃ³n no se puede deshacer.',
+    '¿Borrar todas las rutas de hoy?',
+    'Se van a borrar todas las rutas publicadas para el día de hoy, sin importar su estado (incluso si ya arrancaron o terminaron), junto con sus paradas y verificaciones. Esta acción no se puede deshacer.',
     'Borrar rutas de hoy',
     borrarRutasHoyConfirmado
   );
@@ -1871,11 +1914,11 @@ function confirmarBorrarRutasHoy(){
 async function borrarRutasHoyConfirmado(){
   const data=await apiPost('rutas_borrar_hoy.php',{});
   if(!data.ok){toast(data.error||'No se pudieron borrar las rutas de hoy','warn');return;}
-  toast(data.borradas>0?`Borraste ${data.borradas} ruta(s) de hoy`:'No habÃ­a rutas de hoy para borrar','warn');
+  toast(data.borradas>0?`Borraste ${data.borradas} ruta(s) de hoy`:'No había rutas de hoy para borrar','warn');
   await goHistorial();
 }
 function compartirRutaConductor(){
-  if(!driverStops.length){toast('TodavÃ­a no tenÃ©s una ruta asignada','warn');return;}
+  if(!driverStops.length){toast('Todavía no tenés una ruta asignada','warn');return;}
   compartirTexto(textoRutaCompartible(driverStops,rutaResumen,cap(fechaLarga())));
 }
 function formatearDuracion(seg){
@@ -1889,7 +1932,7 @@ function mostrarPasswordTemporal(nombre,pwd){
   const html=`
     <div class="sheet-grip"></div>
     <h3>Usuario creado</h3>
-    <p class="sub">ContraseÃ±a temporal para <b>${nombre}</b>. Copiala y entregÃ¡sela.</p>
+    <p class="sub">Contraseña temporal para <b>${nombre}</b>. Copiala y entregásela.</p>
     <div class="pwd-box"><code>${pwd}</code>
       <button class="icon-btn" onclick="copyText('${pwd}')" aria-label="Copiar" title="Copiar"><i class="fa-solid fa-copy"></i></button>
     </div>
@@ -1898,15 +1941,15 @@ function mostrarPasswordTemporal(nombre,pwd){
 }
 
 const USERS={
-  boss:  {name:'Ricardo MÃ©ndez',  role:'Jefe',    mail:'ricardo@aprilon.com', initial:'R', icon:'fa-crown'},
-  admin: {name:'Equipo de AdministraciÃ³n', role:'Administrador', mail:'administracion@aprilon.com', initial:'A', icon:'fa-shield-halved'},
+  boss:  {name:'Ricardo Méndez',  role:'Jefe',    mail:'ricardo@aprilon.com', initial:'R', icon:'fa-crown'},
+  admin: {name:'Equipo de Administración', role:'Administrador', mail:'administracion@aprilon.com', initial:'A', icon:'fa-shield-halved'},
   driver:{name:'Diego Sosa',       role:'Conductor', mail:'diego@aprilon.com', initial:'D', icon:'fa-truck'},
 };
 const SB_LINKS={
   boss:[
     {id:'bossDash',    icon:'fa-chart-line',  label:'Panel general',  fn:"navBoss('bossDash')"},
     {id:'bossAdmins',  icon:'fa-users',       label:'Usuarios',        fn:"navBoss('bossAdmins')"},
-    {id:'bossPasswords', icon:'fa-key',       label:'ContraseÃ±as',     fn:"navBoss('bossPasswords')"},
+    {id:'bossPasswords', icon:'fa-key',       label:'Contraseñas',     fn:"navBoss('bossPasswords')"},
     {id:'bossProfile', icon:'fa-user',        label:'Perfil',         fn:"navBoss('bossProfile')"},
   ],
   admin:[
@@ -1947,13 +1990,13 @@ function enterApp(role){
   if(role==='driver') iniciarPollingRuta();
 }
 /* ============================================================
-   NOTIFICACIÃ“N DE IMPREVISTOS NUEVOS (features #3 de las recomendaciones)
-   Mientras el jefe/admin tengan la app abierta, cada 20s se fija si llegÃ³
-   algÃºn imprevisto nuevo sin leer y avisa con un beep + un toast â€” sin esto,
+   NOTIFICACIÓN DE IMPREVISTOS NUEVOS (features #3 de las recomendaciones)
+   Mientras el jefe/admin tengan la app abierta, cada 20s se fija si llegó
+   algún imprevisto nuevo sin leer y avisa con un beep + un toast — sin esto,
    solo se enteraban si entraban a mirar el dashboard a mano.
    ============================================================ */
 let notifPollId=null;
-let idsImprevistosVistos=null; // null = todavÃ­a no se hizo el primer chequeo (no avisar de entrada)
+let idsImprevistosVistos=null; // null = todavía no se hizo el primer chequeo (no avisar de entrada)
 function iniciarPollingImprevistos(){
   if(notifPollId!=null)return;
   idsImprevistosVistos=null;
@@ -1995,9 +2038,9 @@ function sonarAvisoImprevisto(){
    POLLING DE RUTA ASIGNADA (conductor)
    cargarRutaConductor() antes solo se llamaba desde navDriver(), es decir
    al entrar a "Inicio"/"Mi ruta". Si el conductor ya estaba parado en esa
-   pantalla cuando el admin publicaba/cambiaba la ruta del dÃ­a, no se
+   pantalla cuando el admin publicaba/cambiaba la ruta del día, no se
    enteraba hasta navegar a otra pantalla y volver (o recargar). Cada 20s
-   comparamos contra el servidor y, si cambiÃ³, refrescamos la pantalla sola.
+   comparamos contra el servidor y, si cambió, refrescamos la pantalla sola.
    ============================================================ */
 let rutaPollId=null;
 function iniciarPollingRuta(){
@@ -2015,7 +2058,7 @@ async function chequearRutaActualizada(){
   if(rutaActualId===idAntes)return;
   if(state.currentScreen==='driverHome')renderDriverHome();
   if(state.currentScreen==='driverRoute')renderRoute();
-  if(rutaActualId)toast('TenÃ©s una nueva ruta asignada','ok');
+  if(rutaActualId)toast('Tenés una nueva ruta asignada','ok');
 }
 /* ============================================================
    FOTO DE PERFIL (individual por usuario)
@@ -2023,15 +2066,15 @@ async function chequearRutaActualizada(){
 function photoURL(photo){
   if(!photo) return null;
   // rutas absolutas (http, //, o /...) se usan tal cual; las relativas se
-  // resuelven contra la carpeta donde estÃ¡ la app (API_BASE apunta ahÃ­)
+  // resuelven contra la carpeta donde está la app (API_BASE apunta ahí)
   if(/^(https?:)?\/\//.test(photo) || photo.charAt(0)==='/') return photo;
-  return photo; // relativa a la ubicaciÃ³n del index.html (funciona en subcarpetas)
+  return photo; // relativa a la ubicación del index.html (funciona en subcarpetas)
 }
 function avatarDisplay(el,photo,initial){
   if(!el)return;
   const url=photoURL(photo);
   if(url){
-    // mientras se confirma que la imagen carga, mostramos las iniciales (nunca queda vacÃ­o)
+    // mientras se confirma que la imagen carga, mostramos las iniciales (nunca queda vacío)
     el.style.backgroundImage='';el.textContent=initial;el.classList.remove('has-photo');
     const test=new Image();
     test.onload=()=>{
@@ -2064,7 +2107,7 @@ function openEditProfile(){
   const html=`
     <div class="sheet-grip"></div>
     <h3>Editar perfil</h3>
-    <p class="sub">${u.name} Â· ${u.role}</p>
+    <p class="sub">${u.name} · ${u.role}</p>
     <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:6px">
       <div class="avatar lg" id="epPreview" style="width:96px;height:96px;font-size:2rem;${grad}">${u.photo?'':u.initial}</div>
       <input type="file" id="epFile" accept="image/*" style="display:none" onchange="onEditPhoto(this)">
@@ -2081,11 +2124,11 @@ function openEditProfile(){
 async function onEditPhoto(input){
   const file=input.files&&input.files[0];
   if(!file)return;
-  if(!file.type.startsWith('image/')){toast('ElegÃ­ un archivo de imagen','warn');return;}
+  if(!file.type.startsWith('image/')){toast('Elegí un archivo de imagen','warn');return;}
   if(file.size>3*1024*1024){toast('La imagen no puede superar los 3 MB','warn');return;}
   const fd=new FormData(); fd.append('foto',file);
   const btn=document.getElementById('epChange');
-  iniciarCargaBoton(btn,'Subiendoâ€¦');
+  iniciarCargaBoton(btn,'Subiendo…');
   let data;
   try{
     const r=await fetch(API_BASE+'perfil_foto.php',{method:'POST',credentials:'include',body:fd});
@@ -2103,7 +2146,7 @@ async function onEditPhoto(input){
 }
 async function removePhoto(){
   const btn=document.getElementById('epRemove');
-  iniciarCargaBoton(btn,'Quitandoâ€¦');
+  iniciarCargaBoton(btn,'Quitando…');
   const data=await apiPost('perfil_foto_quitar.php');
   terminarCargaBoton(btn);
   if(!data.ok){toast(data.error||'No se pudo quitar la foto','warn');return;}
@@ -2128,7 +2171,7 @@ function openUserSheet(){
     </div>
     <p class="sub" style="margin:14px 0 18px">${u.mail}</p>
     <button class="btn btn-secondary" onclick="closeSheet();${goProfile}"><i class="fa-solid fa-user-gear"></i> Ver perfil y ajustes</button>
-    <button class="btn btn-secondary btn-danger" style="margin-top:10px" onclick="closeSheet();logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesiÃ³n</button>
+    <button class="btn btn-secondary btn-danger" style="margin-top:10px" onclick="closeSheet();logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
     <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeSheet()">Cancelar</button>`;
   openSheet(html);
   if(u.photo)avatarDisplay(document.getElementById('usAvatar'),u.photo,u.initial);
@@ -2143,16 +2186,16 @@ function togglePass(btn){
   else{inp.type='password';ic.className='fa-solid fa-eye';}
 }
 function mostrarErrorLogin(msg){
-  const em=$('loginErrorMsg'); if(em)em.textContent=msg||'Usuario o contraseÃ±a incorrectos.';
+  const em=$('loginErrorMsg'); if(em)em.textContent=msg||'Usuario o contraseña incorrectos.';
   $('loginError').classList.add('show'); $('email').classList.add('err');
 }
 async function doLogin(){
   const usuario=$('email').value.trim();
   const password=$('pass').value;
   const err=$('loginError'), inp=$('email');
-  if(!usuario||!password){ mostrarErrorLogin('CompletÃ¡ usuario y contraseÃ±a.'); return; }
+  if(!usuario||!password){ mostrarErrorLogin('Completá usuario y contraseña.'); return; }
   const btn=$('btnLogin');
-  iniciarCargaBoton(btn,'Ingresandoâ€¦');
+  iniciarCargaBoton(btn,'Ingresando…');
   const data=await apiPost('login.php',{usuario,password});
   if(!data.ok){ terminarCargaBoton(btn); mostrarErrorLogin(data.error); return; }
   err.classList.remove('show'); inp.classList.remove('err');
@@ -2181,7 +2224,7 @@ async function logout(){
   $('page').classList.remove('logged-in');
   closeSheet();
   showScreen('login');
-  toast('SesiÃ³n cerrada','info');
+  toast('Sesión cerrada','info');
 }
 
 /* ============================================================
@@ -2190,28 +2233,28 @@ async function logout(){
 function openForgot(){
   const html=`
     <div class="sheet-grip"></div>
-    <h3>OlvidÃ© mi contraseÃ±a</h3>
-    <p class="sub">El jefe te entrega una contraseÃ±a temporal. IngresÃ¡ tu usuario, esa clave temporal y la nueva contraseÃ±a que querÃ©s usar.</p>
+    <h3>Olvidé mi contraseña</h3>
+    <p class="sub">El jefe te entrega una contraseña temporal. Ingresá tu usuario, esa clave temporal y la nueva contraseña que querés usar.</p>
     <div class="field">
       <label for="fpUser">Usuario</label>
       <div class="input-wrap"><i class="fa-solid fa-user lead"></i>
         <input class="input" id="fpUser" type="text" placeholder="tu usuario" autocomplete="off"></div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 13px;margin-bottom:18px">
-      <span style="font-size:.82rem;color:var(--text-2);line-height:1.4">Â¿No tenÃ©s una clave temporal?</span>
+      <span style="font-size:.82rem;color:var(--text-2);line-height:1.4">¿No tenés una clave temporal?</span>
       <button class="btn-reset" id="btnRequestPwdReset" onclick="requestPwdReset()"><i class="fa-solid fa-bell"></i> Notificar al jefe</button>
     </div>
     <div class="field">
-      <label for="fpTemp">ContraseÃ±a temporal</label>
+      <label for="fpTemp">Contraseña temporal</label>
       <div class="input-wrap"><i class="fa-solid fa-key lead"></i>
         <input class="input" id="fpTemp" type="text" placeholder="la que te dio el jefe" autocomplete="off"></div>
     </div>
     <div class="field">
-      <label for="fpNew">Nueva contraseÃ±a</label>
+      <label for="fpNew">Nueva contraseña</label>
       <div class="input-wrap"><i class="fa-solid fa-lock lead"></i>
-        <input class="input" id="fpNew" type="password" placeholder="elegÃ­ una nueva" autocomplete="off"></div>
+        <input class="input" id="fpNew" type="password" placeholder="elegí una nueva" autocomplete="off"></div>
     </div>
-    <button class="btn btn-primary" style="margin-top:4px" id="btnSubmitForgotPwd" onclick="submitForgotPwd()"><i class="fa-solid fa-circle-check"></i> Cambiar contraseÃ±a</button>
+    <button class="btn btn-primary" style="margin-top:4px" id="btnSubmitForgotPwd" onclick="submitForgotPwd()"><i class="fa-solid fa-circle-check"></i> Cambiar contraseña</button>
     <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeSheet()">Cancelar</button>`;
   openSheet(html);
 }
@@ -2227,38 +2270,38 @@ function findWorker(user){
 function pendingPwdCount(){return state.pwdRequests.length;}
 async function requestPwdReset(){
   const user=($('fpUser')?.value||'').trim();
-  if(!user){toast('IngresÃ¡ tu usuario','warn');return;}
+  if(!user){toast('Ingresá tu usuario','warn');return;}
   const btn=$('btnRequestPwdReset');
-  iniciarCargaBoton(btn,'Notificandoâ€¦');
+  iniciarCargaBoton(btn,'Notificando…');
   const data=await apiPost('solicitud_crear.php',{usuario:user});
   terminarCargaBoton(btn);
   if(!data.ok){toast(data.error||'No se pudo enviar la solicitud','warn');return;}
-  toast('Le avisamos al jefe. Cuando te dÃ© una clave temporal, ingresala abajo.','ok');
+  toast('Le avisamos al jefe. Cuando te dé una clave temporal, ingresala abajo.','ok');
 }
 async function submitForgotPwd(){
   const user=($('fpUser')?.value||'').trim();
   const temp=($('fpTemp')?.value||'').trim();
   const nueva=($('fpNew')?.value||'').trim();
-  if(!user||!temp||!nueva){toast('CompletÃ¡ los tres campos','warn');return;}
-  if(nueva.length<6){toast('La nueva contraseÃ±a debe tener al menos 6 caracteres','warn');return;}
+  if(!user||!temp||!nueva){toast('Completá los tres campos','warn');return;}
+  if(nueva.length<6){toast('La nueva contraseña debe tener al menos 6 caracteres','warn');return;}
   const btn=$('btnSubmitForgotPwd');
-  iniciarCargaBoton(btn,'Cambiandoâ€¦');
+  iniciarCargaBoton(btn,'Cambiando…');
   const data=await apiPost('password_resetear.php',{usuario:user, password_temporal:temp, password_nueva:nueva});
-  if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo cambiar la contraseÃ±a','warn');return;}
+  if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo cambiar la contraseña','warn');return;}
   closeSheet();
-  toast('Listo. Ya podÃ©s ingresar con tu nueva contraseÃ±a.','ok');
+  toast('Listo. Ya podés ingresar con tu nueva contraseña.','ok');
 }
 function openSheet(html){const o=$('overlay');$('sheet').innerHTML=html;o.classList.add('show');}
 function closeSheet(){$('overlay').classList.remove('show');}
 
 /* ============================================================
    SPINNER DE CARGA EN BOTONES
-   Para cualquier acciÃ³n que pega al backend: reemplaza el contenido del
-   botÃ³n por un spinner animado y lo deshabilita, asÃ­ el usuario ve que
-   estÃ¡ cargando en vez de pensar que no pasÃ³ nada (importante si el
+   Para cualquier acción que pega al backend: reemplaza el contenido del
+   botón por un spinner animado y lo deshabilita, así el usuario ve que
+   está cargando en vez de pensar que no pasó nada (importante si el
    servidor tiene lag). terminarCargaBoton() lo devuelve a su estado
-   original. Seguro de llamar aunque el botÃ³n ya no exista en el DOM
-   (p.ej. porque se cerrÃ³ el sheet que lo contenÃ­a).
+   original. Seguro de llamar aunque el botón ya no exista en el DOM
+   (p.ej. porque se cerró el sheet que lo contenía).
    ============================================================ */
 function iniciarCargaBoton(btn,textoCarga){
   if(!btn||btn.dataset.cargando==='1')return;
@@ -2275,7 +2318,7 @@ function terminarCargaBoton(btn){
   delete btn.dataset.htmlOriginal;
 }
 
-/* Sheet de confirmaciÃ³n genÃ©rica para acciones destructivas (borrar, despublicar, etc.) */
+/* Sheet de confirmación genérica para acciones destructivas (borrar, despublicar, etc.) */
 function confirmarAccion(titulo,mensaje,textoBtn,accionFn){
   const html=`
     <div class="sheet-grip"></div>
@@ -2296,7 +2339,7 @@ function confirmarAccion(titulo,mensaje,textoBtn,accionFn){
 }
 
 /* ============================================================
-   ADMIN Â· DASHBOARD
+   ADMIN · DASHBOARD
    ============================================================ */
 async function renderDashboard(){
   $('dashGreet').textContent=`${greeting()}, ${saludoNombre()}`;
@@ -2304,22 +2347,22 @@ async function renderDashboard(){
   renderDayStrip();
   updateNotifBadges();
 
-  const dayFull=DAY_DEFS.find(d=>d.key===state.selectedDay).full;
-  const token=(state._dashToken=(state._dashToken||0)+1); // evita pisar datos si el admin cambia de dÃ­a rÃ¡pido
+  const dayFull=dayName(state.selectedDay);
+  const token=(state._dashToken=(state._dashToken||0)+1); // evita pisar datos si el admin cambia de día rápido
 
   await cargarIncidentes();
   if(token!==state._dashToken)return;
   updateNotifBadges();
 
   const lista=await apiGet('rutas_listar.php?fecha='+encodeURIComponent(fechaParaDia(state.selectedDay)));
-  if(token!==state._dashToken)return; // llegÃ³ tarde, ya se pidiÃ³ otro dÃ­a
+  if(token!==state._dashToken)return; // llegó tarde, ya se pidió otro día
 
   const rutaPublicada=(lista.ok&&lista.rutas&&lista.rutas[0])?lista.rutas[0]:null;
   const list=$('publishedList');
 
   if(rutaPublicada){
     $('mPoints').textContent=rutaPublicada.paradas_total;
-    $('publishedTitle').textContent=`Ruta publicada Â· ${dayFull}`;
+    $('publishedTitle').textContent=`Ruta publicada · ${dayFull}`;
     const det=await apiGet('ruta_detalle.php?id='+rutaPublicada.id);
     if(token!==state._dashToken)return;
     if(det.ok){
@@ -2339,19 +2382,19 @@ async function renderDashboard(){
     return;
   }
 
-  // sin ruta publicada todavÃ­a: mostramos el borrador que se estÃ¡ armando
+  // sin ruta publicada todavía: mostramos el borrador que se está armando
   rutaParaCompartir=null;
   rutaPublicadaActualId=null;
   const bc0=$('btnCompartirRuta'); if(bc0)bc0.style.display='none';
   const bd0=$('btnDespublicarRuta'); if(bd0)bd0.style.display='none';
   const pub=state.published[state.selectedDay];
   $('mPoints').textContent=pub.length;
-  $('publishedTitle').textContent=`Borrador Â· ${dayFull}`;
+  $('publishedTitle').textContent=`Borrador · ${dayFull}`;
   if(pub.length===0){
     list.innerHTML=`<div class="empty">
       <div class="e-ico"><i class="fa-solid fa-map-pin"></i></div>
       <div class="e-t">Sin puntos publicados</div>
-      <div class="e-s">TodavÃ­a no armaste la ruta de este dÃ­a. AgregÃ¡ puntos y publicalos para asignarlos a un conductor.</div>
+      <div class="e-s">Todavía no armaste la ruta de este día. Agregá puntos y publicalos para asignarlos a un conductor.</div>
     </div>`;
     return;
   }
@@ -2370,6 +2413,11 @@ async function renderDashboard(){
 }
 function renderDayStrip(){
   const strip=$('dayStrip');
+  const customActive=state.selectedDay==='custom';
+  const customHas=customActive&&(state.published.custom||[]).length>0;
+  const customLabel=customActive&&state.customFecha
+    ?cap(new Date(state.customFecha+'T00:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'short'}))
+    :'Elegir';
   strip.innerHTML=DAY_DEFS.map(d=>{
     const has=state.published[d.key].length>0;
     return `<button class="day-pill ripple ${d.key===state.selectedDay?'active':''}" onclick="selectDay('${d.key}')">
@@ -2377,27 +2425,51 @@ function renderDayStrip(){
       <div class="d-name">${d.name}</div>
       <div class="d-num"><i class="fa-solid fa-calendar-day" style="font-size:.85rem"></i></div>
     </button>`;
-  }).join('');
+  }).join('')+
+    `<button class="day-pill ripple ${customActive?'active':''}" onclick="abrirCalendarioFuturo()" title="Programar una ruta a futuro">
+      ${customHas?'<span class="d-dot"></span>':''}
+      <div class="d-name">${customLabel}</div>
+      <div class="d-num"><i class="fa-solid fa-calendar-plus" style="font-size:.85rem"></i></div>
+    </button>`;
 }
 function selectDay(key){state.selectedDay=key;renderDashboard();}
+/* "programar a futuro": deja elegir cualquier fecha desde mañana en adelante, no
+   solo los días lun-sáb de la semana actual (pedido explícito 2026-08-26). Usa un
+   <input type="date"> nativo oculto en vez de un date-picker propio. */
+function abrirCalendarioFuturo(){
+  const inp=$('calFuturoInput');
+  const min=new Date(today);
+  min.setDate(min.getDate()+1);
+  inp.min=min.toISOString().slice(0,10);
+  if(state.customFecha)inp.value=state.customFecha;
+  if(inp.showPicker){try{inp.showPicker();return;}catch(e){}}
+  inp.click();
+}
+function seleccionarDiaFuturo(fechaStr){
+  if(!fechaStr)return;
+  state.selectedDay='custom';
+  state.customFecha=fechaStr;
+  if(!state.published.custom)state.published.custom=[];
+  renderDashboard();
+}
 
 let editSeleccion=null;      // {lat,lng} cuando se elige una sugerencia del autocompletado al editar
 let editDireccionDebounce=null;
-let editDireccionSeq=0; // descarta respuestas de Google que lleguen despuÃ©s de una mÃ¡s nueva (evita el "parpadeo" de sugerencias viejas)
+let editDireccionSeq=0; // descarta respuestas de Google que lleguen después de una más nueva (evita el "parpadeo" de sugerencias viejas)
 function editPoint(i){
   const p=state.published[state.selectedDay][i];
   editSeleccion=null;
   const html=`
     <div class="sheet-grip"></div>
     <h3>Editar punto</h3>
-    <p class="sub">ActualizÃ¡ los datos de esta parada de la ruta.</p>
+    <p class="sub">Actualizá los datos de esta parada de la ruta.</p>
     <div class="field">
       <label>Nombre del punto</label>
       <div class="input-wrap"><i class="fa-solid fa-store lead"></i>
         <input class="input" id="editName" value="${p.name.replace(/"/g,'&quot;')}"></div>
     </div>
     <div class="field" style="position:relative">
-      <label>DirecciÃ³n</label>
+      <label>Dirección</label>
       <div class="input-wrap"><i class="fa-solid fa-location-dot lead"></i>
         <input class="input" id="editAddr" value="${p.address.replace(/"/g,'&quot;')}" autocomplete="off" oninput="onEditAddrInput()"></div>
       <div id="editAddrSugerencias" style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-2);z-index:5;max-height:220px;overflow-y:auto"></div>
@@ -2407,17 +2479,17 @@ function editPoint(i){
   openSheet(html);
 }
 function onEditAddrInput(){
-  editSeleccion=null; // si vuelve a tipear despuÃ©s de elegir, invalida la selecciÃ³n anterior
+  editSeleccion=null; // si vuelve a tipear después de elegir, invalida la selección anterior
   clearTimeout(editDireccionDebounce);
   const q=($('editAddr').value||'').trim();
   const box=$('editAddrSugerencias');
   if(q.length<3){box.style.display='none';box.innerHTML='';return;}
   const miSeq=++editDireccionSeq;
   box.style.display='block';
-  box.innerHTML='<div class="suggest-loading">Buscandoâ€¦</div>';
+  box.innerHTML='<div class="suggest-loading">Buscando…</div>';
   editDireccionDebounce=setTimeout(async()=>{
     const data=await apiGet('lugares_autocompletar.php?q='+encodeURIComponent(q));
-    if(miSeq!==editDireccionSeq)return; // llegÃ³ tarde, ya hay una bÃºsqueda mÃ¡s nueva en curso
+    if(miSeq!==editDireccionSeq)return; // llegó tarde, ya hay una búsqueda más nueva en curso
     if(!data.ok||!data.sugerencias||!data.sugerencias.length){box.style.display='none';box.innerHTML='';return;}
     box.innerHTML=data.sugerencias.map(s=>`
       <div class="suggest ripple" style="border:none;border-radius:0;border-bottom:1px solid var(--border)" onclick="elegirDireccionEdit('${s.placeId.replace(/'/g,"\\'")}')">
@@ -2430,22 +2502,22 @@ function onEditAddrInput(){
 async function elegirDireccionEdit(placeId){
   const data=await apiGet('lugares_detalle.php?placeId='+encodeURIComponent(placeId));
   $('editAddrSugerencias').style.display='none';
-  if(!data.ok){toast(data.error||'No se pudo resolver la direcciÃ³n','warn');return;}
+  if(!data.ok){toast(data.error||'No se pudo resolver la dirección','warn');return;}
   $('editAddr').value=data.direccion;
   editSeleccion={lat:data.lat,lng:data.lng};
 }
 async function saveEdit(i){
   const n=$('editName').value.trim(), a=$('editAddr').value.trim();
-  if(!n||!a){toast('CompletÃ¡ nombre y direcciÃ³n','warn');return;}
+  if(!n||!a){toast('Completá nombre y dirección','warn');return;}
   const p=state.published[state.selectedDay][i];
   const direccionCambio=a!==p.address;
-  // si no se eligiÃ³ una sugerencia del autocompletado pero la direcciÃ³n cambiÃ³, hay que
+  // si no se eligió una sugerencia del autocompletado pero la dirección cambió, hay que
   // regeocodificar (mandando lat/lng en null fuerza al backend a geocodificar de nuevo);
-  // si no cambiÃ³, se conservan las coordenadas que ya tenÃ­a
+  // si no cambió, se conservan las coordenadas que ya tenía
   const lat=editSeleccion?editSeleccion.lat:(direccionCambio?null:p.lat);
   const lng=editSeleccion?editSeleccion.lng:(direccionCambio?null:p.lng);
   const btn=$('btnSaveEdit');
-  iniciarCargaBoton(btn,'Guardandoâ€¦');
+  iniciarCargaBoton(btn,'Guardando…');
   const data=await crearPuntoGuardado(n,a,lat,lng,p.id);
   if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo actualizar el punto','warn');return;}
   state.published[state.selectedDay][i]={id:p.id,name:n,address:a,lat:data.lat,lng:data.lng};
@@ -2461,35 +2533,114 @@ function deletePoint(i){
 }
 
 /* ============================================================
-   ADMIN Â· AGREGAR PUNTO
+   ADMIN · AGREGAR PUNTO
    ============================================================ */
 async function goAddPoint(){
-  const dayFull=DAY_DEFS.find(d=>d.key===state.selectedDay).full;
+  const dayFull=dayName(state.selectedDay);
   $('addPointDay').textContent=`Ruta del ${dayFull}`;
   $('emailVerifInput').value='';
+  $('aliasInput').value='';
+  $('direccionInput').value='';
+  $('direccionSugerencias').style.display='none';
+  direccionSeleccionada=null;direccionSeleccionadaPrincipal=null;
+  setAddPointTab('nueva');
   renderAdded();renderAddMap();
   showScreen('addPoint');
   setSidebarActive('addPoint');
   await cargarPuntosGuardados();
   renderSelectAgenda();
 }
+/* tabs de "Agregar punto": dirección nueva vs. punto guardado de la agenda
+   (rediseño 2026-08-26, a pedido explícito — reemplaza las dos secciones
+   apiladas, cada una con su propio botón "Agregar a la ruta" de estilo
+   distinto, por un único botón que actúa sobre la tab activa) */
+function setAddPointTab(tab){
+  state.addPointTab=tab;
+  $('addPointTabNueva').classList.toggle('active',tab==='nueva');
+  $('addPointTabGuardado').classList.toggle('active',tab==='guardado');
+  $('addPointPanelNueva').style.display=tab==='nueva'?'block':'none';
+  $('addPointPanelGuardado').style.display=tab==='guardado'?'block':'none';
+}
+function onAgregarPuntoClick(){
+  if(state.addPointTab==='guardado')agregarDesdeAgenda();
+  else agregarPuntoNuevo();
+}
 function renderSelectAgenda(){
   const sel=$('selectPuntoGuardado');
-  const hint=$('agendaEmptyHint');
+  const selWrap=$('selectPuntoGuardadoWrap');
+  const empty=$('puntoGuardadoEmpty');
+  const label=document.querySelector('#puntoGuardadoWrap > label');
   if(state.puntosGuardados.length===0){
-    sel.innerHTML='<option value="">TodavÃ­a no hay puntos en la agenda</option>';
+    sel.innerHTML='<option value="">Todavía no hay puntos en la agenda</option>';
     sel.disabled=true;
-    hint.style.display='block';
+    selWrap.style.display='none';
+    if(label)label.style.display='none';
+    empty.style.display='block';
     return;
   }
   sel.disabled=false;
-  hint.style.display='none';
-  sel.innerHTML='<option value="">ElegÃ­ un punto guardadoâ€¦</option>'+
-    state.puntosGuardados.map(s=>`<option value="${s.id}">${s.apodo} â€” ${s.direccion}</option>`).join('');
+  sel.innerHTML='<option value="">Elegí un punto guardado…</option>'+
+    state.puntosGuardados.map(s=>`<option value="${s.id}">${s.apodo} — ${s.direccion}</option>`).join('');
+  selWrap.style.display='flex';
+  if(label)label.style.display='block';
+  empty.style.display='none';
+}
+/* dirección manual, cargada directo a la ruta del día sin pasar por la agenda
+   (restaurado 2026-08-26 a pedido explícito; a diferencia de la versión previa a
+   2026-08-21, NO crea un punto permanente en puntos_guardados — ruta_calcular.php
+   no necesita un id de agenda, solo nombre/dirección/lat/lng, así que un punto
+   manual sin id funciona igual de bien para calcular y publicar la ruta) */
+let direccionSeleccionada=null;
+let direccionSeleccionadaPrincipal=null;
+let direccionDebounce=null;
+let direccionSeq=0; // descarta respuestas de Google que lleguen después de una más nueva
+function onDireccionInput(){
+  direccionSeleccionada=null;direccionSeleccionadaPrincipal=null;
+  clearTimeout(direccionDebounce);
+  const q=($('direccionInput').value||'').trim();
+  const box=$('direccionSugerencias');
+  if(q.length<3){box.style.display='none';box.innerHTML='';return;}
+  const miSeq=++direccionSeq;
+  box.style.display='block';
+  box.innerHTML='<div class="suggest-loading">Buscando…</div>';
+  direccionDebounce=setTimeout(async()=>{
+    const data=await apiGet('lugares_autocompletar.php?q='+encodeURIComponent(q));
+    if(miSeq!==direccionSeq)return;
+    if(!data.ok||!data.sugerencias||!data.sugerencias.length){box.style.display='none';box.innerHTML='';return;}
+    box.innerHTML=data.sugerencias.map(s=>`
+      <div class="suggest ripple" style="border:none;border-radius:0;border-bottom:1px solid var(--border)" onclick="elegirDireccion('${s.placeId.replace(/'/g,"\\'")}','${(s.principal||'').replace(/'/g,"\\'")}')">
+        <div class="s-ico"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="s-info"><div class="s-name">${s.principal}</div><div class="s-addr">${s.secundario}</div></div>
+      </div>`).join('');
+    box.style.display='block';
+  },300);
+}
+async function elegirDireccion(placeId,principal){
+  const data=await apiGet('lugares_detalle.php?placeId='+encodeURIComponent(placeId));
+  $('direccionSugerencias').style.display='none';
+  if(!data.ok){toast(data.error||'No se pudo resolver la dirección','warn');return;}
+  $('direccionInput').value=data.direccion;
+  direccionSeleccionada={lat:data.lat,lng:data.lng};
+  direccionSeleccionadaPrincipal=principal||null;
+  if(!$('aliasInput').value.trim()&&principal) $('aliasInput').value=principal;
+}
+function agregarPuntoNuevo(){
+  const alias=($('aliasInput').value||'').trim();
+  const direccion=($('direccionInput').value||'').trim();
+  if(!direccion){toast('Completá la dirección','warn');return;}
+  if(!direccionSeleccionada){toast('Elegí una dirección de las sugerencias','warn');return;}
+  const pub=state.published[state.selectedDay];
+  const email=($('emailVerifInput').value||'').trim();
+  const nombre=alias||direccionSeleccionadaPrincipal||direccion;
+  pub.push({id:null,name:nombre,address:direccion,lat:direccionSeleccionada.lat,lng:direccionSeleccionada.lng,email_verificacion:email||null});
+  $('aliasInput').value='';$('direccionInput').value='';$('emailVerifInput').value='';
+  direccionSeleccionada=null;direccionSeleccionadaPrincipal=null;
+  renderAdded();renderAddMap();
+  toast(`Agregaste "${nombre}" a la ruta`,'ok');
 }
 function agregarDesdeAgenda(){
   const id=Number($('selectPuntoGuardado').value);
-  if(!id){toast('ElegÃ­ un punto de la agenda','warn');return;}
+  if(!id){toast('Elegí un punto de la agenda','warn');return;}
   addPointDirect(id);
   $('selectPuntoGuardado').value='';
 }
@@ -2497,7 +2648,7 @@ function addPointDirect(id){
   const pub=state.published[state.selectedDay];
   const s=state.puntosGuardados.find(x=>x.id===id);
   if(!s)return;
-  if(pub.some(d=>d.id===id)){toast('Ese punto ya estÃ¡ en la ruta','warn');return;}
+  if(pub.some(d=>d.id===id)){toast('Ese punto ya está en la ruta','warn');return;}
   const email=($('emailVerifInput').value||'').trim();
   pub.push({id:s.id,name:s.apodo,address:s.direccion,lat:s.lat,lng:s.lng,email_verificacion:email||null});
   $('emailVerifInput').value='';
@@ -2511,15 +2662,15 @@ function renderAdded(){
   if(pub.length===0){
     list.innerHTML=`<div class="empty" style="padding:28px 20px">
       <div class="e-ico"><i class="fa-solid fa-map-pin"></i></div>
-      <div class="e-t">Ruta vacÃ­a</div>
-      <div class="e-s">TocÃ¡ una direcciÃ³n de las sugerencias para sumarla a la ruta del dÃ­a.</div>
+      <div class="e-t">Ruta vacía</div>
+      <div class="e-s">Tocá una dirección de las sugerencias para sumarla a la ruta del día.</div>
     </div>`;
     return;
   }
   list.innerHTML=pub.map((d,i)=>`
     <div class="draft-item">
       <div class="di-num">${i+1}</div>
-      <div class="di-info"><div class="di-name">${d.name}${d.email_verificacion?' <i class="fa-solid fa-envelope-circle-check" style="color:var(--brand);font-size:.75em" title="Pide verificaciÃ³n por email"></i>':''}</div><div class="di-addr">${d.address}</div></div>
+      <div class="di-info"><div class="di-name">${d.name}${d.email_verificacion?' <i class="fa-solid fa-envelope-circle-check" style="color:var(--brand);font-size:.75em" title="Pide verificación por email"></i>':''}</div><div class="di-addr">${d.address}</div></div>
       <button class="di-rm" onclick="removePoint(${i})" aria-label="Quitar"><i class="fa-solid fa-xmark"></i></button>
     </div>`).join('');
 }
@@ -2530,13 +2681,13 @@ function removePoint(i){
 }
 
 /* ============================================================
-   ADMIN Â· AGENDA DE LUGARES (alta/ediciÃ³n/baja de puntos guardados)
+   ADMIN · AGENDA DE LUGARES (alta/edición/baja de puntos guardados)
    ============================================================ */
 let agendaSeleccion=null;       // {lat,lng} elegido por autocompletado al cargar/editar un punto
 let agendaSeleccionPrincipal=null;
 let agendaEditId=null;          // si no es null, "Guardar" edita ese punto en vez de crear uno nuevo
 let agendaDireccionDebounce=null;
-let agendaDireccionSeq=0; // descarta respuestas de Google que lleguen despuÃ©s de una mÃ¡s nueva
+let agendaDireccionSeq=0; // descarta respuestas de Google que lleguen después de una más nueva
 async function goPlacesAgenda(){
   showScreen('placesAgenda');
   setSidebarActive('placesAgenda');
@@ -2561,7 +2712,7 @@ function onAgendaDireccionInput(){
   if(q.length<3){box.style.display='none';box.innerHTML='';return;}
   const miSeq=++agendaDireccionSeq;
   box.style.display='block';
-  box.innerHTML='<div class="suggest-loading">Buscandoâ€¦</div>';
+  box.innerHTML='<div class="suggest-loading">Buscando…</div>';
   agendaDireccionDebounce=setTimeout(async()=>{
     const data=await apiGet('lugares_autocompletar.php?q='+encodeURIComponent(q));
     if(miSeq!==agendaDireccionSeq)return;
@@ -2577,7 +2728,7 @@ function onAgendaDireccionInput(){
 async function elegirDireccionAgenda(placeId,principal){
   const data=await apiGet('lugares_detalle.php?placeId='+encodeURIComponent(placeId));
   $('agendaDireccionSugerencias').style.display='none';
-  if(!data.ok){toast(data.error||'No se pudo resolver la direcciÃ³n','warn');return;}
+  if(!data.ok){toast(data.error||'No se pudo resolver la dirección','warn');return;}
   $('agendaDireccion').value=data.direccion;
   agendaSeleccion={lat:data.lat,lng:data.lng};
   agendaSeleccionPrincipal=principal||null;
@@ -2586,9 +2737,9 @@ async function elegirDireccionAgenda(placeId,principal){
 async function guardarPuntoAgenda(){
   const apodo=($('agendaAlias').value||'').trim();
   const direccion=($('agendaDireccion').value||'').trim();
-  if(!apodo||!direccion){toast('CompletÃ¡ el alias y la direcciÃ³n','warn');return;}
+  if(!apodo||!direccion){toast('Completá el alias y la dirección','warn');return;}
   const btn=$('btnAgendaGuardar');
-  iniciarCargaBoton(btn,'Guardandoâ€¦');
+  iniciarCargaBoton(btn,'Guardando…');
   const data=await crearPuntoGuardado(apodo,direccion,agendaSeleccion&&agendaSeleccion.lat,agendaSeleccion&&agendaSeleccion.lng,agendaEditId);
   terminarCargaBoton(btn);
   if(!data.ok){toast(data.error||'No se pudo guardar el punto','warn');return;}
@@ -2618,8 +2769,8 @@ function eliminarPuntoAgenda(id){
   const p=state.puntosGuardados.find(x=>x.id===id);
   if(!p)return;
   confirmarAccion(
-    'Â¿Eliminar este punto?',
-    `"${p.apodo}" se va a borrar de la agenda de lugares. Esta acciÃ³n no se puede deshacer.`,
+    '¿Eliminar este punto?',
+    `"${p.apodo}" se va a borrar de la agenda de lugares. Esta acción no se puede deshacer.`,
     'Eliminar',
     ()=>eliminarPuntoAgendaConfirmado(id)
   );
@@ -2639,8 +2790,8 @@ function renderAgendaList(){
   if(state.puntosGuardados.length===0){
     list.innerHTML=`<div class="empty" style="padding:28px 20px">
       <div class="e-ico"><i class="fa-solid fa-address-book"></i></div>
-      <div class="e-t">Agenda vacÃ­a</div>
-      <div class="e-s">CargÃ¡ los puntos que uses seguido para elegirlos rÃ¡pido al armar una ruta.</div>
+      <div class="e-t">Agenda vacía</div>
+      <div class="e-s">Cargá los puntos que uses seguido para elegirlos rápido al armar una ruta.</div>
     </div>`;
     return;
   }
@@ -2653,12 +2804,12 @@ function renderAgendaList(){
 }
 
 /* ============================================================
-   ADMIN Â· HISTORIAL DE RUTAS (features #1 de las recomendaciones)
+   ADMIN · HISTORIAL DE RUTAS (features #1 de las recomendaciones)
    ============================================================ */
 async function goHistorial(){
   showScreen('rutasHistorial');
   setSidebarActive('rutasHistorial');
-  $('historialList').innerHTML=`<div class="empty" style="padding:28px 20px"><div class="e-ico"><i class="fa-solid fa-spinner fa-spin"></i></div><div class="e-t">Cargandoâ€¦</div></div>`;
+  $('historialList').innerHTML=`<div class="empty" style="padding:28px 20px"><div class="e-ico"><i class="fa-solid fa-spinner fa-spin"></i></div><div class="e-t">Cargando…</div></div>`;
   const data=await apiGet('rutas_historial.php?limit=30');
   if(!data.ok){$('historialList').innerHTML=`<div class="empty" style="padding:28px 20px"><div class="e-t">No se pudo cargar el historial</div></div>`;return;}
   renderHistorial(data.rutas||[]);
@@ -2669,8 +2820,8 @@ function renderHistorial(rutas){
   if(rutas.length===0){
     list.innerHTML=`<div class="empty" style="padding:28px 20px">
       <div class="e-ico"><i class="fa-solid fa-clock-rotate-left"></i></div>
-      <div class="e-t">TodavÃ­a no hay rutas en el historial</div>
-      <div class="e-s">AcÃ¡ van a aparecer las rutas publicadas a medida que pasen los dÃ­as.</div>
+      <div class="e-t">Todavía no hay rutas en el historial</div>
+      <div class="e-s">Acá van a aparecer las rutas publicadas a medida que pasen los días.</div>
     </div>`;
     return;
   }
@@ -2680,7 +2831,7 @@ function renderHistorial(rutas){
     return `<div class="draft-item ripple" style="cursor:pointer" onclick="verDetalleHistorial(${r.id})">
       <div class="di-info">
         <div class="di-name">${fechaTxt}</div>
-        <div class="di-addr">${r.paradas_hechas}/${r.paradas_total} paradas Â· ${formatearDistancia(r.distancia_m)} Â· ${formatearDuracion(r.duracion_seg)}</div>
+        <div class="di-addr">${r.paradas_hechas}/${r.paradas_total} paradas · ${formatearDistancia(r.distancia_m)} · ${formatearDuracion(r.duracion_seg)}</div>
       </div>
       <span class="tl-badge ${r.estado==='completada'?'badge-done':'badge-active'}">${ESTADO_LABEL[r.estado]||r.estado}</span>
     </div>`;
@@ -2694,7 +2845,7 @@ async function verDetalleHistorial(id){
   const html=`
     <div class="sheet-grip"></div>
     <h3>${fechaTxt}</h3>
-    <p class="sub">${ESTADO_LABEL[det.ruta.estado]||det.ruta.estado} Â· ${formatearDistancia(det.ruta.distancia_m)} Â· ${formatearDuracion(det.ruta.duracion_seg)}</p>
+    <p class="sub">${ESTADO_LABEL[det.ruta.estado]||det.ruta.estado} · ${formatearDistancia(det.ruta.distancia_m)} · ${formatearDuracion(det.ruta.duracion_seg)}</p>
     <div style="display:flex;flex-direction:column;gap:9px;max-height:340px;overflow-y:auto;margin-top:12px">
       ${det.paradas.map(p=>`
         <div class="draft-item no-anim">
@@ -2709,7 +2860,7 @@ async function verDetalleHistorial(id){
 let rutaCalculada=null;
 async function onCalcularRuta(){
   const btn=$('btnCalcularRuta');
-  iniciarCargaBoton(btn,'Calculandoâ€¦');
+  iniciarCargaBoton(btn,'Calculando…');
   const data=await calcularRutaDelDia();
   terminarCargaBoton(btn);
   if(!data)return;
@@ -2718,7 +2869,7 @@ async function onCalcularRuta(){
   const html=`
     <div class="sheet-grip"></div>
     <h3>Ruta calculada</h3>
-    <p class="sub">Este es el orden Ã³ptimo segÃºn Google Maps, con trÃ¡nsito en tiempo real. Revisala antes de publicarla.</p>
+    <p class="sub">Este es el orden óptimo según Google Maps, con tránsito en tiempo real. Revisala antes de publicarla.</p>
     <div class="route-meta" style="margin:16px 0">
       <div class="rm-chip"><div class="rm-ico"><i class="fa-solid fa-road"></i></div>${formatearDistancia(data.distancia_m)}</div>
       <div class="rm-chip"><div class="rm-ico"><i class="fa-solid fa-clock"></i></div>${formatearDuracion(data.duracion_seg)}</div>
@@ -2739,7 +2890,7 @@ async function onCalcularRuta(){
   openSheet(html);
   renderPreviewMap(data.paradas, data.polyline);
 }
-/* dibuja, en el bottom-sheet de "Ruta calculada", el camino REAL que devolviÃ³ Google
+/* dibuja, en el bottom-sheet de "Ruta calculada", el camino REAL que devolvió Google
    (decodificando la polyline) en vez de solo los pines de las paradas */
 function renderPreviewMap(paradas,polyline){
   const el=$('previewMap');
@@ -2766,7 +2917,7 @@ function renderPreviewMap(paradas,polyline){
     if(bounds.length) map.fitBounds(bounds,{padding:[30,30],maxZoom:15});
   },90);
 }
-/* decodifica una polyline codificada de Google (algoritmo estÃ¡ndar) a una lista de [lat,lng] */
+/* decodifica una polyline codificada de Google (algoritmo estándar) a una lista de [lat,lng] */
 function decodePolyline(encoded){
   let index=0,lat=0,lng=0;const out=[];
   while(index<encoded.length){
@@ -2785,7 +2936,7 @@ async function onPublicarRuta(){
   if(!rutaCalculada||publicandoRuta)return;
   publicandoRuta=true;
   const btn=$('btnPublicarRuta');
-  iniciarCargaBoton(btn,'Publicandoâ€¦');
+  iniciarCargaBoton(btn,'Publicando…');
   const data=await guardarRutaDelDia(rutaCalculada);
   publicandoRuta=false;
   if(!data.ok){
@@ -2795,22 +2946,22 @@ async function onPublicarRuta(){
   rutaCalculada=null;
   state.published[state.selectedDay]=[];
   closeSheet();
-  toast('Ruta publicada. Ya la puede ver expediciÃ³n.','ok');
+  toast('Ruta publicada. Ya la puede ver expedición.','ok');
   navAdmin('adminDash');
 }
 
 /* ============================================================
-   CONDUCTOR Â· BIENVENIDA + RUTA
+   CONDUCTOR · BIENVENIDA + RUTA
    ============================================================ */
 function renderDriverHome(){
-  $('driverGreet').textContent=`${greeting().replace('Buenos dÃ­as','Bienvenido de vuelta').replace('Buenas tardes','Bienvenido de vuelta').replace('Buenas noches','Bienvenido de vuelta')}`;
-  $('driverHeroName').textContent=(sessionUser&&sessionUser.nombre)||'â€”';
+  $('driverGreet').textContent=`${greeting().replace('Buenos días','Bienvenido de vuelta').replace('Buenas tardes','Bienvenido de vuelta').replace('Buenas noches','Bienvenido de vuelta')}`;
+  $('driverHeroName').textContent=(sessionUser&&sessionUser.nombre)||'—';
   $('driverDate').textContent=cap(fechaLarga());
   const done=driverStops.filter(s=>s.status==='done').length;
   const pend=driverStops.length-done;
   $('hsStops').textContent=driverStops.length;
-  $('hsTime').textContent=rutaResumen.duracion_seg?formatearDuracion(rutaResumen.duracion_seg):'â€”';
-  $('hsDist').textContent=rutaResumen.distancia_m?formatearDistancia(rutaResumen.distancia_m):'â€”';
+  $('hsTime').textContent=rutaResumen.duracion_seg?formatearDuracion(rutaResumen.duracion_seg):'—';
+  $('hsDist').textContent=rutaResumen.distancia_m?formatearDistancia(rutaResumen.distancia_m):'—';
   $('scDone').textContent=done;
   $('scPend').textContent=pend;
   const next=driverStops.find(s=>s.status==='active')||driverStops.find(s=>s.status==='pending');
@@ -2818,9 +2969,9 @@ function renderDriverHome(){
     $('nsName').textContent=next.name;$('nsAddr').textContent=next.address;$('nsEta').textContent=next.eta;
     $('nextStopCard').style.display='flex';
   }else if(driverStops.length===0){
-    $('nsName').textContent='Sin ruta asignada';$('nsAddr').textContent='TodavÃ­a no te publicaron una ruta para hoy';$('nsEta').textContent='â€”';
+    $('nsName').textContent='Sin ruta asignada';$('nsAddr').textContent='Todavía no te publicaron una ruta para hoy';$('nsEta').textContent='—';
   }else{
-    $('nsName').textContent='Ruta completada';$('nsAddr').textContent='No quedan paradas pendientes';$('nsEta').textContent='âœ“';
+    $('nsName').textContent='Ruta completada';$('nsAddr').textContent='No quedan paradas pendientes';$('nsEta').textContent='✓';
   }
 }
 function renderRoute(){
@@ -2830,16 +2981,16 @@ function renderRoute(){
   const total=driverStops.length;
   $('pcCount').textContent=`${done} de ${total} paradas`;
   $('pcBar').style.width=(total?done/total*100:0)+'%';
-  $('routeTime').textContent=rutaResumen.duracion_seg?formatearDuracion(rutaResumen.duracion_seg):'â€”';
-  $('routeDist').textContent=rutaResumen.distancia_m?formatearDistancia(rutaResumen.distancia_m):'â€”';
-  $('routeStopsCount').textContent=total||'â€”';
+  $('routeTime').textContent=rutaResumen.duracion_seg?formatearDuracion(rutaResumen.duracion_seg):'—';
+  $('routeDist').textContent=rutaResumen.distancia_m?formatearDistancia(rutaResumen.distancia_m):'—';
+  $('routeStopsCount').textContent=total||'—';
 
   const tl=$('timeline');
   if(total===0){
     tl.innerHTML=`<div class="empty" style="padding:28px 20px">
       <div class="e-ico"><i class="fa-solid fa-route"></i></div>
-      <div class="e-t">TodavÃ­a no tenÃ©s una ruta</div>
-      <div class="e-s">Cuando el administrador publique la ruta del dÃ­a, va a aparecer acÃ¡.</div>
+      <div class="e-t">Todavía no tenés una ruta</div>
+      <div class="e-s">Cuando el administrador publique la ruta del día, va a aparecer acá.</div>
     </div>`;
     return;
   }
@@ -2850,7 +3001,7 @@ function renderRoute(){
     if(s.status==='done')badge='<span class="tl-badge badge-done"><i class="fa-solid fa-check" style="font-size:.6rem"></i> Completada</span>';
     let note=(s.status==='active'&&s.note)?`<div class="tl-note"><i class="fa-solid fa-circle-info"></i><div>${s.note}</div></div>`:'';
     if(s.status==='active'&&s.requiereVerificacion){
-      note+=`<div class="tl-note"><i class="fa-solid fa-key"></i><div>Esta entrega necesita la palabra de verificaciÃ³n que le llegÃ³ por email al encargado del negocio.</div></div>`;
+      note+=`<div class="tl-note"><i class="fa-solid fa-key"></i><div>Esta entrega necesita la palabra de verificación que le llegó por email al encargado del negocio.</div></div>`;
     }
     let acts=s.status==='active'?`
       <div class="tl-acts">
@@ -2872,20 +3023,20 @@ function renderRoute(){
 async function completeStop(i,btn){
   const parada=driverStops[i];
   if(parada.requiereVerificacion){ pedirPalabraVerificacion(i); return; }
-  iniciarCargaBoton(btn,'Completandoâ€¦');
+  iniciarCargaBoton(btn,'Completando…');
   const ok=await enviarCompletarParada(i,null);
   if(!ok)terminarCargaBoton(btn);
 }
-/* la palabra de verificaciÃ³n se pide en un sheet propio (no un prompt() nativo:
-   bloquea la extensiÃ³n de automatizaciÃ³n y no encaja con el resto de la UI) */
+/* la palabra de verificación se pide en un sheet propio (no un prompt() nativo:
+   bloquea la extensión de automatización y no encaja con el resto de la UI) */
 function pedirPalabraVerificacion(i){
   const parada=driverStops[i];
   const html=`
     <div class="sheet-grip"></div>
-    <h3>VerificaciÃ³n de entrega</h3>
-    <p class="sub">Pedile al encargado de <b>${parada.name}</b> la palabra que le llegÃ³ por email y escribila acÃ¡ para completar la entrega.</p>
+    <h3>Verificación de entrega</h3>
+    <p class="sub">Pedile al encargado de <b>${parada.name}</b> la palabra que le llegó por email y escribila acá para completar la entrega.</p>
     <div class="field">
-      <label>Palabra de verificaciÃ³n</label>
+      <label>Palabra de verificación</label>
       <div class="input-wrap"><i class="fa-solid fa-key lead"></i>
         <input class="input" id="palabraVerifInput" type="text" placeholder="Ej: LUNA42" autocomplete="off" style="text-transform:uppercase"></div>
     </div>
@@ -2897,8 +3048,8 @@ function pedirPalabraVerificacion(i){
 async function confirmarPalabraVerificacion(i,btn){
   const el=$('palabraVerifInput');
   const palabra=(el&&el.value||'').trim();
-  if(!palabra){toast('IngresÃ¡ la palabra','warn');return;}
-  iniciarCargaBoton(btn,'Confirmandoâ€¦');
+  if(!palabra){toast('Ingresá la palabra','warn');return;}
+  iniciarCargaBoton(btn,'Confirmando…');
   const ok=await enviarCompletarParada(i,palabra);
   if(!ok)terminarCargaBoton(btn);
 }
@@ -2914,30 +3065,30 @@ async function enviarCompletarParada(i,palabra){
   if(next){
     next.status='active';
     renderRoute();
-    toast(`Parada completada Â· siguiente: ${next.name}`,'ok');
+    toast(`Parada completada · siguiente: ${next.name}`,'ok');
   }else{
     renderRoute();
-    setTimeout(()=>toast('Â¡Ruta completada! Buen trabajo ðŸŽ‰','ok'),200);
+    setTimeout(()=>toast('¡Ruta completada! Buen trabajo 🎉','ok'),200);
   }
   return true;
 }
 
 /* ============================================================
-   MAPAS Â· Leaflet + OpenStreetMap (vista en la app, sin API key)
-   + botÃ³n "Abrir en Maps" (deep-link nativo a Google Maps, sin API key)
+   MAPAS · Leaflet + OpenStreetMap (vista en la app, sin API key)
+   + botón "Abrir en Maps" (deep-link nativo a Google Maps, sin API key)
    ============================================================ */
 const CABA_CENTER=[-34.60,-58.40];
-const MAPS={};              // cachÃ© de instancias { map, layer, userMarker } por id de contenedor
+const MAPS={};              // caché de instancias { map, layer, userMarker } por id de contenedor
 let geoWatchId=null;        // id del watchPosition
-let lastKnownPos=null;      // [lat,lng] de la ubicaciÃ³n en vivo
+let lastKnownPos=null;      // [lat,lng] de la ubicación en vivo
 
-/* ---- Mapa offline: precarga los tiles de la zona de la ruta del dÃ­a ----
-   El service worker (sw.js) guarda en cachÃ© cualquier tile de OpenStreetMap
-   que se pida (cache-first), asÃ­ que con solo mirar el mapa ya queda guardado
-   lo que se vio. Esta funciÃ³n ademÃ¡s precarga de entrada el rectÃ¡ngulo que
-   cubre todas las paradas del dÃ­a en unos pocos niveles de zoom, para que la
-   ruta se pueda ver offline aunque el conductor todavÃ­a no haya paneado por
-   ahÃ­ â€” pensado para cuando se pierde seÃ±al en medio del recorrido. */
+/* ---- Mapa offline: precarga los tiles de la zona de la ruta del día ----
+   El service worker (sw.js) guarda en caché cualquier tile de OpenStreetMap
+   que se pida (cache-first), así que con solo mirar el mapa ya queda guardado
+   lo que se vio. Esta función además precarga de entrada el rectángulo que
+   cubre todas las paradas del día en unos pocos niveles de zoom, para que la
+   ruta se pueda ver offline aunque el conductor todavía no haya paneado por
+   ahí — pensado para cuando se pierde señal en medio del recorrido. */
 function tileXY(lat,lng,z){
   const latRad=lat*Math.PI/180;
   const n=Math.pow(2,z);
@@ -2968,12 +3119,12 @@ async function precargarTilesRuta(stops){
   async function siguiente(){
     if(i>=urls.length||!navigator.onLine)return;
     const url=urls[i++];
-    try{ await fetch(url,{mode:'no-cors'}); }catch(e){/* offline a mitad de camino: no pasa nada, sigue con lo que ya cacheÃ³ */}
+    try{ await fetch(url,{mode:'no-cors'}); }catch(e){/* offline a mitad de camino: no pasa nada, sigue con lo que ya cacheó */}
     return siguiente();
   }
   await Promise.all(Array.from({length:CONCURRENCIA},siguiente));
 }
-/* ---- Banner "sin conexiÃ³n" + registro del service worker ---- */
+/* ---- Banner "sin conexión" + registro del service worker ---- */
 function actualizarBannerOffline(){
   const b=$('offlineBanner'); if(!b)return;
   b.classList.toggle('show',!navigator.onLine);
@@ -2986,10 +3137,10 @@ if('serviceWorker' in navigator){
 actualizarBannerOffline();
 
 /* crea (o reutiliza) un mapa Leaflet dentro del contenedor indicado */
-/* el mapa siempre usa tiles claros (OSM estÃ¡ndar), sin importar el modo
-   oscuro/claro elegido por el usuario â€” a pedido explÃ­cito, no seguir el tema */
+/* el mapa siempre usa tiles claros (OSM estándar), sin importar el modo
+   oscuro/claro elegido por el usuario — a pedido explícito, no seguir el tema */
 function tileLayerConfig(){
-  return {url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains:'abc', attribution:'Â© OpenStreetMap'};
+  return {url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', subdomains:'abc', attribution:'© OpenStreetMap'};
 }
 function agregarTileLayer(map){
   const cfg=tileLayerConfig();
@@ -2999,19 +3150,19 @@ function makeMap(elId,center){
   const el=$(elId);
   if(!el) return null;
   if(typeof L==='undefined'){
-    el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:.82rem;color:var(--text-3);text-align:center;padding:16px">No se pudo cargar el mapa. RevisÃ¡ tu conexiÃ³n a internet.</div>';
+    el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:.82rem;color:var(--text-3);text-align:center;padding:16px">No se pudo cargar el mapa. Revisá tu conexión a internet.</div>';
     return null;
   }
   if(MAPS[elId]) return MAPS[elId];
   const map=L.map(elId,{zoomControl:true,attributionControl:true}).setView(center||CABA_CENTER,13);
-  // sin el prefijo "Leaflet" (que incluye la banderita) â†’ solo queda el crÃ©dito de OSM, sin recuadro
+  // sin el prefijo "Leaflet" (que incluye la banderita) → solo queda el crédito de OSM, sin recuadro
   if(map.attributionControl) map.attributionControl.setPrefix(false);
   const tileLayer=agregarTileLayer(map);
   MAPS[elId]={map, layer:L.featureGroup().addTo(map), userMarker:null, tileLayer};
   return MAPS[elId];
 }
 
-/* Ã­cono numerado de parada */
+/* ícono numerado de parada */
 function numberIcon(n,color){
   return L.divIcon({
     className:'route-pin',
@@ -3023,8 +3174,8 @@ function userIcon(){
   return L.divIcon({className:'user-pin',html:'<div class="up-dot"></div>',iconSize:[18,18],iconAnchor:[9,9]});
 }
 
-/* dibuja las paradas (pines numerados) y la LÃNEA DE RUTA con color.
-   La lÃ­nea recta se muestra SIEMPRE de entrada; si el ruteo por calles responde,
+/* dibuja las paradas (pines numerados) y la LÍNEA DE RUTA con color.
+   La línea recta se muestra SIEMPRE de entrada; si el ruteo por calles responde,
    se reemplaza por el camino real que sigue las calles (mismo estilo con color). */
 function drawStops(m,stops,opts){
   opts=opts||{};
@@ -3043,20 +3194,20 @@ function drawStops(m,stops,opts){
     coords.push([s.lng,s.lat]); // OSRM espera lng,lat
   });
   if(pts.length>1){
-    setRouteLine(m,pts);      // lÃ­nea de ruta con color, visible de inmediato
+    setRouteLine(m,pts);      // línea de ruta con color, visible de inmediato
     drawRoadRoute(m,coords);  // la refina siguiendo las calles cuando el ruteo responde
   }
   return pts;
 }
-/* dibuja/reemplaza la lÃ­nea de ruta (halo blanco + trazo verde) sobre un mapa */
+/* dibuja/reemplaza la línea de ruta (halo blanco + trazo verde) sobre un mapa */
 function setRouteLine(m,latlngs){
   if(m._routeHalo) m.layer.removeLayer(m._routeHalo);
   if(m._routeLine) m.layer.removeLayer(m._routeLine);
   m._routeHalo=L.polyline(latlngs,{color:'#ffffff',weight:8,opacity:.95,lineJoin:'round',lineCap:'round'}).addTo(m.layer);
   m._routeLine=L.polyline(latlngs,{color:'#00B359',weight:5,opacity:1,lineJoin:'round',lineCap:'round'}).addTo(m.layer);
-  // los pines viven en el markerPane (por encima del overlayPane), asÃ­ que quedan sobre la lÃ­nea
+  // los pines viven en el markerPane (por encima del overlayPane), así que quedan sobre la línea
 }
-/* pide la ruta a OSRM (OpenStreetMap, sin API key) y refina la lÃ­nea por calles */
+/* pide la ruta a OSRM (OpenStreetMap, sin API key) y refina la línea por calles */
 function drawRoadRoute(m,coords){
   if(coords.length<2 || typeof fetch!=='function') return;
   const token=(m._routeToken=(m._routeToken||0)+1);
@@ -3065,14 +3216,14 @@ function drawRoadRoute(m,coords){
   fetch(url)
     .then(r=>r.ok?r.json():Promise.reject(new Error('routing')))
     .then(data=>{
-      if(token!==m._routeToken) return; // llegÃ³ tarde: ya se re-dibujÃ³ el mapa
+      if(token!==m._routeToken) return; // llegó tarde: ya se re-dibujó el mapa
       const geo=data&&data.routes&&data.routes[0]&&data.routes[0].geometry;
       if(!geo||!geo.coordinates||!geo.coordinates.length) return;
       const latlngs=geo.coordinates.map(c=>[c[1],c[0]]); // a lat,lng
       setRouteLine(m,latlngs);                            // reemplaza la recta por el camino real
       if(m.map) m.map.fitBounds(latlngs,{padding:[42,42]});
     })
-    .catch(()=>{ /* sin conexiÃ³n / sin ruteo: queda la lÃ­nea recta con color */ });
+    .catch(()=>{ /* sin conexión / sin ruteo: queda la línea recta con color */ });
 }
 
 function renderRouteMap(){
@@ -3101,9 +3252,9 @@ function renderAddMap(){
   },90);
 }
 
-/* ---- UbicaciÃ³n en vivo ---- */
+/* ---- Ubicación en vivo ---- */
 const FOLLOW_ZOOM=17;
-let followMapId=null; // si estÃ¡ seteado, ese mapa recentra su vista en cada posiciÃ³n nueva (modo seguimiento)
+let followMapId=null; // si está seteado, ese mapa recentra su vista en cada posición nueva (modo seguimiento)
 function startGeo(){
   if(!navigator.geolocation || geoWatchId!=null) return;
   geoWatchId=navigator.geolocation.watchPosition(
@@ -3117,7 +3268,7 @@ function updateUserMarkers(){
   ['routeMap','addMap','fsmMapEl'].forEach(id=>{
     const m=MAPS[id]; if(!m) return;
     if(!m.userMarker){
-      m.userMarker=L.marker(lastKnownPos,{icon:userIcon(),zIndexOffset:1000}).addTo(m.map).bindPopup('EstÃ¡s acÃ¡');
+      m.userMarker=L.marker(lastKnownPos,{icon:userIcon(),zIndexOffset:1000}).addTo(m.map).bindPopup('Estás acá');
     }else{
       m.userMarker.setLatLng(lastKnownPos);
     }
@@ -3127,11 +3278,11 @@ function updateUserMarkers(){
 function centerOnMe(elId){
   const m=MAPS[elId]; if(!m) return;
   if(lastKnownPos){ m.map.setView(lastKnownPos,15); return; }
-  if(!navigator.geolocation){ toast('Tu dispositivo no permite geolocalizaciÃ³n','warn'); return; }
-  toast('Buscando tu ubicaciÃ³nâ€¦','info');
+  if(!navigator.geolocation){ toast('Tu dispositivo no permite geolocalización','warn'); return; }
+  toast('Buscando tu ubicación…','info');
   navigator.geolocation.getCurrentPosition(
     ({coords})=>{ lastKnownPos=[coords.latitude,coords.longitude]; updateUserMarkers(); m.map.setView(lastKnownPos,15); },
-    ()=>toast('No pudimos acceder a tu ubicaciÃ³n. RevisÃ¡ los permisos.','warn'),
+    ()=>toast('No pudimos acceder a tu ubicación. Revisá los permisos.','warn'),
     {enableHighAccuracy:true}
   );
 }
@@ -3141,13 +3292,13 @@ function mapsUrlFor(stops){
   const list=stops.filter(s=>s.lat!=null&&s.lng!=null);
   if(!list.length) return null;
   if(list.length===1){
-    // una sola parada: no hay "ruta" con la que comparar, se navega desde la ubicaciÃ³n actual
+    // una sola parada: no hay "ruta" con la que comparar, se navega desde la ubicación actual
     const s=list[0];
     return `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}&travelmode=driving`;
   }
-  // 2+ paradas: mismo origen/destino/intermedias que calcular_ruta_optima() usÃ³ en el backend
-  // (primera parada = origen, Ãºltima = destino), para que la distancia/tiempo que muestra Maps
-  // coincida con la que calculÃ³ la app. Si se omite el origen, Maps arranca desde la ubicaciÃ³n
+  // 2+ paradas: mismo origen/destino/intermedias que calcular_ruta_optima() usó en el backend
+  // (primera parada = origen, última = destino), para que la distancia/tiempo que muestra Maps
+  // coincida con la que calculó la app. Si se omite el origen, Maps arranca desde la ubicación
   // actual del dispositivo, que casi nunca es la primera parada de la ruta.
   const origin=list[0];
   const dest=list[list.length-1];
@@ -3156,14 +3307,14 @@ function mapsUrlFor(stops){
   return `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${dest.lat},${dest.lng}${wp}&travelmode=driving`;
 }
 /* ---- Pantalla completa (mapa grande dentro de la propia app, sin salir a Maps) ----
-   opts.followUser=true â†’ "modo seguimiento": arranca con zoom cercano sobre la posiciÃ³n
+   opts.followUser=true → "modo seguimiento": arranca con zoom cercano sobre la posición
    GPS del usuario (en vez de mostrar todas las paradas alejado) y lo sigue mientras se
    mueve. Usado desde "Mi ruta" del conductor, que es mobile-only (ver .fsm-mobile-only). */
 let fullscreenStops=[];
 function openFullscreenMap(stops,title,opts){
   opts=opts||{};
   const list=(stops||[]).filter(s=>s.lat!=null&&s.lng!=null);
-  if(!list.length){ toast('No hay paradas con ubicaciÃ³n para mostrar','warn'); return; }
+  if(!list.length){ toast('No hay paradas con ubicación para mostrar','warn'); return; }
   fullscreenStops=stops;
   $('fsmTitle').textContent=title||'Ruta';
   $('fullscreenMap').classList.add('show');
@@ -3179,12 +3330,12 @@ function openFullscreenMap(stops,title,opts){
         updateUserMarkers();
         m.map.setView(lastKnownPos,FOLLOW_ZOOM);
       }else{
-        // sin posiciÃ³n todavÃ­a (primer uso / permiso reciÃ©n concedido): vista provisoria
+        // sin posición todavía (primer uso / permiso recién concedido): vista provisoria
         // a las paradas hasta que watchPosition (ya arrancado por startGeo) traiga la primera
         if(pts.length) m.map.fitBounds(pts,{padding:[42,42],maxZoom:15});
         navigator.geolocation.getCurrentPosition(
           ({coords})=>{ lastKnownPos=[coords.latitude,coords.longitude]; updateUserMarkers(); m.map.setView(lastKnownPos,FOLLOW_ZOOM); },
-          ()=>toast('No pudimos acceder a tu ubicaciÃ³n. RevisÃ¡ los permisos.','warn'),
+          ()=>toast('No pudimos acceder a tu ubicación. Revisá los permisos.','warn'),
           {enableHighAccuracy:true}
         );
       }
@@ -3200,22 +3351,22 @@ function closeFullscreenMap(){
 }
 function navegarConGoogleMaps(){
   const url=mapsUrlFor(fullscreenStops);
-  if(!url){ toast('No hay paradas con ubicaciÃ³n para navegar','warn'); return; }
+  if(!url){ toast('No hay paradas con ubicación para navegar','warn'); return; }
   window.open(url,'_blank');
 }
 /* "Pantalla completa" del conductor en mobile: en vez de abrir el mapa in-app, va
-   directo a la navegaciÃ³n turn-by-turn real de Google Maps (con voz), que es lo
-   Ãºnico que existe gratis para esto en web â€” ver secciÃ³n 2 del handoff. */
+   directo a la navegación turn-by-turn real de Google Maps (con voz), que es lo
+   único que existe gratis para esto en web — ver sección 2 del handoff. */
 function iniciarNavegacionConductor(){
   const url=mapsUrlFor(driverStops);
-  if(!url){ toast('No hay paradas con ubicaciÃ³n para navegar','warn'); return; }
+  if(!url){ toast('No hay paradas con ubicación para navegar','warn'); return; }
   window.open(url,'_blank');
 }
 function navigateToStop(i){
   const s=driverStops[i];
-  if(!s||s.lat==null){ toast('Esta parada no tiene ubicaciÃ³n','warn'); return; }
+  if(!s||s.lat==null){ toast('Esta parada no tiene ubicación','warn'); return; }
   window.open(`https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}&travelmode=driving`,'_blank');
-  toast(`Abriendo navegaciÃ³n hacia ${s.name}â€¦`,'ok');
+  toast(`Abriendo navegación hacia ${s.name}…`,'ok');
 }
 
 /* ============================================================
@@ -3232,21 +3383,21 @@ function toast(msg,type='info'){
 }
 
 /* ============================================================
-   IMPREVISTOS Â· EL CONDUCTOR REPORTA â†’ NOTIFICA AL ADMIN
+   IMPREVISTOS · EL CONDUCTOR REPORTA → NOTIFICA AL ADMIN
    ============================================================ */
-const IMP_TYPES=['TrÃ¡fico / corte de calle','VehÃ­culo averiado','Cliente ausente','DirecciÃ³n incorrecta','Demora en entrega','Otro'];
+const IMP_TYPES=['Tráfico / corte de calle','Vehículo averiado','Cliente ausente','Dirección incorrecta','Demora en entrega','Otro'];
 function openImprevisto(){
   state.impType=null;
   const html=`
     <div class="sheet-grip"></div>
     <h3>Reportar imprevisto</h3>
-    <p class="sub">AvisÃ¡ al administrador quÃ© estÃ¡ pasando con tu ruta. Lo recibe al instante.</p>
+    <p class="sub">Avisá al administrador qué está pasando con tu ruta. Lo recibe al instante.</p>
     <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text-2);margin-bottom:10px">Tipo de imprevisto</label>
     <div class="imp-types">
       ${IMP_TYPES.map(t=>`<button class="imp-chip" onclick="selImpType(this,'${t.replace(/'/g,"\\'")}')">${t}</button>`).join('')}
     </div>
     <label for="impDetail" style="display:block;font-size:.82rem;font-weight:600;color:var(--text-2);margin-bottom:8px">Detalle (opcional)</label>
-    <textarea class="textarea" id="impDetail" placeholder="ContÃ¡ brevemente quÃ© pasÃ³â€¦"></textarea>
+    <textarea class="textarea" id="impDetail" placeholder="Contá brevemente qué pasó…"></textarea>
     <button class="btn btn-primary" style="margin-top:16px" id="btnSendImprevisto" onclick="sendImprevisto()"><i class="fa-solid fa-paper-plane"></i> Notificar al administrador</button>
     <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeSheet()">Cancelar</button>`;
   openSheet(html);
@@ -3257,10 +3408,10 @@ function selImpType(btn,t){
   btn.classList.add('sel');
 }
 async function sendImprevisto(){
-  if(!state.impType){toast('ElegÃ­ el tipo de imprevisto','warn');return;}
+  if(!state.impType){toast('Elegí el tipo de imprevisto','warn');return;}
   const detail=($('impDetail').value||'').trim();
   const btn=$('btnSendImprevisto');
-  iniciarCargaBoton(btn,'Enviandoâ€¦');
+  iniciarCargaBoton(btn,'Enviando…');
   const data=await apiPost('imprevisto_crear.php',{tipo:state.impType,detalle:detail});
   if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo enviar el imprevisto','warn');return;}
   closeSheet();
@@ -3268,7 +3419,7 @@ async function sendImprevisto(){
 }
 
 /* ============================================================
-   NOTIFICACIONES Â· ADMIN / JEFE VEN LOS IMPREVISTOS
+   NOTIFICACIONES · ADMIN / JEFE VEN LOS IMPREVISTOS
    ============================================================ */
 function unreadCount(){return state.incidents.filter(i=>!i.read).length;}
 function updateNotifBadges(){
@@ -3287,7 +3438,7 @@ async function openIncidents(){
   let reqSection='';
   if(isBoss && reqs.length){
     reqSection=`
-      <p class="section-title" style="margin:2px 0 10px">Solicitudes de contraseÃ±a</p>
+      <p class="section-title" style="margin:2px 0 10px">Solicitudes de contraseña</p>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
         ${reqs.map(r=>{
           const f=findWorker(r.user);
@@ -3295,8 +3446,8 @@ async function openIncidents(){
           return `<div class="incident unread">
             <div class="ic-ico" style="background:var(--brand)"><i class="fa-solid fa-key"></i></div>
             <div class="ic-info">
-              <div class="ic-type">${r.name} necesita una contraseÃ±a</div>
-              <div class="ic-detail">SolicitÃ³ al jefe una contraseÃ±a temporal para volver a ingresar.</div>
+              <div class="ic-type">${r.name} necesita una contraseña</div>
+              <div class="ic-detail">Solicitó al jefe una contraseña temporal para volver a ingresar.</div>
               <div class="ic-meta"><i class="fa-solid fa-at" style="font-size:.7rem"></i> ${r.user}<span class="dot"></span><i class="fa-solid fa-clock" style="font-size:.7rem"></i> ${r.time}</div>
             </div>
             <button class="btn-reset" style="align-self:center" ${act}><i class="fa-solid fa-key"></i> Restablecer</button>
@@ -3309,7 +3460,7 @@ async function openIncidents(){
     ? `<div class="empty" style="padding:30px 20px">
          <div class="e-ico"><i class="fa-solid fa-bell-slash"></i></div>
          <div class="e-t">Sin imprevistos</div>
-         <div class="e-s">Cuando un conductor reporte un imprevisto, lo vas a ver acÃ¡.</div>
+         <div class="e-s">Cuando un conductor reporte un imprevisto, lo vas a ver acá.</div>
        </div>`
     : items.map(i=>`
         <div class="incident ${i.read?'':'unread'}">
@@ -3319,13 +3470,13 @@ async function openIncidents(){
             <div class="ic-detail">${i.detail}</div>
             <div class="ic-meta"><i class="fa-solid fa-user" style="font-size:.7rem"></i> ${i.driver}<span class="dot"></span><i class="fa-solid fa-clock" style="font-size:.7rem"></i> ${i.time}<span class="dot"></span><i class="fa-solid fa-calendar-day" style="font-size:.7rem"></i> ${cap(dayName(i.day))}</div>
           </div>
-          ${i.read?'':`<button class="btn-ghost btn-sm" style="align-self:center;color:var(--brand);font-weight:700" onclick="marcarUnoLeido(${i.id},this)">LeÃ­do</button>`}
+          ${i.read?'':`<button class="btn-ghost btn-sm" style="align-self:center;color:var(--brand);font-weight:700" onclick="marcarUnoLeido(${i.id},this)">Leído</button>`}
         </div>`).join('');
   const html=`
     <div class="sheet-grip"></div>
     <div class="row-between" style="margin-bottom:4px">
       <h3 style="margin:0">${isBoss?'Notificaciones':'Imprevistos'}</h3>
-      ${items.length?`<button class="btn-ghost btn-sm" style="color:var(--brand);font-weight:700" id="btnMarkAllRead" onclick="markAllRead()">Marcar leÃ­dos</button>`:''}
+      ${items.length?`<button class="btn-ghost btn-sm" style="color:var(--brand);font-weight:700" id="btnMarkAllRead" onclick="markAllRead()">Marcar leídos</button>`:''}
     </div>
     <p class="sub" style="margin:6px 0 18px">${isBoss?'Solicitudes de acceso e imprevistos de los conductores.':'Reportes enviados por los conductores en tiempo real.'}</p>
     ${reqSection}
@@ -3336,11 +3487,11 @@ async function openIncidents(){
 }
 async function markAllRead(){
   const btn=$('btnMarkAllRead');
-  iniciarCargaBoton(btn,'Marcandoâ€¦');
+  iniciarCargaBoton(btn,'Marcando…');
   const data=await apiPost('imprevisto_marcar_leidos.php',{});
   if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo actualizar','warn');return;}
   await openIncidents();
-  toast('Imprevistos marcados como leÃ­dos','info');
+  toast('Imprevistos marcados como leídos','info');
 }
 async function marcarUnoLeido(id,btn){
   iniciarCargaBoton(btn,'');
@@ -3350,12 +3501,12 @@ async function marcarUnoLeido(id,btn){
 }
 
 /* ============================================================
-   JEFE Â· PANEL GENERAL
+   JEFE · PANEL GENERAL
    ============================================================ */
 function initials(name){return name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();}
-/* Cuenta puntos reales por dÃ­a de la semana actual: primero mira si hay una
+/* Cuenta puntos reales por día de la semana actual: primero mira si hay una
    ruta ya publicada en el backend para esa fecha (paradas_total), y si no,
-   cae al borrador local del cliente (state.published) â€” mismo patrÃ³n que
+   cae al borrador local del cliente (state.published) — mismo patrón que
    renderDashboard() del admin, que lee el backend en vez de solo el borrador. */
 async function contarPuntosPorDia(){
   const resultados=await Promise.all(DAY_DEFS.map(async d=>{
@@ -3379,7 +3530,7 @@ async function renderBossDash(){
 
   const token=(state._bossDashToken=(state._bossDashToken||0)+1);
   const counts=await contarPuntosPorDia();
-  if(token!==state._bossDashToken)return; // el jefe navegÃ³ a otra pantalla mientras esperÃ¡bamos
+  if(token!==state._bossDashToken)return; // el jefe navegó a otra pantalla mientras esperábamos
 
   $('bPoints').textContent=counts.reduce((a,n)=>a+n,0);
   const max=Math.max(1,...counts);
@@ -3394,7 +3545,7 @@ async function renderBossDash(){
 }
 
 /* ============================================================
-   JEFE Â· GESTIÃ“N DE USUARIOS Y ROLES (control total)
+   JEFE · GESTIÓN DE USUARIOS Y ROLES (control total)
    ============================================================ */
 function allUsers(){
   return [
@@ -3416,14 +3567,14 @@ function userPreviewHTML(u,kind){
     </div>
   </div>`;
 }
-/* tarjeta de la cuenta compartida de AdministraciÃ³n (sin eliminar, sin cambio de rol) */
+/* tarjeta de la cuenta compartida de Administración (sin eliminar, sin cambio de rol) */
 function ventasCardHTML(u){
   return `<div class="admin-row">
     <div class="ar-av" style="background:var(--brand-medium);color:var(--brand-dark)"><i class="fa-solid fa-shield-halved"></i></div>
     <div class="ar-info">
       <div class="ar-name">${u.name} <span class="status-pill role-admin">Compartida</span></div>
       <div class="ar-mail"><i class="fa-solid fa-at" style="font-size:.72rem"></i> ${userOf(u)}</div>
-      <div class="worker-meta"><i class="fa-solid fa-users" style="font-size:.7rem;color:var(--brand)"></i> La usa todo el equipo de administraciÃ³n</div>
+      <div class="worker-meta"><i class="fa-solid fa-users" style="font-size:.7rem;color:var(--brand)"></i> La usa todo el equipo de administración</div>
     </div>
     <div class="ar-acts">
       <button class="icon-btn" onclick="openAdminForm('admin',0)" aria-label="Editar" title="Editar"><i class="fa-solid fa-pen"></i></button>
@@ -3446,13 +3597,13 @@ function expedicionRowHTML(u,idx){
 }
 function renderBossAdmins(){
   const nd=state.drivers.length;
-  $('bossAdminsSub').textContent=`1 cuenta de administraciÃ³n Â· ${nd} conductor${nd!==1?'es':''}`;
+  $('bossAdminsSub').textContent=`1 cuenta de administración · ${nd} conductor${nd!==1?'es':''}`;
   $('bossVentasCard').innerHTML=state.admins.length?ventasCardHTML(state.admins[0]):'';
   if(nd===0){
     $('bossAdminList').innerHTML=`<div class="empty" style="padding:26px 20px">
       <div class="e-ico"><i class="fa-solid fa-user-slash"></i></div>
       <div class="e-t">Sin conductores</div>
-      <div class="e-s">TocÃ¡ â€œAgregarâ€ para cargar la cuenta de un trabajador de reparto.</div>
+      <div class="e-s">Tocá “Agregar” para cargar la cuenta de un trabajador de reparto.</div>
     </div>`;
     return;
   }
@@ -3462,12 +3613,12 @@ function openAdminForm(kind,idx){
   const isVentas = kind==='admin';
   const editing = (kind==='admin'||kind==='driver') && typeof idx==='number';
   const a = editing ? (kind==='admin'?state.admins:state.drivers)[idx] : {name:'',zone:'',user:''};
-  const title = isVentas ? 'Editar cuenta de AdministraciÃ³n'
+  const title = isVentas ? 'Editar cuenta de Administración'
               : (editing ? 'Editar conductor' : 'Nuevo conductor');
   const sub = isVentas
-    ? 'Cuenta compartida por todo el equipo de administraciÃ³n. ActualizÃ¡ el nombre o el usuario.'
-    : (editing ? 'ActualizÃ¡ los datos de este trabajador de reparto.'
-               : 'CargÃ¡ la cuenta de un conductor (trabajador de reparto).');
+    ? 'Cuenta compartida por todo el equipo de administración. Actualizá el nombre o el usuario.'
+    : (editing ? 'Actualizá los datos de este trabajador de reparto.'
+               : 'Cargá la cuenta de un conductor (trabajador de reparto).');
   const zoneField = isVentas ? '' : `
     <div class="field">
       <label>Zona asignada</label>
@@ -3481,7 +3632,7 @@ function openAdminForm(kind,idx){
     <div class="field">
       <label>${isVentas?'Nombre de la cuenta':'Nombre y apellido'}</label>
       <div class="input-wrap"><i class="fa-solid fa-user lead"></i>
-        <input class="input" id="admName" value="${(a.name||'').replace(/"/g,'&quot;')}" placeholder="${isVentas?'Equipo de AdministraciÃ³n':'Nombre completo'}"></div>
+        <input class="input" id="admName" value="${(a.name||'').replace(/"/g,'&quot;')}" placeholder="${isVentas?'Equipo de Administración':'Nombre completo'}"></div>
     </div>
     <div class="field">
       <label>Usuario</label>
@@ -3497,16 +3648,16 @@ async function saveUser(kind,idx){
   const name=$('admName').value.trim();
   const user=($('admUser')?$('admUser').value:'').trim();
   const zoneEl=$('admZone'); const zone=zoneEl?zoneEl.value.trim():'';
-  if(!name||!user){toast('CompletÃ¡ nombre y usuario','warn');return;}
+  if(!name||!user){toast('Completá nombre y usuario','warn');return;}
   const editing=(kind==='admin'||kind==='driver')&&typeof idx==='number';
   const btn=$('btnSaveUser');
-  iniciarCargaBoton(btn,editing?'Guardandoâ€¦':'Agregandoâ€¦');
+  iniciarCargaBoton(btn,editing?'Guardando…':'Agregando…');
   if(editing){
     const rec=(kind==='admin'?state.admins:state.drivers)[idx]; if(!rec||!rec.id){terminarCargaBoton(btn);return;}
     const data=await apiPost('usuarios_guardar.php',{id:rec.id, usuario:user, nombre:name, zona:zone});
     if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo guardar','warn');return;}
     await cargarUsuarios();
-    toast(kind==='admin'?'Cuenta de AdministraciÃ³n actualizada':'Conductor actualizado','ok');
+    toast(kind==='admin'?'Cuenta de Administración actualizada':'Conductor actualizado','ok');
   }else{
     const data=await apiPost('usuarios_guardar.php',{usuario:user, nombre:name, zona:zone});
     if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo crear el usuario','warn');return;}
@@ -3527,20 +3678,20 @@ async function saveUser(kind,idx){
   if(state.currentScreen==='bossPasswords')renderBossPasswords();
 }
 function deleteUser(kind,idx){
-  if(kind==='admin'){toast('La cuenta de AdministraciÃ³n es compartida y no se puede eliminar','info');return;}
+  if(kind==='admin'){toast('La cuenta de Administración es compartida y no se puede eliminar','info');return;}
   const u=(kind==='admin'?state.admins:state.drivers)[idx]; if(!u)return;
   const html=`
     <div class="sheet-grip"></div>
     <h3>Eliminar usuario</h3>
-    <p class="sub">Â¿Seguro que querÃ©s eliminar a <b>${u.name}</b> de Conductores? Esta acciÃ³n no se puede deshacer.</p>
-    <button class="btn btn-primary" style="background:var(--danger);box-shadow:none;margin-top:4px" id="btnConfirmDeleteUser" onclick="confirmDeleteUser('${kind}',${idx})"><i class="fa-solid fa-trash-can"></i> SÃ­, eliminar</button>
+    <p class="sub">¿Seguro que querés eliminar a <b>${u.name}</b> de Conductores? Esta acción no se puede deshacer.</p>
+    <button class="btn btn-primary" style="background:var(--danger);box-shadow:none;margin-top:4px" id="btnConfirmDeleteUser" onclick="confirmDeleteUser('${kind}',${idx})"><i class="fa-solid fa-trash-can"></i> Sí, eliminar</button>
     <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeSheet()">Cancelar</button>`;
   openSheet(html);
 }
 async function confirmDeleteUser(kind,idx){
   if(kind==='admin'){closeSheet();return;}
   const u=state.drivers[idx]; if(!u||!u.id){closeSheet();return;}
-  iniciarCargaBoton($('btnConfirmDeleteUser'),'Eliminandoâ€¦');
+  iniciarCargaBoton($('btnConfirmDeleteUser'),'Eliminando…');
   const data=await apiPost('usuarios_eliminar.php',{id:u.id});
   if(!data.ok){toast(data.error||'No se pudo eliminar','warn');closeSheet();return;}
   await cargarUsuarios();
@@ -3551,7 +3702,7 @@ async function confirmDeleteUser(kind,idx){
 }
 
 /* ============================================================
-   JEFE Â· CONTRASEÃ‘AS DE TRABAJADORES
+   JEFE · CONTRASEÑAS DE TRABAJADORES
    ============================================================ */
 function listFor(kind){return kind==='admin'?state.admins:state.drivers;}
 function userOf(w){return w.user || (w.mail?w.mail.split('@')[0]:w.name.toLowerCase().split(/\s+/)[0]);}
@@ -3569,7 +3720,7 @@ function workerRowHTML(w,kind,idx){
     pill='<span class="status-pill temp">Temporal</span>';
     middle=`<div class="worker-meta">
       <span class="pwd-chip"><i class="fa-solid fa-key"></i> <code>${w.tempPwd}</code></span>
-      <button class="pwd-copy" onclick="copyText('${w.tempPwd}')" aria-label="Copiar" title="Copiar contraseÃ±a"><i class="fa-solid fa-copy"></i></button>
+      <button class="pwd-copy" onclick="copyText('${w.tempPwd}')" aria-label="Copiar" title="Copiar contraseña"><i class="fa-solid fa-copy"></i></button>
       ${w.lastReset?`<span class="dot"></span> ${w.lastReset}`:''}
     </div>`;
   }else{
@@ -3590,7 +3741,7 @@ function workerRowHTML(w,kind,idx){
 }
 function renderBossPasswords(){
   const total=state.admins.length+state.drivers.length;
-  $('bossPwdSub').textContent=`AdministraciÃ³n (compartida) Â· ${state.drivers.length} conductor${state.drivers.length!==1?'es':''}`;
+  $('bossPwdSub').textContent=`Administración (compartida) · ${state.drivers.length} conductor${state.drivers.length!==1?'es':''}`;
 
   const reqWrap=$('pwdRequests');
   if(state.pwdRequests.length){
@@ -3605,7 +3756,7 @@ function renderBossPasswords(){
           <div class="ar-info">
             <div class="ar-name">${r.name}</div>
             <div class="ar-mail"><i class="fa-solid fa-at" style="font-size:.72rem"></i> ${r.user}</div>
-            <div class="worker-meta">SolicitÃ³ una contraseÃ±a temporal <span class="dot"></span> ${r.time}</div>
+            <div class="worker-meta">Solicitó una contraseña temporal <span class="dot"></span> ${r.time}</div>
           </div>
           <div class="ar-acts"><button class="btn-reset" ${act}><i class="fa-solid fa-key"></i> Restablecer</button></div>
         </div>`;
@@ -3625,19 +3776,19 @@ function openPwdReset(kind,idx){
   const reReset=!!w.tempPwd;
   const html=`
     <div class="sheet-grip"></div>
-    <h3>Restablecer contraseÃ±a</h3>
-    <p class="sub">${w.name} Â· usuario <b>${u}</b></p>
-    ${reReset?'<p class="sub" style="margin-top:-4px;color:#9a6312"><i class="fa-solid fa-triangle-exclamation"></i> Este trabajador ya tiene una contraseÃ±a temporal activa.</p>':''}
-    <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text-2);margin-bottom:8px">ContraseÃ±a temporal</label>
+    <h3>Restablecer contraseña</h3>
+    <p class="sub">${w.name} · usuario <b>${u}</b></p>
+    ${reReset?'<p class="sub" style="margin-top:-4px;color:#9a6312"><i class="fa-solid fa-triangle-exclamation"></i> Este trabajador ya tiene una contraseña temporal activa.</p>':''}
+    <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text-2);margin-bottom:8px">Contraseña temporal</label>
     <div class="pwd-box">
       <code id="pwdValue" contenteditable="true" spellcheck="false">${initial}</code>
       <button class="icon-btn" onclick="copyText(document.getElementById('pwdValue').textContent.trim())" aria-label="Copiar" title="Copiar"><i class="fa-solid fa-copy"></i></button>
       <button class="icon-btn" onclick="regenPwd()" aria-label="Generar otra" title="Generar otra"><i class="fa-solid fa-rotate"></i></button>
     </div>
-    <p style="font-size:.78rem;color:var(--text-3);margin:0 0 16px">PodÃ©s editarla escribiendo sobre el recuadro, copiarla o generar otra.</p>
+    <p style="font-size:.78rem;color:var(--text-3);margin:0 0 16px">Podés editarla escribiendo sobre el recuadro, copiarla o generar otra.</p>
     <div class="menu-item no-hover" style="border-radius:var(--r-md);padding:11px 13px;margin-bottom:16px">
       <div class="mi-ico"><i class="fa-solid fa-arrows-rotate"></i></div>
-      <div class="mi-label" style="font-size:.88rem">Pedir cambio al iniciar sesiÃ³n</div>
+      <div class="mi-label" style="font-size:.88rem">Pedir cambio al iniciar sesión</div>
       <label class="switch"><input type="checkbox" id="pwdMustChange" checked><span class="track"></span><span class="thumb"></span></label>
     </div>
     <button class="btn btn-primary" id="btnConfirmPwdReset" onclick="confirmPwdReset('${kind}',${idx})"><i class="fa-solid fa-shield-halved"></i> Confirmar restablecimiento</button>
@@ -3650,21 +3801,21 @@ function regenPwd(){
 async function confirmPwdReset(kind,idx){
   const el=document.getElementById('pwdValue');
   const pwd=(el?el.textContent:'').trim();
-  if(pwd.length<4){toast('La contraseÃ±a debe tener al menos 4 caracteres','warn');return;}
+  if(pwd.length<4){toast('La contraseña debe tener al menos 4 caracteres','warn');return;}
   const w=listFor(kind)[idx]; if(!w||!w.id)return;
   const debe=document.getElementById('pwdMustChange').checked?1:0;
   const btn=$('btnConfirmPwdReset');
-  iniciarCargaBoton(btn,'Restableciendoâ€¦');
+  iniciarCargaBoton(btn,'Restableciendo…');
   const data=await apiPost('password_restablecer.php',{id:w.id, password:pwd, debe_cambiar:debe});
   if(!data.ok){terminarCargaBoton(btn);toast(data.error||'No se pudo restablecer','warn');return;}
   await cargarDatosJefe();
   updateNotifBadges();
   closeSheet();
   renderBossPasswords();
-  toast(`ContraseÃ±a de ${w.name} restablecida`,'ok');
+  toast(`Contraseña de ${w.name} restablecida`,'ok');
 }
 function copyText(t){
-  const ok=()=>toast('ContraseÃ±a copiada','ok');
+  const ok=()=>toast('Contraseña copiada','ok');
   try{
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(t).then(ok).catch(()=>fallbackCopy(t,ok));
@@ -3675,7 +3826,7 @@ function fallbackCopy(t,cb){
   const ta=document.createElement('textarea');
   ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; ta.style.pointerEvents='none';
   document.body.appendChild(ta); ta.focus(); ta.select();
-  try{document.execCommand('copy'); cb&&cb();}catch(e){toast('CopiÃ¡ la contraseÃ±a manualmente','info');}
+  try{document.execCommand('copy'); cb&&cb();}catch(e){toast('Copiá la contraseña manualmente','info');}
   document.body.removeChild(ta);
 }
 
@@ -3692,13 +3843,13 @@ document.addEventListener('click',e=>{
   r.style.top=(e.clientY-rect.top-size/2)+'px';
   b.appendChild(r);setTimeout(()=>r.remove(),600);
 });
-/* Enter envÃ­a login */
+/* Enter envía login */
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&state.currentScreen==='login')doLogin();
 });
 
 /* ============================================================
-   ARRANQUE Â· SPLASH  (con restauraciÃ³n de sesiÃ³n desde el backend)
+   ARRANQUE · SPLASH  (con restauración de sesión desde el backend)
    ============================================================ */
 async function restaurarSesion(){
   const data=await apiGet('sesion.php');
@@ -3712,8 +3863,8 @@ async function restaurarSesion(){
   return true;
 }
 /* la caja de "usuarios de prueba" del login solo se muestra si el backend
-   confirma que este entorno es de demo (.env: APP_DEMO=true) â€” asÃ­ no queda
-   siempre visible si esto se despliega en algo mÃ¡s parecido a producciÃ³n */
+   confirma que este entorno es de demo (.env: APP_DEMO=true) — así no queda
+   siempre visible si esto se despliega en algo más parecido a producción */
 (async function mostrarCredsDemoSiCorresponde(){
   try{
     const data=await apiGet('config_publico.php');
@@ -3726,7 +3877,7 @@ async function restaurarSesion(){
   const t=setInterval(async ()=>{
     p+=Math.random()*16+8;
     if(p>=100){p=100;bar.style.width='100%';clearInterval(t);
-      // si hay sesiÃ³n activa, entra directo; si no, muestra el login
+      // si hay sesión activa, entra directo; si no, muestra el login
       const yaLogueado=await restaurarSesion();
       if(!yaLogueado) setTimeout(()=>showScreen('login'),420);
     }else bar.style.width=p+'%';
