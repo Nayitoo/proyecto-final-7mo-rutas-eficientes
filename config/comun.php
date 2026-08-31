@@ -66,6 +66,16 @@ function requiere_rol(array $roles): array {
     if (!in_array($u['rol'], $roles, true)) error('No tenés permiso para esta acción.', 403);
     return $u;
 }
+/* Libera el lock de sesión (PHP lo mantiene tomado hasta que el script termina).
+ * Llamar apenas termina de leerse todo lo que hace falta de $_SESSION, en endpoints
+ * de solo lectura que después hacen algo lento (ej. una llamada a una API externa) —
+ * si no, cualquier otro request de la misma sesión de navegador (otra pestaña, un
+ * polling en segundo plano, la tecla siguiente en un autocompletado) queda esperando
+ * en cola en vez de poder correr en paralelo. No usar en un endpoint que todavía
+ * necesite escribir en $_SESSION después de llamarla. */
+function liberar_sesion(): void {
+    if (session_status() === PHP_SESSION_ACTIVE) session_write_close();
+}
 
 /* ---- Utilidades ---- */
 function generar_password_temporal(): string {

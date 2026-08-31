@@ -6,6 +6,7 @@
 require_once __DIR__ . '/../config/comun.php';
 require_once __DIR__ . '/../config/google_routes.php';
 requiere_rol(['jefe', 'administrador']);
+liberar_sesion(); // no hace falta la sesión durante la llamada (lenta) a Google — ver comun.php
 
 $q = trim((string)($_GET['q'] ?? ''));
 if ($q === '') responder(['ok' => true, 'sugerencias' => []]);

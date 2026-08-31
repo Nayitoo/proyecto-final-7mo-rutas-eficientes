@@ -4,6 +4,7 @@
 require_once __DIR__ . '/../config/comun.php';
 require_once __DIR__ . '/../config/google_routes.php';
 requiere_rol(['jefe', 'administrador']);
+liberar_sesion(); // no hace falta la sesión durante la llamada (lenta) a Google — ver comun.php
 
 $placeId = trim((string)($_GET['placeId'] ?? ''));
 if ($placeId === '') error('Falta el placeId.');
