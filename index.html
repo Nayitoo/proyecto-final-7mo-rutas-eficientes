@@ -1594,8 +1594,8 @@ const todayKey=JS_TO_KEY[today.getDay()];
 /* fecha real (AAAA-MM-DD) de la semana actual para un día del selector,
    para poder guardar/consultar rutas contra el backend por fecha */
 function fechaParaDia(key){
-  if(key==='custom')return state.customFecha; // fecha elegida a mano en el calendario (pedido 2026-08-26), fuera de la semana actual
   const idx=DAY_DEFS.findIndex(d=>d.key===key);
+  if(idx===-1)return key; // clave de un día programado a futuro: la clave YA es la fecha AAAA-MM-DD
   const d=new Date(today);
   d.setDate(d.getDate()-((d.getDay()+6)%7)+idx); // lunes de esta semana + offset
   return d.toISOString().slice(0,10);
@@ -1605,7 +1605,7 @@ const state={
   theme:'light',
   role:null,
   selectedDay:todayKey,
-  customFecha:null, // fecha AAAA-MM-DD elegida con el calendario de "programar a futuro", cuando selectedDay==='custom'
+  customDays:[], // fechas AAAA-MM-DD programadas a futuro (cada una es su propia clave en `published`, además de lun..sab) — pueden ser varias a la vez, sin pisarse entre sí
   addPointTab:'nueva', // tab activa en "Agregar punto": 'nueva' o 'guardado'
   published:{lun:[],mar:[],mie:[],jue:[],vie:[],sab:[]},
   puntosGuardados:[],
@@ -1657,8 +1657,10 @@ function incidentsForDay(day){return state.incidents.filter(i=>i.day===day);}
 function incidentVisible(i){return !i.read || i.day===todayKey;}
 function visibleIncidents(){return state.incidents.filter(incidentVisible);}
 function dayName(key){
-  if(key==='custom')return state.customFecha?cap(new Date(state.customFecha+'T00:00:00').toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'})):'día programado';
-  const d=DAY_DEFS.find(x=>x.key===key);return d?d.full:key;
+  const d=DAY_DEFS.find(x=>x.key===key);
+  if(d)return d.full;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(key))return cap(new Date(key+'T00:00:00').toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'}));
+  return key;
 }
 function $(id){return document.getElementById(id);}
 
@@ -1759,7 +1761,7 @@ function aplicarUsuarioSesion(u){
 function primerNombre(nombre){return (nombre||'').trim().split(/\s+/)[0]||'';}
 function saludoNombre(){
   if(!sessionUser)return'Jefe';
-  return sessionUser.rol==='administrador' ? 'Administración' : primerNombre(sessionUser.nombre);
+  return primerNombre(sessionUser.nombre);
 }
 function actualizarEncabezadoPerfil(){
   const u=USERS[state.role]; if(!u)return;
@@ -2413,24 +2415,30 @@ async function renderDashboard(){
 }
 function renderDayStrip(){
   const strip=$('dayStrip');
-  const customActive=state.selectedDay==='custom';
-  const customHas=customActive&&(state.published.custom||[]).length>0;
-  const customLabel=customActive&&state.customFecha
-    ?cap(new Date(state.customFecha+'T00:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'short'}))
-    :'Elegir';
-  strip.innerHTML=DAY_DEFS.map(d=>{
+  const weekPills=DAY_DEFS.map(d=>{
     const has=state.published[d.key].length>0;
     return `<button class="day-pill ripple ${d.key===state.selectedDay?'active':''}" onclick="selectDay('${d.key}')">
       ${has?'<span class="d-dot"></span>':''}
       <div class="d-name">${d.name}</div>
       <div class="d-num"><i class="fa-solid fa-calendar-day" style="font-size:.85rem"></i></div>
     </button>`;
-  }).join('')+
-    `<button class="day-pill ripple ${customActive?'active':''}" onclick="abrirCalendarioFuturo()" title="Programar una ruta a futuro">
-      ${customHas?'<span class="d-dot"></span>':''}
-      <div class="d-name">${customLabel}</div>
+  }).join('');
+  // cada día programado a futuro queda como su propia pill fija (no se pisan entre sí)
+  const customPills=state.customDays.map(fecha=>{
+    const has=(state.published[fecha]||[]).length>0;
+    const label=cap(new Date(fecha+'T00:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'short'}));
+    return `<button class="day-pill ripple ${fecha===state.selectedDay?'active':''}" onclick="selectDay('${fecha}')">
+      ${has?'<span class="d-dot"></span>':''}
+      <div class="d-name">${label}</div>
+      <div class="d-num"><i class="fa-solid fa-calendar-day" style="font-size:.85rem"></i></div>
+    </button>`;
+  }).join('');
+  // ícono aparte, siempre al final, solo para AGREGAR un día nuevo (no representa ningún día seleccionado)
+  const addPill=`<button class="day-pill ripple" onclick="abrirCalendarioFuturo()" title="Programar una ruta a futuro">
+      <div class="d-name">+</div>
       <div class="d-num"><i class="fa-solid fa-calendar-plus" style="font-size:.85rem"></i></div>
     </button>`;
+  strip.innerHTML=weekPills+customPills+addPill;
 }
 function selectDay(key){state.selectedDay=key;renderDashboard();}
 /* "programar a futuro": deja elegir cualquier fecha desde mañana en adelante, no
@@ -2441,15 +2449,27 @@ function abrirCalendarioFuturo(){
   const min=new Date(today);
   min.setDate(min.getDate()+1);
   inp.min=min.toISOString().slice(0,10);
-  if(state.customFecha)inp.value=state.customFecha;
+  inp.value='';
   if(inp.showPicker){try{inp.showPicker();return;}catch(e){}}
   inp.click();
 }
+/* agrega (o selecciona, si ya existía) un día programado a futuro — nunca pisa uno
+   que ya estaba: si la fecha elegida coincide con un día lun-sáb de la semana actual,
+   redirige a esa pill en vez de crear un duplicado que se superponga. */
 function seleccionarDiaFuturo(fechaStr){
   if(!fechaStr)return;
-  state.selectedDay='custom';
-  state.customFecha=fechaStr;
-  if(!state.published.custom)state.published.custom=[];
+  const idxSemana=DAY_DEFS.findIndex(d=>fechaParaDia(d.key)===fechaStr);
+  if(idxSemana!==-1){
+    toast(`Esa fecha ya es el ${DAY_DEFS[idxSemana].full} de esta semana — seleccionalo ahí.`,'info');
+    selectDay(DAY_DEFS[idxSemana].key);
+    return;
+  }
+  if(!state.customDays.includes(fechaStr)){
+    state.customDays.push(fechaStr);
+    state.customDays.sort();
+  }
+  if(!state.published[fechaStr])state.published[fechaStr]=[];
+  state.selectedDay=fechaStr;
   renderDashboard();
 }
 
