@@ -76,6 +76,12 @@
 
   --device-h:880px;
   --ease:cubic-bezier(.22,.61,.36,1);
+
+  /* gris del botón primario deshabilitado — no se usa --surface-3 (#f0f1ee)
+     porque contra el fondo claro (#f4f5f2) queda casi blanco y no se nota */
+  --btn-off-bg:#d8dad4;
+  --btn-off-text:#77786f;
+  --btn-off-border:rgba(17,17,16,.10);
 }
 [data-theme="dark"]{
   --bg:#161714;
@@ -92,6 +98,10 @@
   --map-street:#34372f;
   --map-block:#2b2e28;
   --map-block-2:#313529;
+
+  --btn-off-bg:#3a3b36;
+  --btn-off-text:#8e8f86;
+  --btn-off-border:rgba(255,255,255,.10);
 
   --danger:#ff6369;
   --danger-soft:#3a1f20;
@@ -161,8 +171,17 @@ input{font-family:inherit}
   background:var(--glass-bg);
   backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
   border-right:1px solid var(--glass-border);position:relative;overflow:hidden;
+  transition:width .22s var(--ease),padding .22s var(--ease);
 }
 .sb-brand{display:flex;align-items:center;gap:11px;padding:6px 8px 26px;position:relative;z-index:1}
+/* botón para minimizar/expandir el menú lateral */
+.sb-toggle{
+  width:32px;height:32px;border-radius:10px;flex:none;margin-left:auto;
+  display:grid;place-items:center;font-size:.8rem;color:var(--text-2);
+  background:var(--glass-bg-strong);border:1px solid var(--glass-border);
+  transition:.18s var(--ease);
+}
+.sb-toggle:hover{color:var(--brand);border-color:var(--brand)}
 .sb-brand .sb-logo{width:42px;height:42px;border-radius:var(--r-sm);background:var(--brand-grad);display:grid;place-items:center;box-shadow:var(--sh-brand)}
 .sb-brand .sb-logo i{color:#fff;font-size:1.15rem}
 .sb-brand .sb-name{font-weight:800;font-size:1.15rem;letter-spacing:-.02em;color:var(--text)}
@@ -264,7 +283,11 @@ button:disabled{opacity:.6;cursor:not-allowed}
 }
 .btn-primary:hover{transform:translateY(-1px)}
 .btn-primary:active{transform:scale(.975)}
-.btn-primary:disabled{background:var(--surface-3);color:var(--text-3);box-shadow:none;cursor:not-allowed}
+.btn-primary:disabled{
+  background:var(--btn-off-bg);color:var(--btn-off-text);
+  border:1px solid var(--btn-off-border);box-shadow:none;cursor:not-allowed;
+  opacity:1; /* anula el opacity:.6 global, que contra el fondo claro vuelve a lavar el gris */
+}
 .btn-primary:disabled::before{display:none}
 .btn-primary:disabled:hover{transform:none}
 .btn-secondary{background:var(--glass-bg-strong);color:var(--text);border:1px solid var(--glass-border);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
@@ -544,6 +567,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .draft-item .di-rm:hover{background:var(--danger-soft)}
 
 .publish-bar{padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--border)}
+
+/* fila de dos acciones lado a lado ("Agregar a la ruta" + "Calcular ruta óptima") */
+.action-row{display:flex;gap:12px;align-items:stretch}
+.action-row .btn{flex:1;min-width:0}
+@media(max-width:520px){
+  .action-row{flex-direction:column}
+}
 
 /* ============================================================
    HERO CONDUCTOR
@@ -889,6 +919,23 @@ button:disabled{opacity:.6;cursor:not-allowed}
   }
   .sidebar{width:264px}
   .page.logged-in .sidebar{display:flex}
+
+  /* ---------- menú lateral minimizado (solo iconos) ----------
+     vive acá adentro para ganarle en la cascada a .sidebar{width:264px} */
+  .page.sb-collapsed .sidebar{width:78px;padding-left:12px;padding-right:12px}
+  .page.sb-collapsed .sb-brand{padding:6px 0 26px;justify-content:center}
+  .page.sb-collapsed .sb-brand .brand-logo{display:none}
+  .page.sb-collapsed .sb-toggle{margin-left:0}
+  .page.sb-collapsed .sb-link{justify-content:center;padding:12px 0;gap:0}
+  .page.sb-collapsed .sb-lbl{display:none}
+  .page.sb-collapsed .sb-theme{justify-content:center;padding:6px 0 14px}
+  .page.sb-collapsed .sb-theme > span{display:none}
+  .page.sb-collapsed .sb-user{justify-content:center;padding:8px;gap:0}
+  .page.sb-collapsed .sb-uinfo{display:none}
+  /* el avatar tiene 38px por atributo inline: lo achicamos para que entre en los 78px */
+  .page.sb-collapsed .sb-user .avatar{width:34px!important;height:34px!important}
+  .page.sb-collapsed .sb-foot .btn{padding:11px 0;gap:0}
+  .page.sb-collapsed .sb-foot .btn .sb-lbl{display:none}
   .app-shell{
     position:relative;flex:1;min-width:0;height:100%;min-height:0;
     border-radius:0;box-shadow:none;border:none;overflow:hidden;
@@ -921,6 +968,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
   <aside class="sidebar" id="sidebar">
     <div class="sb-brand">
       <div class="brand-logo" role="img" aria-label="aprilon" style="width:107px;height:34px"></div>
+      <button class="sb-toggle" id="btnSidebarToggle" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" title="Minimizar menú" aria-label="Minimizar menú"><i class="fa-solid fa-angles-left"></i></button>
     </div>
     <nav class="sb-nav" id="sbNav"></nav>
     <div class="sb-foot">
@@ -935,7 +983,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
           <div class="sb-urole" id="sbRole">—</div>
         </div>
       </div>
-      <button class="btn btn-secondary btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+      <button class="btn btn-secondary btn-danger" onclick="logout()" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i> <span class="sb-lbl">Cerrar sesión</span></button>
     </div>
   </aside>
 
@@ -1123,9 +1171,14 @@ button:disabled{opacity:.6;cursor:not-allowed}
         <div class="input-wrap"><i class="fa-solid fa-envelope lead"></i>
           <input class="input" id="emailVerifInput" type="email" placeholder="Email del dueño/encargado del negocio" autocomplete="off"></div>
       </div>
-      <button class="btn btn-primary" id="btnAgregarPunto" onclick="onAgregarPuntoClick()">
-        <i class="fa-solid fa-plus"></i> Agregar a la ruta
-      </button>
+      <div class="action-row">
+        <button class="btn btn-primary" id="btnAgregarPunto" onclick="onAgregarPuntoClick()">
+          <i class="fa-solid fa-plus"></i> Agregar a la ruta
+        </button>
+        <button class="btn btn-primary" id="btnCalcularRuta" onclick="onCalcularRuta()" disabled>
+          <i class="fa-solid fa-route"></i> Calcular ruta óptima
+        </button>
+      </div>
 
       <div style="margin-top:24px">
         <div class="row-between" style="margin-bottom:12px">
@@ -1136,11 +1189,6 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </div>
     </div>
 
-    <div class="publish-bar">
-      <button class="btn btn-primary" id="btnCalcularRuta" onclick="onCalcularRuta()">
-        <i class="fa-solid fa-route"></i> Calcular ruta óptima
-      </button>
-    </div>
   </section>
 
   <!-- ====================== ADMIN · AGENDA DE LUGARES ====================== -->
@@ -1973,9 +2021,35 @@ function renderSidebar(){
   $('sbAvatar').textContent=u.initial;
   $('sbName').textContent=u.name;
   $('sbRole').textContent=u.role;
+  /* el label va en su propio <span> para poder ocultarlo con el menú minimizado;
+     el title queda siempre, así minimizado se ve el nombre al pasar el mouse */
   $('sbNav').innerHTML=SB_LINKS[state.role].map(l=>
-    `<button class="sb-link" data-screen="${l.id}" onclick="${l.fn}"><i class="fa-solid ${l.icon}"></i> ${l.label}</button>`
+    `<button class="sb-link" data-screen="${l.id}" onclick="${l.fn}" title="${l.label}"><i class="fa-solid ${l.icon}"></i> <span class="sb-lbl">${l.label}</span></button>`
   ).join('');
+  restaurarSidebar();
+}
+
+/* ---- Minimizar / expandir el menú lateral (solo escritorio; en mobile no se ve) ----
+   La preferencia se guarda en localStorage para que sobreviva a recargas. */
+function toggleSidebar(){
+  const colapsado=$('page').classList.toggle('sb-collapsed');
+  try{ localStorage.setItem('aprilon_sb_colapsada', colapsado?'1':'0'); }catch(e){/* modo privado: no persiste, no importa */}
+  sincronizarBotonSidebar();
+}
+function sincronizarBotonSidebar(){
+  const b=$('btnSidebarToggle'); if(!b)return;
+  const colapsado=$('page').classList.contains('sb-collapsed');
+  const texto=colapsado?'Expandir menú':'Minimizar menú';
+  b.innerHTML=`<i class="fa-solid fa-angles-${colapsado?'right':'left'}"></i>`;
+  b.title=texto;
+  b.setAttribute('aria-label',texto);
+  b.setAttribute('aria-expanded',colapsado?'false':'true');
+}
+function restaurarSidebar(){
+  let v=null;
+  try{ v=localStorage.getItem('aprilon_sb_colapsada'); }catch(e){}
+  $('page').classList.toggle('sb-collapsed', v==='1');
+  sincronizarBotonSidebar();
 }
 function setSidebarActive(screen){
   document.querySelectorAll('#sbNav .sb-link').forEach(l=>
@@ -2678,6 +2752,7 @@ function addPointDirect(id){
 function renderAdded(){
   const pub=state.published[state.selectedDay];
   $('addedCount').textContent=`${pub.length} punto${pub.length!==1?'s':''}`;
+  actualizarBtnCalcular();
   const list=$('addedList');
   if(pub.length===0){
     list.innerHTML=`<div class="empty" style="padding:28px 20px">
@@ -2693,6 +2768,15 @@ function renderAdded(){
       <div class="di-info"><div class="di-name">${d.name}${d.email_verificacion?' <i class="fa-solid fa-envelope-circle-check" style="color:var(--brand);font-size:.75em" title="Pide verificación por email"></i>':''}</div><div class="di-addr">${d.address}</div></div>
       <button class="di-rm" onclick="removePoint(${i})" aria-label="Quitar"><i class="fa-solid fa-xmark"></i></button>
     </div>`).join('');
+}
+/* "Calcular ruta óptima" queda gris/deshabilitado hasta que haya al menos 2 puntos
+   (misma condición que ya validaba calcularRutaDelDia, ahora visible antes del clic).
+   No toca el botón mientras está en estado de carga: de eso se encarga terminarCargaBoton. */
+function actualizarBtnCalcular(){
+  const btn=$('btnCalcularRuta');
+  if(!btn||btn.dataset.cargando==='1')return;
+  const pub=state.published[state.selectedDay]||[];
+  btn.disabled=pub.length<2;
 }
 function removePoint(i){
   const r=state.published[state.selectedDay].splice(i,1)[0];
@@ -2883,6 +2967,7 @@ async function onCalcularRuta(){
   iniciarCargaBoton(btn,'Calculando…');
   const data=await calcularRutaDelDia();
   terminarCargaBoton(btn);
+  actualizarBtnCalcular(); /* terminarCargaBoton rehabilita siempre; re-aplicamos la condición real */
   if(!data)return;
   if(!data.ok){toast(data.error||'No se pudo calcular la ruta','warn');return;}
   rutaCalculada=data;
