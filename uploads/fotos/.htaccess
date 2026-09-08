@@ -1,0 +1,13 @@
+# Evita ejecutar cualquier script subido a esta carpeta (compatible con Apache + PHP-FPM).
+# NO usamos "php_flag engine off" porque en hostings con PHP-FPM (AlwaysData)
+# esa directiva no está permitida y rompe la carpeta con un error 500.
+
+<FilesMatch "\.(php|php[0-9]|phtml|phar|pht|cgi|pl|py|sh|asp|aspx)$">
+  Require all denied
+</FilesMatch>
+
+# Por las dudas, forzamos que estos archivos se sirvan como texto/descarga y no se ejecuten.
+<IfModule mod_mime.c>
+  RemoveHandler .php .phtml .phar .cgi .pl .py
+  AddType text/plain .php .phtml .phar
+</IfModule>

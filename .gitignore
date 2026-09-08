@@ -1,19 +1,104 @@
-# Credenciales y datos sensibles - NUNCA subir
+# ============================================================================
+#  Aprilon — .gitignore
+#  Regla general: si un archivo tiene credenciales, datos de una persona real
+#  (clientes, fotos, direcciones de entrega) o sale de una máquina y no del
+#  proyecto, no entra al repo.
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+#  Credenciales y configuración de entorno — NUNCA subir
+# ---------------------------------------------------------------------------
 .env
 .env.*
 !.env.example
-config/conexion.php
-config/conexion.local.php
-config/conexion.ilm.php
 
-# Uploads de usuarios (fotos de perfil, etc.)
-uploads/
+# Con comodín a propósito: si mañana aparece un conexion.produccion.php o
+# conexion.test.php, queda cubierto solo. Antes estaban las tres rutas
+# escritas a mano y un nombre nuevo se colaba sin que nadie lo notara.
+config/conexion*.php
+!config/conexion.example.php
 
-# Backups
+# Claves y certificados. cacert.pem es la excepción: es el bundle público de
+# Mozilla que el servidor ILM necesita sí o sí (ver config/google_routes.php).
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+!config/cacert.pem
+
+# ---------------------------------------------------------------------------
+#  Datos personales de usuarios reales
+# ---------------------------------------------------------------------------
+# uploads/ tiene fotos de perfil de gente real. Se ignora el contenido, pero
+# NO la carpeta: .gitkeep la hace existir al clonar y .htaccess es el control
+# que impide ejecutar un script subido ahí (protección contra subir un .php y
+# que el servidor lo corra). Con el "uploads/" a secas de antes, los dos
+# quedaban afuera del repo y un deploy desde un clon salía sin esa protección.
+uploads/*
+!uploads/fotos/
+uploads/fotos/*
+!uploads/fotos/.gitkeep
+!uploads/fotos/.htaccess
+
+# Dumps y backups de la base: db/*.sql son el esquema y sí van al repo, pero
+# un dump real trae direcciones de entrega, emails y palabras de verificación
+# de clientes. Se bloquea el .sql suelto en la raíz y cualquier nombre con
+# pinta de dump/backup en cualquier carpeta.
+/*.sql
+*dump*.sql
+*backup*.sql
+*.sql.gz
+
+# Exportaciones de datos (listados de rutas, puntos, clientes).
+/*.csv
+/*.xlsx
+
+# ---------------------------------------------------------------------------
+#  Documentación interna con credenciales en texto plano
+# ---------------------------------------------------------------------------
+# El documento de handoff lleva usuarios, contraseñas y hosts reales. Vive en
+# la misma carpeta compartida del ILM, así que es perfectamente posible que
+# alguien lo copie al lado del proyecto y lo arrastre un "git add .".
+# (El web.config ya bloquea .md por HTTP por exactamente este motivo.)
+APRILON_CONTEXTO*.md
+APRILON_ESCALABILIDAD*.md
+
+# El manual de usuario y sus capturas muestran datos cargados en la app real.
+*.docx
+~$*.docx
+manual_imagenes/
+
+# ---------------------------------------------------------------------------
+#  Backups y comprimidos
+# ---------------------------------------------------------------------------
 *.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tgz
 *.bak
 
-# Sistema / editor
-Thumbs.db
-.DS_Store
+# ---------------------------------------------------------------------------
+#  Logs
+# ---------------------------------------------------------------------------
 *.log
+# Apache y varios hostings dejan un archivo llamado "error_log", sin
+# extensión, así que *.log no lo agarra. Puede tener rutas internas y
+# fragmentos de consultas.
+error_log
+php_errors.log
+
+# ---------------------------------------------------------------------------
+#  Sistema operativo y editores
+# ---------------------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
