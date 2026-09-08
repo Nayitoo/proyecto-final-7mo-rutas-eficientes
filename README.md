@@ -1,112 +1,222 @@
-# Aprilon · Backend PHP
+# Aprilon · Gestión de rutas de entrega
 
-Backend del mockup **Aprilon**, en **PHP 8 + PDO + MariaDB/MySQL**,
-pensado para correr en **XAMPP**. El mockup (`index.html`) está conectado
-en vivo a este backend: login, gestión de usuarios, contraseñas y foto de perfil
-funcionan contra la base de datos real.
+Aplicación web para **Aprilon Textiles**. Un administrador carga las direcciones
+de entrega del día, el sistema calcula el orden óptimo de las paradas con Google
+Maps, y el conductor sigue esa ruta desde el celular marcando cada entrega.
+
+**No hay nada que instalar para usarla: se entra por el navegador.**
 
 ---
 
-## 1. Instalación (5 minutos)
+## 1. Cómo se usa
 
-1. **Copiá la carpeta `aprilon/` dentro de `htdocs` de XAMPP.**
-   Por ejemplo: `C:\xampp\htdocs\aprilon-backend\`
-2. **Copiá también `index.html` dentro de esa misma carpeta**, para que quede así:
-   ```
-   htdocs/aprilon/
-   ├── index.html        ← el mockup
-   ├── api/…
-   ├── config/…
-   ├── db/aprilon_db.sql
-   └── uploads/…
-   ```
-   (Es importante que el mockup esté en el mismo origen que el backend
-   para que las cookies de sesión funcionen sin configurar nada.)
-3. **Importá la base de datos**: abrí HeidiSQL, conectate a `127.0.0.1` con usuario `root`
-   sin contraseña, y hacé **Archivo → Ejecutar archivo SQL…** eligiendo
-   `db/aprilon_db.sql`. Se crea la base `aprilon` con usuarios de ejemplo.
-4. **Arrancá Apache y MySQL** desde el panel de XAMPP.
-5. **Abrí el mockup en el navegador**:
-   ```
-   http://localhost/aprilon/
-   ```
-   ⚠️ Siempre por `http://localhost/…`, nunca con doble clic al archivo.
+Abrí la aplicación y entrá con tu usuario. Funciona en la computadora y en el
+celular, y no requiere instalar ninguna app.
 
-## 2. Credenciales de ejemplo
+| Entorno | Dirección | Notas |
+|---|---|---|
+| **Servidor del instituto (ILM)** | `http://192.168.101.92:8091/aprilon/` | Es el entorno en uso. Solo accesible desde la red del instituto |
+| Producción | *pendiente de despliegue* | Ver la sección 9 |
 
-| Usuario      | Contraseña    | Rol           |
-|--------------|---------------|---------------|
-| `jefe`       | `aprilon2026` | jefe          |
-| `ventas`     | `aprilon2026` | administrador (cuenta compartida) |
-| `expedicion` | `aprilon2026` | conductor     |
+### Cuentas
 
-## 3. Qué funciona conectado a la base
+| Usuario | Rol | Qué puede hacer |
+|---|---|---|
+| `jefe` | Jefe | Administra las cuentas y las contraseñas del equipo |
+| `ventas` | Administrador | Carga los puntos de entrega, calcula y publica las rutas |
+| `expedicion` | Conductor | Sigue la ruta publicada, marca las paradas y reporta imprevistos |
 
-- ✅ **Login real** con `password_verify()` (bcrypt).
-- ✅ **Sesión persistente**: si cerrás y volvés a abrir el mockup, seguís logueado.
-- ✅ **Logout** cierra la sesión en el servidor.
-- ✅ **Panel del jefe** lee usuarios y solicitudes de la DB.
-- ✅ **Alta / edición / baja** de conductores desde la app.
-- ✅ **Restablecer contraseña** desde la pantalla del jefe (con clave elegida o autogenerada).
-- ✅ **"Olvidé mi contraseña"** desde el login: el usuario avisa al jefe, el jefe le pasa una clave temporal, el usuario elige la nueva.
-- ✅ **Foto de perfil** subida y borrada contra `uploads/fotos/`.
-- ✅ **Guards de rol**: un conductor recibe HTTP 403 al intentar endpoints del jefe.
-- ✅ **Una sola cuenta de administrador** garantizada por la base (índice único).
+La contraseña de las tres cuentas de demostración es `aprilon2026`.
 
-## 4. Endpoints
+> **Antes de un despliegue a producción real**, cambiá estas contraseñas: los
+> hashes de `db/aprilon.sql` corresponden a una clave conocida y documentada.
 
-Base: `…/aprilon/api/`
+---
 
-| Método | Endpoint | Rol | Descripción |
-|---|---|---|---|
-| POST | `login.php` | público | `{usuario, password}` |
-| POST | `logout.php` | logueado | — |
-| GET  | `sesion.php` | público | ¿hay sesión activa? |
-| GET  | `usuarios_listar.php` | jefe | jefe + admin + conductores |
-| POST | `usuarios_guardar.php` | jefe | crear/editar (`id` opcional para editar) |
-| POST | `usuarios_eliminar.php` | jefe | solo conductores |
-| POST | `password_restablecer.php` | jefe | `{id, password?, debe_cambiar?}` |
-| POST | `password_cambiar.php` | logueado | `{password_actual, password_nueva}` |
-| POST | `password_resetear.php` | público | `{usuario, password_temporal, password_nueva}` |
-| POST | `solicitud_crear.php` | público | `{usuario}` (olvidé mi contraseña) |
-| GET  | `solicitudes_listar.php` | jefe | solicitudes pendientes |
-| POST | `solicitud_resolver.php` | jefe | marca resuelta |
-| POST | `perfil_foto.php` | logueado | `multipart/form-data` campo `foto` |
-| POST | `perfil_foto_quitar.php` | logueado | quita la foto de perfil |
+## 2. Qué hace la aplicación
 
-## 5. Seguridad
+### Administrador
+- **Carga de puntos** con autocompletado de direcciones (Google Places), o
+  eligiendo de una agenda de lugares guardados.
+- **Cálculo de la ruta óptima**: Google Routes reordena las paradas para
+  minimizar el recorrido, teniendo en cuenta el tránsito.
+- **Publicación de la ruta** para que el conductor la vea, y despublicación si
+  hay que corregirla.
+- **Programación a futuro**: se pueden dejar armadas varias rutas con fecha, no
+  solo la del día.
+- **Verificaciones** (opcional por parada): al publicar la ruta se genera una
+  palabra al azar y se envía por email al encargado del negocio. El conductor
+  tiene que pedírsela para poder cerrar esa entrega.
+- **Historial** de rutas y **avisos de imprevistos** en tiempo real.
 
-- Contraseñas con **bcrypt** (`password_hash()` / `password_verify()`), nunca en texto plano.
-- **Consultas preparadas** (PDO): sin inyección SQL.
-- Guards de **rol** en cada endpoint; sesión con cookie `HttpOnly`.
-- Carpeta `uploads/fotos/` con `.htaccess` que impide ejecutar scripts subidos.
-- La regla de **una sola cuenta de administrador** está reforzada por la base
-  (columna generada + índice único `uq_admin_unica`).
+### Conductor
+- Ve la ruta del día en un mapa, con la próxima parada destacada.
+- **Seguimiento por GPS** y modo pantalla completa; el botón de navegación abre
+  Google Maps con indicaciones por voz.
+- Marca cada parada como completada (pidiendo la palabra de verificación si esa
+  parada la requiere) y **reporta imprevistos** al administrador.
 
-## 6. Configuración
+### Jefe
+- Alta, baja y edición de cuentas; restablecimiento de contraseñas.
+- Atiende los pedidos de "olvidé mi contraseña" que llegan desde el login.
 
-Revisá `config/conexion.php`. Por defecto ya apunta al root de XAMPP:
-```php
-const DB_HOST = 'localhost';
-const DB_USER = 'root';
-const DB_PASS = '';
-```
+---
 
-## 7. Estructura
+## 3. Stack
+
+| Capa | Tecnología |
+|---|---|
+| Backend | PHP 8 + PDO, sin framework |
+| Base de datos | MySQL / MariaDB |
+| Frontend | HTML + CSS + JavaScript en un solo archivo (`index.html`), sin build step |
+| Mapa | Leaflet con tiles de OpenStreetMap / CartoDB |
+| Rutas y direcciones | Google Maps: Geocoding v4, Routes, Places |
+| Email | SMTP propio (`config/mailer.php`), sin dependencias externas |
+| Offline | Service Worker (`sw.js`) que cachea los tiles del mapa |
+
+La API key de Google se usa **solo del lado del servidor**; nunca llega al
+navegador. El Service Worker requiere HTTPS, así que el mapa offline funciona en
+`localhost` y en un hosting con certificado, pero no sobre HTTP plano.
+
+---
+
+## 4. Estructura
 
 ```
 aprilon/
+├── index.html            Toda la interfaz (las 3 vistas por rol)
+├── sw.js                 Service Worker: caché de tiles del mapa
 ├── config/
-│   ├── conexion.php      Conexión PDO
-│   └── comun.php         CORS, sesión, respuestas JSON, guards de rol
-├── api/                  13 endpoints
-├── db/
-│   └── aprilon_db.sql    Esquema + datos de ejemplo
-├── uploads/fotos/        Fotos de perfil (con .htaccess de protección)
-└── README.md
+│   ├── comun.php         Sesión, guards de rol, respuestas JSON
+│   ├── conexion*.php     Conexión PDO (una por entorno, fuera del repo)
+│   ├── env.php           Lectura del .env
+│   ├── google_routes.php Llamadas a Google (Routes, Geocoding, Places)
+│   ├── mailer.php        Envío SMTP
+│   └── verificaciones.php Palabras de verificación de entrega
+├── api/                  31 endpoints JSON
+├── db/                   Esquema SQL
+└── uploads/fotos/        Fotos de perfil (con .htaccess de protección)
 ```
 
-## 8. Próximo paso (opcional)
+---
 
-La base cubre **usuarios**. Si querés persistir también **rutas, puntos e imprevistos**,
-se agregan sus tablas y endpoints siguiendo el mismo patrón. Avisame y lo extiendo.
+## 5. Base de datos
+
+Tres archivos, que se importan en este orden:
+
+| Archivo | Tablas |
+|---|---|
+| `db/aprilon.sql` | `usuarios`, `solicitudes_password` |
+| `db/rutas.sql` | `puntos_guardados`, `rutas`, `ruta_paradas`, `verificaciones` |
+| `db/incidentes.sql` | `incidentes` |
+
+---
+
+## 6. API
+
+Todos los endpoints están bajo `…/aprilon/api/` y responden JSON.
+
+### Sesión y cuenta
+| Método | Endpoint | Rol |
+|---|---|---|
+| POST | `login.php` | público |
+| POST | `logout.php` | público |
+| GET | `sesion.php` | público |
+| GET | `config_publico.php` | público |
+| POST | `solicitud_crear.php` | público |
+| POST | `password_resetear.php` | público |
+| POST | `password_cambiar.php` | logueado |
+| POST | `perfil_foto.php` / `perfil_foto_quitar.php` | logueado |
+
+### Administración de usuarios
+| Método | Endpoint | Rol |
+|---|---|---|
+| GET | `usuarios_listar.php` | jefe |
+| POST | `usuarios_guardar.php` / `usuarios_eliminar.php` | jefe |
+| POST | `password_restablecer.php` | jefe |
+| GET | `solicitudes_listar.php` | jefe |
+| POST | `solicitud_resolver.php` | jefe |
+
+### Puntos y rutas
+| Método | Endpoint | Rol |
+|---|---|---|
+| GET | `lugares_autocompletar.php` / `lugares_detalle.php` | admin |
+| GET | `puntos_guardados_listar.php` | admin |
+| POST | `puntos_guardados_guardar.php` / `puntos_guardados_eliminar.php` | admin |
+| POST | `ruta_calcular.php` | admin |
+| POST | `ruta_guardar.php` | admin |
+| POST | `ruta_despublicar.php` | admin |
+| POST | `rutas_borrar_hoy.php` | admin |
+| GET | `rutas_historial.php` | admin |
+| GET | `rutas_listar.php` / `ruta_detalle.php` | logueado |
+| POST | `ruta_parada_completar.php` | conductor |
+
+### Imprevistos
+| Método | Endpoint | Rol |
+|---|---|---|
+| POST | `imprevisto_crear.php` | conductor |
+| GET | `imprevistos_listar.php` | admin |
+| POST | `imprevisto_marcar_leidos.php` | admin |
+
+*"admin" incluye al jefe y al administrador.*
+
+---
+
+## 7. Seguridad
+
+- Contraseñas con **bcrypt** (`password_hash()` / `password_verify()`).
+- **Consultas preparadas** con PDO en todos los endpoints: sin inyección SQL.
+- **Guard de rol** en cada endpoint (`requiere_rol()`); un conductor recibe 403
+  al pedir un endpoint del jefe.
+- Sesión con cookie **HttpOnly**.
+- `uploads/fotos/` tiene un `.htaccess` que **impide ejecutar scripts subidos**.
+- La regla de **una sola cuenta de administrador** la refuerza la base, con una
+  columna generada y el índice único `uq_admin_unica`.
+- Credenciales y API keys viven en `.env` y en `config/conexion*.php`, ninguno
+  de los dos versionado.
+
+---
+
+## 8. Configuración (`.env`)
+
+Copiá `.env.example` a `.env` y completá:
+
+| Variable | Para qué |
+|---|---|
+| `GOOGLE_MAPS_API_KEY` | Geocoding, Routes y Places |
+| `APP_DEMO` | `true` muestra las cuentas de prueba en el login. **`false` en producción** |
+| `SMTP_HOST` · `SMTP_PORT` · `SMTP_USER` · `SMTP_PASS` · `SMTP_FROM` | Envío de las palabras de verificación. Sin esto la palabra se genera igual, solo que no sale el email |
+
+La conexión a la base se elige con una sola línea en `config/comun.php`, que
+hace `require_once` del `config/conexion*.php` del entorno correspondiente.
+
+---
+
+## 9. Desplegar en un hosting
+
+1. Subir el proyecto por SFTP.
+2. Crear la base e importar los tres `.sql` de la sección 5.
+3. Crear `config/conexion.php` con las credenciales del hosting y apuntar ahí el
+   `require_once` de `config/comun.php`.
+4. Crear el `.env` de la sección 8.
+5. Dar permiso de escritura a `uploads/fotos/`.
+6. **Proteger `config/` y `db/`**: el `web.config` incluido sirve para IIS. En
+   Apache hace falta un `.htaccess` equivalente, o esas carpetas quedan
+   descargables por URL.
+7. Cambiar las contraseñas de las cuentas de demostración.
+
+---
+
+## 10. Apéndice · Levantar una copia local (XAMPP)
+
+Solo hace falta para desarrollar o probar cambios. **Para usar la aplicación no
+se instala nada**, se entra por la dirección de la sección 1.
+
+1. Copiar el proyecto a `C:\xampp\htdocs\aprilon\`.
+2. Importar los tres `.sql` de la sección 5 en la base `aprilon` (con HeidiSQL o
+   phpMyAdmin, conectando a `127.0.0.1` con usuario `root` y sin contraseña).
+3. Crear `config/conexion.local.php` apuntando a esa base, y dejar el
+   `require_once` de `config/comun.php` señalándolo.
+4. Arrancar Apache y MySQL desde el panel de XAMPP.
+5. Abrir `http://localhost/aprilon/` — siempre por `http://`, nunca abriendo el
+   `index.html` con doble clic, o las cookies de sesión no funcionan.
