@@ -1,10 +1,10 @@
 /**
- * Service worker de Aprilon — solo se ocupa de cachear los tiles del mapa
+ * Service worker de Rutas Eficientes — solo se ocupa de cachear los tiles del mapa
  * (OpenStreetMap) para que se puedan seguir viendo sin conexión. El resto
  * de los pedidos (index.html, api/*) van directo a la red: no queremos
  * servir datos de rutas/paradas viejos desde caché mientras haya señal.
  */
-const CACHE_TILES = 'aprilon-tiles-v1';
+const CACHE_TILES = 're-tiles-v1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();

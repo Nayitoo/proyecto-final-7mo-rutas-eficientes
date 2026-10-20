@@ -1,0 +1,18 @@
+{
+  "name": "Rutas Eficientes",
+  "short_name": "Rutas Eficientes",
+  "description": "Gestión y optimización de rutas de entrega.",
+  "lang": "es-AR",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFDFE",
+  "theme_color": "#F3F5F4",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
