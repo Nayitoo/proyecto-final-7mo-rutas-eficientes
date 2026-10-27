@@ -2,11 +2,12 @@
 /** POST /api/ruta_guardar.php  (jefe, administrador)
  *  Persiste una ruta ya calculada (la respuesta de ruta_calcular.php) que el
  *  jefe decidió aceptar.
- *  { fecha, distancia_m, duracion_seg, polyline?,
+ *  { fecha, distancia_m, duracion_seg, polyline?, evitar?: {peajes, autopistas, transbordadores}, peaje_estimado?,
  *    paradas: [{orden, nombre, direccion, lat, lng, distancia_tramo_m?, duracion_tramo_seg?, email_verificacion?}] } */
 require_once __DIR__ . '/../config/comun.php';
 require_once __DIR__ . '/../config/mailer.php';
 require_once __DIR__ . '/../config/verificaciones.php';
+require_once __DIR__ . '/../config/esquema.php';
 $u = requiere_rol(['jefe', 'administrador']);
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') error('Método no permitido.', 405);
 
@@ -15,18 +16,26 @@ $fecha        = trim((string)($in['fecha'] ?? ''));
 $distanciaM   = (int)($in['distancia_m'] ?? 0);
 $duracionSeg  = (int)($in['duracion_seg'] ?? 0);
 $polyline     = $in['polyline'] ?? null;
-$paradas      = is_array($in['paradas'] ?? null) ? $in['paradas'] : [];
+$ev           = is_array($in['evitar'] ?? null) ? $in['evitar'] : [];
+$peajeEst     = isset($in['peaje_estimado']) && is_numeric($in['peaje_estimado']) ? round((float)$in['peaje_estimado'], 2) : null;
+$paradas     = is_array($in['paradas'] ?? null) ? $in['paradas'] : [];
 
 if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) error('Falta una fecha válida (AAAA-MM-DD).');
 if (count($paradas) < 2) error('La ruta necesita al menos 2 paradas.');
 
+asegurar_esquema();
 $pdo = db();
 $pdo->beginTransaction();
 try {
     $pdo->prepare(
-        'INSERT INTO rutas (fecha, distancia_m, duracion_seg, polyline, creado_por)
-         VALUES (?,?,?,?,?)'
-    )->execute([$fecha, $distanciaM, $duracionSeg, $polyline, $u['id']]);
+        'INSERT INTO rutas (fecha, distancia_m, duracion_seg, polyline, creado_por,
+                            evitar_peajes, evitar_autopistas, evitar_transbordadores, peajes_costo)
+         VALUES (?,?,?,?,?,?,?,?,?)'
+    )->execute([
+        $fecha, $distanciaM, $duracionSeg, $polyline, $u['id'],
+        !empty($ev['peajes']) ? 1 : 0, !empty($ev['autopistas']) ? 1 : 0, !empty($ev['transbordadores']) ? 1 : 0,
+        $peajeEst,
+    ]);
     $rutaId = (int)$pdo->lastInsertId();
 
     $stP = $pdo->prepare(

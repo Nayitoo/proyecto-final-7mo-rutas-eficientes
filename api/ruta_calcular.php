@@ -1,6 +1,8 @@
 <?php
 /** POST /api/ruta_calcular.php  (jefe, administrador)
- *  { paradas: [{nombre, direccion, lat?, lng?}, ...] }  (mínimo 2)
+ *  { paradas: [{nombre, direccion, lat?, lng?}, ...],            (mínimo 2)
+ *    evitar?: {peajes?, autopistas?, transbordadores?} }
+ *  La primera parada es el punto de partida (el front pone primero la que eligió el admin).
  *  Geocodifica las que falten y le pide a Google Routes API el orden óptimo.
  *  No persiste nada: es la "ruta temporal" que el jefe puede aceptar o no. */
 require_once __DIR__ . '/../config/comun.php';
@@ -39,8 +41,16 @@ foreach ($paradas as $i => &$p) {
 }
 unset($p);
 
+// Opciones de la ruta: { evitar: {peajes, autopistas, transbordadores} } (todas opcionales)
+$ev     = is_array($in['evitar'] ?? null) ? $in['evitar'] : [];
+$evitar = [
+    'peajes'          => !empty($ev['peajes']),
+    'autopistas'      => !empty($ev['autopistas']),
+    'transbordadores' => !empty($ev['transbordadores']),
+];
+
 try {
-    $ruta = calcular_ruta_optima($paradas);
+    $ruta = calcular_ruta_optima($paradas, $evitar);
 } catch (GoogleMapsError $e) {
     error('No se pudo calcular la ruta: ' . $e->getMessage(), 502);
 } catch (InvalidArgumentException $e) {
@@ -63,4 +73,6 @@ responder([
     'distancia_m'   => $ruta['distancia_m'],
     'duracion_seg'  => $ruta['duracion_seg'],
     'polyline'      => $ruta['polyline'],
+    'evitar'        => $evitar,
+    'peaje_estimado'=> $ruta['peaje_estimado'],
 ]);

@@ -54,8 +54,11 @@ function geocodificar(string $direccion): ?array {
  *  - orden: índices (sobre $paradas) en el orden óptimo, origen y destino incluidos
  *  - distancia_m, duracion_seg (con tráfico en tiempo real)
  *  - polyline: polyline codificada de la ruta completa, para dibujar en el mapa
+ *  - peaje_estimado: precio de peajes según Google, o null si no lo informa
+ *
+ * $evitar = ['peajes' => bool, 'autopistas' => bool, 'transbordadores' => bool]
  */
-function calcular_ruta_optima(array $paradas): array {
+function calcular_ruta_optima(array $paradas, array $evitar = []): array {
     if (count($paradas) < 2) throw new InvalidArgumentException('Se necesitan al menos 2 paradas.');
 
     $origen      = $paradas[0];
@@ -80,28 +83,32 @@ function calcular_ruta_optima(array $paradas): array {
         'units'                     => 'METRIC',
     ];
 
-    $ch = google_curl_init('https://routes.googleapis.com/directions/v2:computeRoutes');
-    curl_setopt_array($ch, [
-        CURLOPT_POST           => true,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POSTFIELDS     => json_encode($body),
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'X-Goog-Api-Key: ' . google_maps_key(),
-            'X-Goog-FieldMask: routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline,routes.optimizedIntermediateWaypointIndex,routes.legs.duration,routes.legs.distanceMeters',
-        ],
-        CURLOPT_TIMEOUT => 15,
-    ]);
-    $raw = curl_exec($ch);
-    if ($raw === false) throw new GoogleMapsError('No se pudo conectar con Google Routes API: ' . curl_error($ch));
-    curl_close($ch);
+    // Evitar peajes / autopistas / transbordadores (routeModifiers de Routes API)
+    $mods = [];
+    if (!empty($evitar['peajes']))          $mods['avoidTolls']  = true;
+    if (!empty($evitar['autopistas']))      $mods['avoidHighways'] = true;
+    if (!empty($evitar['transbordadores'])) $mods['avoidFerries'] = true;
+    if ($mods) $body['routeModifiers'] = $mods;
 
-    $data = json_decode($raw, true);
+    // Si se permiten peajes, se pide además el precio estimado (puede no estar disponible en la zona)
+    $pidePeajes = empty($evitar['peajes']);
+    $data = $pidePeajes ? google_compute_routes($body + ['extraComputations' => ['TOLLS']], true) : null;
+    if (!$data || empty($data['routes'][0])) {
+        // el cálculo de peajes no es crítico: si Google lo rechaza, se calcula la ruta sin él
+        $data = google_compute_routes($body, false);
+    }
     if (empty($data['routes'][0])) {
         $msg = $data['error']['message'] ?? 'Google no devolvió ninguna ruta.';
         throw new GoogleMapsError($msg);
     }
     $ruta = $data['routes'][0];
+
+    $peaje = null;
+    foreach ($ruta['travelAdvisory']['tollInfo']['estimatedPrice'] ?? [] as $precio) {
+        if (($precio['currencyCode'] ?? '') === 'ARS') {
+            $peaje = (float)($precio['units'] ?? 0) + (float)($precio['nanos'] ?? 0) / 1e9;
+        }
+    }
 
     // reconstruye el orden real de paradas: origen, intermedias reordenadas, destino
     // Google a veces devuelve [-1] (o nada) cuando no hay nada para reordenar
@@ -120,11 +127,39 @@ function calcular_ruta_optima(array $paradas): array {
         'distancia_m'   => (int)($ruta['distanceMeters'] ?? 0),
         'duracion_seg'  => (int)rtrim($ruta['duration'] ?? '0s', 's'),
         'polyline'      => $ruta['polyline']['encodedPolyline'] ?? null,
+        'peaje_estimado'=> $peaje,
         'tramos'        => array_map(fn($l) => [
             'distancia_m'  => (int)($l['distanceMeters'] ?? 0),
             'duracion_seg' => (int)rtrim($l['duration'] ?? '0s', 's'),
         ], $ruta['legs'] ?? []),
     ];
+}
+
+/** POST a computeRoutes. Con $tolerante, un error de Google devuelve null en vez de cortar. */
+function google_compute_routes(array $body, bool $tolerante): ?array {
+    $mascara = 'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline,routes.optimizedIntermediateWaypointIndex,routes.legs.duration,routes.legs.distanceMeters';
+    if (!empty($body['extraComputations'])) $mascara .= ',routes.travelAdvisory.tollInfo';
+
+    $ch = google_curl_init('https://routes.googleapis.com/directions/v2:computeRoutes');
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS     => json_encode($body),
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'X-Goog-Api-Key: ' . google_maps_key(),
+            'X-Goog-FieldMask: ' . $mascara,
+        ],
+        CURLOPT_TIMEOUT => 15,
+    ]);
+    $raw = curl_exec($ch);
+    if ($raw === false) {
+        if ($tolerante) return null;
+        throw new GoogleMapsError('No se pudo conectar con Google Routes API: ' . curl_error($ch));
+    }
+    curl_close($ch);
+    $data = json_decode($raw, true);
+    return is_array($data) ? $data : null;
 }
 
 function google_waypoint(array $p): array {

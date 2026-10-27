@@ -1,7 +1,7 @@
 -- ============================================================================
---  APRILON · Tablas de puntos de entrega y rutas
+--  RUTAS EFICIENTES · Tablas de puntos de entrega y rutas
 -- ----------------------------------------------------------------------------
---  Importalo dentro de la misma base donde ya corriste aprilon.sql
+--  Importalo dentro de la misma base donde ya corriste rutas_eficientes.sql
 --  (las tablas de usuarios tienen que existir antes que estas).
 -- ============================================================================
 
@@ -12,8 +12,16 @@ DROP TABLE IF EXISTS `verificaciones`;
 DROP TABLE IF EXISTS `ruta_paradas`;
 DROP TABLE IF EXISTS `rutas`;
 DROP TABLE IF EXISTS `puntos_guardados`;
+DROP TABLE IF EXISTS `configuracion`;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- Configuración de flota (combustible, consumo y precios) para las estadísticas del jefe
+CREATE TABLE `configuracion` (
+  `clave` VARCHAR(60)  NOT NULL,
+  `valor` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`clave`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Direcciones frecuentes guardadas por el jefe/administrador ("apodo" reutilizable)
 CREATE TABLE `puntos_guardados` (
@@ -44,6 +52,10 @@ CREATE TABLE `rutas` (
   `distancia_m`    INT UNSIGNED NOT NULL,
   `duracion_seg`   INT UNSIGNED NOT NULL,
   `polyline`       TEXT NULL COMMENT 'Polyline codificada de Google Routes API para dibujar el camino',
+  `evitar_peajes`          TINYINT(1) NOT NULL DEFAULT 0,
+  `evitar_autopistas`      TINYINT(1) NOT NULL DEFAULT 0,
+  `evitar_transbordadores` TINYINT(1) NOT NULL DEFAULT 0,
+  `peajes_costo`   DECIMAL(12,2) NULL COMMENT 'Gasto en peajes de la ruta (estimado por Google o cargado por el jefe)',
   `creado_por`     INT UNSIGNED NOT NULL,
   `creado_en`      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

@@ -802,6 +802,63 @@ button:disabled{opacity:.6;cursor:not-allowed}
   .routebar.mini .rb-foot .btn{padding:15px 22px;gap:9px;border-radius:999px}
 }
 
+/* ---- punto de partida: bandera en cada punto de la lista ---- */
+.draft-item .di-flag{width:30px;height:30px;border-radius:50%;color:var(--text-3);display:grid;place-items:center;flex:none;font-size:.82rem;transition:.18s var(--ease)}
+.draft-item .di-flag:hover{background:var(--brand-light);color:var(--brand)}
+.draft-item.es-partida{border-color:var(--brand)}
+.draft-item.es-partida .di-flag{background:var(--brand);color:#fff;cursor:default}
+.di-tag{display:inline-block;font-size:.64rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--brand-dark);margin-left:6px}
+[data-theme="dark"] .di-tag{color:var(--brand-dark)}
+
+/* ---- opciones de la ruta (evitar peajes / autopistas / transbordadores) ---- */
+.rb-opts{margin-bottom:12px}
+.rb-opts-t{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.rb-opts-row{display:flex;flex-wrap:wrap;gap:7px}
+.rb-opt{position:relative;cursor:pointer}
+.rb-opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.rb-opt span{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-size:.8rem;font-weight:600;
+  color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);transition:.18s var(--ease)}
+.rb-opt input:checked + span{background:var(--brand-light);border-color:var(--brand);color:var(--brand-dark)}
+.rb-opt input:focus-visible + span{outline:2px solid var(--brand);outline-offset:2px}
+.routebar.mini .rb-opts{display:none}
+@media(max-width:979px){ .routebar.mini .rb-opts{display:block} }
+.rm-opts{display:flex;flex-wrap:wrap;gap:7px;margin:-6px 0 14px}
+.rm-opts .tag{font-size:.76rem;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--brand-light);color:var(--brand-dark)}
+
+/* ============================================================
+   JEFE · ESTADÍSTICAS
+   ============================================================ */
+.st-hero{padding:20px;border-radius:var(--r-lg);background:var(--brand-grad);color:#fff;margin-bottom:14px}
+.st-hero .st-lab{font-size:.8rem;opacity:.9}
+.st-hero .st-num{font-size:2.4rem;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:4px 0 2px}
+.st-hero .st-sub{font-size:.82rem;opacity:.9}
+.st-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.st-card{padding:15px;border-radius:var(--r-lg)}
+.st-card .st-ico{width:34px;height:34px;border-radius:var(--r-xs);display:grid;place-items:center;font-size:.9rem;margin-bottom:10px;background:var(--brand-light);color:var(--brand-dark)}
+.st-card .st-v{font-size:1.25rem;font-weight:800;letter-spacing:-.01em;line-height:1.1;overflow-wrap:anywhere}
+.st-card .st-l{font-size:.76rem;color:var(--text-2);margin-top:4px;line-height:1.3}
+.st-card .st-s{font-size:.72rem;color:var(--text-3);margin-top:3px;line-height:1.3}
+@media(min-width:760px){ .st-grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.st-chart{display:flex;align-items:flex-end;gap:6px;height:150px;padding:6px 2px 0;margin-bottom:6px}
+.st-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px}
+.st-col i{display:block;width:100%;max-width:38px;min-height:3px;border-radius:7px 7px 3px 3px;background:var(--brand-grad)}
+.st-col b{font-size:.66rem;font-weight:700;color:var(--text-2);white-space:nowrap}
+.st-col span{font-size:.64rem;color:var(--text-3);white-space:nowrap}
+.st-empty{padding:22px 14px;text-align:center;font-size:.86rem;color:var(--text-2);background:var(--surface-2);border:1px dashed var(--border);border-radius:var(--r-md)}
+.st-ruta{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border)}
+.st-ruta .sr-info{flex:1;min-width:0}
+.st-ruta .sr-t{font-weight:700;font-size:.9rem}
+.st-ruta .sr-s{font-size:.76rem;color:var(--text-2);margin-top:2px;line-height:1.4}
+.st-nota{font-size:.78rem;color:var(--text-2);line-height:1.5;margin:16px 0 4px;display:flex;gap:9px}
+.st-nota i{color:var(--brand);margin-top:3px}
+.fuel-opt{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface);margin-bottom:8px}
+.fuel-opt.sel{border-color:var(--brand);background:var(--brand-light)}
+.fuel-opt label.fo-n{flex:1;display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;cursor:pointer;margin:0}
+.fuel-opt input[type=radio]{accent-color:var(--brand);width:18px;height:18px;margin:0}
+.fuel-opt .fo-p{width:112px;flex:none}
+.fuel-opt .fo-p .input{padding:9px 10px;text-align:right}
+.fuel-opt .fo-u{font-size:.72rem;color:var(--text-3);display:block;text-align:right;margin-top:2px}
+
 /* ============================================================
    HERO CONDUCTOR
    ============================================================ */
@@ -1408,10 +1465,10 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </div>
 
       <div class="banner" style="margin-top:18px;cursor:default">
-        <div class="b-ico"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="b-ico"><i class="fa-solid fa-flag-checkered"></i></div>
         <div class="b-txt">
-          <div class="b-t">Acordate de poner el punto de partida primero</div>
-          <div class="b-s">El primer punto que agregues a la lista va a ser el origen de la ruta.</div>
+          <div class="b-t">Elegí el punto de partida</div>
+          <div class="b-s">La ruta sale desde el primero de la lista. Tocá la bandera en cualquier punto cargado para usarlo como partida.</div>
         </div>
       </div>
 
@@ -1465,6 +1522,14 @@ button:disabled{opacity:.6;cursor:not-allowed}
       </div>
       <div class="rb-list" id="addedList"></div>
       <div class="rb-foot">
+        <div class="rb-opts" id="rbOpts">
+          <div class="rb-opts-t">Evitar en el recorrido</div>
+          <div class="rb-opts-row">
+            <label class="rb-opt"><input type="checkbox" id="optPeajes" onchange="onOpcionRuta()"><span><i class="fa-solid fa-ticket"></i> Peajes</span></label>
+            <label class="rb-opt"><input type="checkbox" id="optAutopistas" onchange="onOpcionRuta()"><span><i class="fa-solid fa-road"></i> Autopistas</span></label>
+            <label class="rb-opt"><input type="checkbox" id="optTransbordadores" onchange="onOpcionRuta()"><span><i class="fa-solid fa-ferry"></i> Transbordadores</span></label>
+          </div>
+        </div>
         <button class="btn btn-primary" id="btnCalcularRuta" onclick="onCalcularRuta()" title="Calcular ruta óptima" disabled>
           <i class="fa-solid fa-route"></i> <span class="rb-lbl">Calcular ruta óptima</span>
         </button>
@@ -1738,6 +1803,17 @@ button:disabled{opacity:.6;cursor:not-allowed}
         </div>
       </div>
 
+      <div class="metric card" style="margin-bottom:12px;cursor:pointer" onclick="navBoss('bossStats')">
+        <div style="display:flex;align-items:center;gap:13px">
+          <div class="m-ico green" style="margin-bottom:0"><i class="fa-solid fa-gas-pump"></i></div>
+          <div style="flex:1">
+            <div class="m-val" style="font-size:1.4rem"><span id="bKm">—</span></div>
+            <div class="m-lab" style="margin-top:2px" id="bKmLab">Kilómetros recorridos en los últimos 7 días</div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-3)"></i>
+        </div>
+      </div>
+
       <div class="metric card" style="margin-bottom:22px;cursor:pointer" onclick="openIncidents()">
         <div style="display:flex;align-items:center;gap:13px">
           <div class="m-ico amber" style="margin-bottom:0"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -1761,6 +1837,38 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
     <nav class="bottomnav">
       <button class="nav-item active" onclick="navBoss('bossDash',this)"><i class="fa-solid fa-chart-line"></i><span>Panel</span></button>
+      <button class="nav-item" onclick="navBoss('bossStats',this)"><i class="fa-solid fa-chart-pie"></i><span>Datos</span></button>
+      <button class="nav-item" onclick="navBoss('bossAdmins',this)"><i class="fa-solid fa-users"></i><span>Usuarios</span></button>
+      <button class="nav-item" onclick="navBoss('bossPasswords',this)"><i class="fa-solid fa-key"></i><span>Claves</span></button>
+      <button class="nav-item" onclick="navBoss('bossProfile',this)"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
+    </nav>
+  </section>
+
+  <!-- ====================== JEFE · ESTADÍSTICAS ====================== -->
+  <section class="screen" id="bossStats">
+    <div class="topbar">
+      <button class="icon-btn" onclick="navBoss('bossDash')" aria-label="Volver"><i class="fa-solid fa-arrow-left"></i></button>
+      <div>
+        <div class="tb-title">Estadísticas</div>
+        <div class="tb-sub" id="statsSub">—</div>
+      </div>
+      <span class="spacer"></span>
+      <button class="icon-btn" onclick="abrirConfigFlota()" title="Combustible y consumo" aria-label="Combustible y consumo"><i class="fa-solid fa-gas-pump"></i></button>
+    </div>
+
+    <div class="content pad">
+      <div class="segmented" id="statsPeriodo" role="tablist" aria-label="Período">
+        <button type="button" class="seg-btn" data-p="semana" onclick="setPeriodoStats('semana')">7 días</button>
+        <button type="button" class="seg-btn active" data-p="mes" onclick="setPeriodoStats('mes')">30 días</button>
+        <button type="button" class="seg-btn" data-p="anio" onclick="setPeriodoStats('anio')">12 meses</button>
+        <button type="button" class="seg-btn" data-p="todo" onclick="setPeriodoStats('todo')">Todo</button>
+      </div>
+      <div id="statsBody"></div>
+    </div>
+
+    <nav class="bottomnav">
+      <button class="nav-item" onclick="navBoss('bossDash',this)"><i class="fa-solid fa-chart-line"></i><span>Panel</span></button>
+      <button class="nav-item active" onclick="navBoss('bossStats',this)"><i class="fa-solid fa-chart-pie"></i><span>Datos</span></button>
       <button class="nav-item" onclick="navBoss('bossAdmins',this)"><i class="fa-solid fa-users"></i><span>Usuarios</span></button>
       <button class="nav-item" onclick="navBoss('bossPasswords',this)"><i class="fa-solid fa-key"></i><span>Claves</span></button>
       <button class="nav-item" onclick="navBoss('bossProfile',this)"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
@@ -1789,6 +1897,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
     <nav class="bottomnav">
       <button class="nav-item" onclick="navBoss('bossDash',this)"><i class="fa-solid fa-chart-line"></i><span>Panel</span></button>
+      <button class="nav-item" onclick="navBoss('bossStats',this)"><i class="fa-solid fa-chart-pie"></i><span>Datos</span></button>
       <button class="nav-item active" onclick="navBoss('bossAdmins',this)"><i class="fa-solid fa-users"></i><span>Usuarios</span></button>
       <button class="nav-item" onclick="navBoss('bossPasswords',this)"><i class="fa-solid fa-key"></i><span>Claves</span></button>
       <button class="nav-item" onclick="navBoss('bossProfile',this)"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
@@ -1822,6 +1931,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
     <nav class="bottomnav">
       <button class="nav-item" onclick="navBoss('bossDash',this)"><i class="fa-solid fa-chart-line"></i><span>Panel</span></button>
+      <button class="nav-item" onclick="navBoss('bossStats',this)"><i class="fa-solid fa-chart-pie"></i><span>Datos</span></button>
       <button class="nav-item" onclick="navBoss('bossAdmins',this)"><i class="fa-solid fa-users"></i><span>Usuarios</span></button>
       <button class="nav-item active" onclick="navBoss('bossPasswords',this)"><i class="fa-solid fa-key"></i><span>Claves</span></button>
       <button class="nav-item" onclick="navBoss('bossProfile',this)"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
@@ -1862,6 +1972,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
     </div>
     <nav class="bottomnav">
       <button class="nav-item" onclick="navBoss('bossDash',this)"><i class="fa-solid fa-chart-line"></i><span>Panel</span></button>
+      <button class="nav-item" onclick="navBoss('bossStats',this)"><i class="fa-solid fa-chart-pie"></i><span>Datos</span></button>
       <button class="nav-item" onclick="navBoss('bossAdmins',this)"><i class="fa-solid fa-users"></i><span>Usuarios</span></button>
       <button class="nav-item" onclick="navBoss('bossPasswords',this)"><i class="fa-solid fa-key"></i><span>Claves</span></button>
       <button class="nav-item active" onclick="navBoss('bossProfile',this)"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
@@ -2079,6 +2190,7 @@ async function navDriver(id,btn){
 async function navBoss(id,btn){
   if(id==='bossDash'||id==='bossAdmins'||id==='bossPasswords') await cargarDatosJefe();
   if(id==='bossDash')renderBossDash();
+  if(id==='bossStats')cargarEstadisticas();
   if(id==='bossAdmins')renderBossAdmins();
   if(id==='bossPasswords')renderBossPasswords();
   showScreen(id);
@@ -2205,7 +2317,7 @@ async function calcularRutaDelDia(){
   const pub=state.published[state.selectedDay];
   if(pub.length<2){toast('Agregá al menos 2 puntos para calcular la ruta','warn');return null;}
   const paradas=pub.map(p=>({nombre:p.name,direccion:p.address,lat:p.lat,lng:p.lng,email_verificacion:p.email_verificacion||null}));
-  return apiPost('ruta_calcular.php',{paradas});
+  return apiPost('ruta_calcular.php',{paradas,evitar:opcionesRuta}); // la primera parada es el punto de partida
 }
 async function guardarRutaDelDia(preview){
   return apiPost('ruta_guardar.php',{
@@ -2214,6 +2326,8 @@ async function guardarRutaDelDia(preview){
     distancia_m:preview.distancia_m,
     duracion_seg:preview.duracion_seg,
     polyline:preview.polyline,
+    evitar:preview.evitar,
+    peaje_estimado:preview.peaje_estimado,
   });
 }
 /* carga la ruta del conductor logueado para una fecha (por defecto, hoy) */
@@ -2322,6 +2436,7 @@ const USERS={
 const SB_LINKS={
   boss:[
     {id:'bossDash',    icon:'fa-chart-line',  label:'Panel general',  fn:"navBoss('bossDash')"},
+    {id:'bossStats',   icon:'fa-chart-pie',   label:'Estadísticas',   fn:"navBoss('bossStats')"},
     {id:'bossAdmins',  icon:'fa-users',       label:'Usuarios',        fn:"navBoss('bossAdmins')"},
     {id:'bossPasswords', icon:'fa-key',       label:'Contraseñas',     fn:"navBoss('bossPasswords')"},
     {id:'bossProfile', icon:'fa-user',        label:'Perfil',         fn:"navBoss('bossProfile')"},
@@ -3243,11 +3358,36 @@ function renderAdded(){
   const list=$('addedList');
   if(pub.length===0){ list.innerHTML=''; return; }
   list.innerHTML=pub.map((d,i)=>`
-    <div class="draft-item">
+    <div class="draft-item${i===0?' es-partida':''}">
       <div class="di-num">${i+1}</div>
-      <div class="di-info"><div class="di-name">${d.name}${d.email_verificacion?' <i class="fa-solid fa-envelope-circle-check" style="color:var(--verify);font-size:.75em" title="Pide verificación por email"></i>':''}</div><div class="di-addr">${d.address}</div></div>
+      <div class="di-info"><div class="di-name">${d.name}${i===0?'<span class="di-tag">Partida</span>':''}${d.email_verificacion?' <i class="fa-solid fa-envelope-circle-check" style="color:var(--verify);font-size:.75em" title="Pide verificación por email"></i>':''}</div><div class="di-addr">${d.address}</div></div>
+      <button class="di-flag" ${i===0?'disabled aria-pressed="true" title="Punto de partida"':`onclick="setPartida(${i})" title="Usar como punto de partida"`} aria-label="${i===0?'Es el punto de partida':'Usar como punto de partida'}"><i class="fa-solid fa-flag"></i></button>
       <button class="di-rm" onclick="removePoint(${i})" title="Quitar de la ruta" aria-label="Quitar"><i class="fa-solid fa-trash-can"></i></button>
     </div>`).join('');
+  sincronizarOpcionesRuta();
+}
+/* el origen de la ruta es el primer punto de la lista: elegir otro partida lo sube al primer lugar */
+function setPartida(i){
+  const pub=state.published[state.selectedDay];
+  if(!pub||i<=0||i>=pub.length)return;
+  const [p]=pub.splice(i,1);
+  pub.unshift(p);
+  renderAdded();renderAddMap();
+  toast(`"${p.name}" es ahora el punto de partida`,'ok');
+}
+/* opciones de la ruta: evitar peajes / autopistas / transbordadores. Se recuerdan entre sesiones. */
+let opcionesRuta={peajes:false,autopistas:false,transbordadores:false};
+try{
+  const g=JSON.parse(localStorage.getItem('re_opciones_ruta')||'null');
+  if(g&&typeof g==='object') Object.keys(opcionesRuta).forEach(k=>{ opcionesRuta[k]=!!g[k]; });
+}catch(e){}
+function sincronizarOpcionesRuta(){
+  const ids={peajes:'optPeajes',autopistas:'optAutopistas',transbordadores:'optTransbordadores'};
+  Object.keys(ids).forEach(k=>{ const el=$(ids[k]); if(el)el.checked=!!opcionesRuta[k]; });
+}
+function onOpcionRuta(){
+  opcionesRuta={peajes:$('optPeajes').checked,autopistas:$('optAutopistas').checked,transbordadores:$('optTransbordadores').checked};
+  try{ localStorage.setItem('re_opciones_ruta',JSON.stringify(opcionesRuta)); }catch(e){}
 }
 /* minimiza/expande el panel lateral de la ruta */
 function sincronizarBotonRouteBar(mini){
@@ -3457,6 +3597,16 @@ async function verDetalleHistorial(id){
 }
 
 let rutaCalculada=null;
+/* etiquetas bajo los datos de la vista previa: partida, qué se evitó y peajes estimados por Google */
+function etiquetasOpcionesRuta(data){
+  const ev=data.evitar||{};
+  const tags=[`<span class="tag"><i class="fa-solid fa-flag"></i> Sale de ${data.paradas[0].nombre}</span>`];
+  if(ev.peajes) tags.push('<span class="tag">Sin peajes</span>');
+  if(ev.autopistas) tags.push('<span class="tag">Sin autopistas</span>');
+  if(ev.transbordadores) tags.push('<span class="tag">Sin transbordadores</span>');
+  if(data.peaje_estimado!=null&&data.peaje_estimado>0) tags.push(`<span class="tag">Peajes estimados ${fmtDinero(data.peaje_estimado)}</span>`);
+  return `<div class="rm-opts">${tags.join('')}</div>`;
+}
 async function onCalcularRuta(){
   const btn=$('btnCalcularRuta');
   iniciarCargaBoton(btn,'Calculando…');
@@ -3476,6 +3626,7 @@ async function onCalcularRuta(){
       <div class="rm-chip"><div class="rm-ico"><i class="fa-solid fa-clock"></i></div>${formatearDuracion(data.duracion_seg)}</div>
       <div class="rm-chip"><div class="rm-ico"><i class="fa-solid fa-map-pin"></i></div>${data.paradas.length} paradas</div>
     </div>
+    ${etiquetasOpcionesRuta(data)}
     <div class="map-card" style="margin-bottom:14px;position:relative">
       <div id="previewMap" class="leaflet-map" style="height:168px"></div>
       <button class="map-expand" onclick="abrirPreviewFullscreen()" title="Ver el mapa en grande" aria-label="Ver el mapa en grande"><i class="fa-solid fa-expand"></i></button>
@@ -4276,6 +4427,11 @@ async function renderBossDash(){
   $('bAdmins').textContent=users.length;
   $('bIncidents').textContent=visibleIncidents().length;
   updateNotifBadges();
+  apiGet('estadisticas.php?periodo=semana').then(e=>{ // tarjeta de kilómetros de la semana
+    if(!e.ok)return;
+    $('bKm').textContent=fmtNum(e.totales.km)+' km';
+    $('bKmLab').textContent=`Recorridos en los últimos 7 días · combustible ${fmtDinero(e.totales.combustible_costo)}`;
+  });
 
   $('bossAdminPreview').innerHTML=users.slice(0,3).map(x=>userPreviewHTML(x.u,x.kind)).join('');
 
@@ -4293,6 +4449,164 @@ async function renderBossDash(){
       <div class="od-val">${n} punto${n!==1?'s':''}</div>
     </div>`;
   }).join('');
+}
+
+/* ============================================================
+   JEFE · ESTADÍSTICAS
+   Kilómetros (rutas completadas), combustible según el vehículo configurado,
+   peajes y demás datos de la operación. El cálculo vive en api/estadisticas.php.
+   ============================================================ */
+const fmtDinero=n=>n==null?'—':'$ '+Number(n).toLocaleString('es-AR',{maximumFractionDigits:0});
+const fmtNum=(n,d=1)=>n==null?'—':Number(n).toLocaleString('es-AR',{maximumFractionDigits:d});
+const MESES_CORTOS=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+let statsPeriodo='mes', statsDatos=null;
+function setPeriodoStats(p){
+  statsPeriodo=p;
+  document.querySelectorAll('#statsPeriodo .seg-btn').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
+  cargarEstadisticas();
+}
+async function cargarEstadisticas(){
+  const token=(state._statsToken=(state._statsToken||0)+1);
+  $('statsBody').innerHTML='<div class="st-empty"><i class="fa-solid fa-spinner fa-spin"></i> Calculando…</div>';
+  const data=await apiGet('estadisticas.php?periodo='+statsPeriodo);
+  if(token!==state._statsToken)return; // cambió de período o de pantalla mientras esperábamos
+  if(!data.ok){ $('statsBody').innerHTML=`<div class="st-empty">${data.error||'No se pudieron cargar las estadísticas.'}</div>`; return; }
+  statsDatos=data;
+  renderEstadisticas();
+}
+function etiquetaSerie(k,porMes){
+  if(porMes){ const [,m]=k.split('-'); return MESES_CORTOS[+m-1]; }
+  return fechaCorta(k);
+}
+function renderEstadisticas(){
+  const d=statsDatos, t=d.totales, f=d.flota;
+  $('statsSub').textContent = d.periodo==='todo'
+    ? 'Desde el inicio'
+    : `${fechaCorta(d.desde)} al ${fechaCorta(d.hasta)}`;
+
+  const card=(ico,v,l,s)=>`<div class="card st-card"><div class="st-ico"><i class="fa-solid ${ico}"></i></div>
+    <div class="st-v">${v}</div><div class="st-l">${l}</div>${s?`<div class="st-s">${s}</div>`:''}</div>`;
+
+  const max=Math.max(1,...d.serie.map(s=>s.km));
+  const conValor=d.serie.length<=12;
+  const grafico=d.serie.length===0
+    ? '<div class="st-empty">Todavía no hay rutas completadas en este período.</div>'
+    : `<div style="overflow-x:auto"><div class="st-chart" style="min-width:${Math.max(0,d.serie.length*34)}px">${d.serie.map(s=>
+        `<div class="st-col" title="${fmtNum(s.km)} km · ${fmtDinero(s.combustible)} de combustible">
+           ${conValor?`<b>${fmtNum(s.km,0)}</b>`:''}<i style="height:${Math.max(3,s.km/max*100)}%"></i><span>${etiquetaSerie(s.k,d.por_mes)}</span></div>`).join('')}</div></div>`;
+
+  const evitan=[t.rutas_evitan_peajes&&`${t.rutas_evitan_peajes} sin peajes`,t.rutas_evitan_autopistas&&`${t.rutas_evitan_autopistas} sin autopistas`,t.rutas_evitan_transbordadores&&`${t.rutas_evitan_transbordadores} sin transbordadores`].filter(Boolean);
+
+  const ESTADO={publicada:'Publicada',en_curso:'En curso',completada:'Completada'};
+  const rutas=d.recientes.length===0
+    ? '<div class="st-empty">No hay rutas en este período.</div>'
+    : d.recientes.map(r=>{
+        const ev=[r.evita.peajes&&'sin peajes',r.evita.autopistas&&'sin autopistas',r.evita.transbordadores&&'sin transbordadores'].filter(Boolean);
+        return `<div class="st-ruta">
+          <div class="sr-info">
+            <div class="sr-t">${cap(fechaCorta(r.fecha))} · ${fmtNum(r.km)} km <span class="status-pill ${r.estado==='completada'?'role-admin':'temp'}" style="margin-left:4px">${ESTADO[r.estado]||r.estado}</span></div>
+            <div class="sr-s">${r.hechas}/${r.paradas} paradas · ${formatearDuracion(r.duracion_seg)} · combustible ${fmtDinero(r.combustible)} · peajes ${r.peajes_costo!=null?fmtDinero(r.peajes_costo):'sin cargar'}${ev.length?' · '+ev.join(', '):''}</div>
+          </div>
+          <button class="icon-btn" onclick="abrirPeajeRuta(${r.id})" title="Cargar peajes de esta ruta" aria-label="Cargar peajes"><i class="fa-solid fa-ticket"></i></button>
+        </div>`;
+      }).join('');
+
+  $('statsBody').innerHTML=`
+    <div class="st-hero">
+      <div class="st-lab">Kilómetros recorridos</div>
+      <div class="st-num">${fmtNum(t.km)} km</div>
+      <div class="st-sub">${t.rutas_completadas} ruta${t.rutas_completadas!==1?'s':''} completada${t.rutas_completadas!==1?'s':''} · ${formatearDuracion(t.duracion_seg)} en ruta${t.rutas_pendientes?` · ${t.rutas_pendientes} pendiente${t.rutas_pendientes!==1?'s':''}`:''}</div>
+    </div>
+    <div class="st-grid">
+      ${card('fa-gas-pump',fmtDinero(t.combustible_costo),'Combustible',`${fmtNum(t.combustible_unidades)} ${f.unidad==='litro'?'L':f.unidad} de ${f.nombre.toLowerCase()}`)}
+      ${card('fa-ticket',fmtDinero(t.peajes_costo),'Peajes',t.rutas_con_peaje_cargado?`cargado en ${t.rutas_con_peaje_cargado} de ${t.rutas_completadas} rutas`:'sin datos cargados')}
+      ${card('fa-wallet',fmtDinero(t.costo_total),'Costo total','combustible + peajes')}
+      ${card('fa-scale-balanced',t.costo_por_km!=null?fmtDinero(t.costo_por_km):'—','Costo por km',t.costo_por_parada!=null?`${fmtDinero(t.costo_por_parada)} por parada`:'')}
+      ${card('fa-location-dot',fmtNum(t.paradas_entregadas,0),'Paradas entregadas','')}
+      ${card('fa-route',t.km_promedio_ruta!=null?fmtNum(t.km_promedio_ruta)+' km':'—','Promedio por ruta','')}
+      ${card('fa-triangle-exclamation',fmtNum(t.imprevistos,0),'Imprevistos reportados','')}
+      ${card('fa-road-circle-xmark',fmtNum(t.rutas_evitan_peajes+t.rutas_evitan_autopistas+t.rutas_evitan_transbordadores,0),'Restricciones aplicadas',evitan.join(' · ')||'ninguna ruta evitó peajes ni autopistas')}
+    </div>
+
+    <p class="section-title">Kilómetros ${d.por_mes?'por mes':'por día'}</p>
+    <div style="margin-bottom:24px">${grafico}</div>
+
+    <p class="section-title">Últimas rutas</p>
+    <div style="display:flex;flex-direction:column;gap:9px">${rutas}</div>
+
+    <div class="st-nota"><i class="fa-solid fa-circle-info"></i>
+      <span>El combustible se calcula con <b>${f.nombre}</b> a ${fmtDinero(f.precio)} por ${f.unidad} y un consumo de ${fmtNum(f.consumo_100km)} ${f.unidad==='litro'?'L':f.unidad} cada 100 km.
+      <a href="#" onclick="abrirConfigFlota();return false" style="color:var(--brand);font-weight:700">Cambiar</a>.
+      Google no siempre informa el precio de los peajes de Argentina: podés cargarlo a mano en cada ruta.</span></div>`;
+}
+/* ---- peajes de una ruta (carga manual) ---- */
+function abrirPeajeRuta(id){
+  const r=statsDatos&&statsDatos.recientes.find(x=>x.id===id); if(!r)return;
+  openSheet(`
+    <div class="sheet-grip"></div>
+    <h3>Peajes de la ruta</h3>
+    <p class="sub">${cap(fechaCorta(r.fecha))} · ${fmtNum(r.km)} km. Cargá lo que se gastó en peajes; dejalo vacío para borrarlo.</p>
+    <div class="field" style="margin-top:14px">
+      <label for="peajeMonto">Monto gastado ($)</label>
+      <div class="input-wrap"><i class="fa-solid fa-ticket lead"></i>
+        <input class="input" id="peajeMonto" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0" value="${r.peajes_costo!=null?r.peajes_costo:''}"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn btn-primary" id="btnGuardarPeaje" onclick="guardarPeajeRuta(${id})"><i class="fa-solid fa-check"></i> Guardar</button>
+      <button class="btn btn-ghost" style="width:100%" onclick="closeSheet()">Cancelar</button>
+    </div>`);
+  setTimeout(()=>{ const i=$('peajeMonto'); if(i)i.focus(); },60);
+}
+async function guardarPeajeRuta(id){
+  const btn=$('btnGuardarPeaje');
+  iniciarCargaBoton(btn,'Guardando…');
+  const data=await apiPost('ruta_peaje_guardar.php',{id,monto:$('peajeMonto').value});
+  if(!data.ok){ terminarCargaBoton(btn); toast(data.error||'No se pudo guardar','warn'); return; }
+  closeSheet();
+  toast('Peajes guardados','ok');
+  cargarEstadisticas();
+}
+/* ---- combustible, consumo y precios ---- */
+async function abrirConfigFlota(){
+  const data=await apiGet('config_flota.php');
+  if(!data.ok){ toast(data.error||'No se pudo cargar la configuración','warn'); return; }
+  const c=data.config, fuels=data.combustibles;
+  const filas=Object.keys(fuels).map(k=>`
+    <div class="fuel-opt ${k===c.combustible?'sel':''}" id="fo_${k}">
+      <label class="fo-n"><input type="radio" name="fCombustible" value="${k}" ${k===c.combustible?'checked':''} onchange="marcarCombustible()"> ${fuels[k].nombre}</label>
+      <div class="fo-p"><input class="input" id="fp_${k}" type="number" inputmode="decimal" min="0" step="0.01" value="${c.precios[k]}" aria-label="Precio de ${fuels[k].nombre}"><span class="fo-u">$ por ${fuels[k].unidad}</span></div>
+    </div>`).join('');
+  openSheet(`
+    <div class="sheet-grip"></div>
+    <h3>Combustible y consumo</h3>
+    <p class="sub">Elegí el combustible que usa el vehículo y cargá su precio. Las estadísticas se recalculan con estos valores.</p>
+    <div style="margin:14px 0 6px">${filas}</div>
+    <div class="field">
+      <label for="fConsumo">Consumo del vehículo (cada 100 km)</label>
+      <div class="input-wrap"><i class="fa-solid fa-gauge-high lead"></i>
+        <input class="input" id="fConsumo" type="number" inputmode="decimal" min="0.1" step="0.1" value="${c.consumo_100km}"></div>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn btn-primary" id="btnGuardarFlota" onclick="guardarConfigFlota()"><i class="fa-solid fa-check"></i> Guardar</button>
+      <button class="btn btn-ghost" style="width:100%" onclick="closeSheet()">Cancelar</button>
+    </div>`);
+}
+function marcarCombustible(){
+  const v=(document.querySelector('input[name="fCombustible"]:checked')||{}).value;
+  document.querySelectorAll('.fuel-opt').forEach(el=>el.classList.toggle('sel',el.id==='fo_'+v));
+}
+async function guardarConfigFlota(){
+  const sel=document.querySelector('input[name="fCombustible"]:checked');
+  if(!sel){ toast('Elegí un combustible','warn'); return; }
+  const precios={};
+  document.querySelectorAll('[id^="fp_"]').forEach(i=>{ precios[i.id.slice(3)]=parseFloat(i.value)||0; });
+  const btn=$('btnGuardarFlota');
+  iniciarCargaBoton(btn,'Guardando…');
+  const data=await apiPost('config_flota.php',{combustible:sel.value,consumo_100km:parseFloat($('fConsumo').value),precios});
+  if(!data.ok){ terminarCargaBoton(btn); toast(data.error||'No se pudo guardar','warn'); return; }
+  closeSheet();
+  toast('Configuración guardada','ok');
+  if(state.currentScreen==='bossStats') cargarEstadisticas();
 }
 
 /* ============================================================
