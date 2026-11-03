@@ -1,7 +1,7 @@
 -- ============================================================================
---  APRILON · Tabla de imprevistos reportados por conductores
+--  RUTAS EFICIENTES · Tabla de imprevistos reportados por conductores
 -- ----------------------------------------------------------------------------
---  Importalo dentro de la misma base donde ya corriste aprilon.sql
+--  Importalo dentro de la misma base donde ya corriste rutas_eficientes.sql
 --  (las tablas de usuarios tienen que existir antes que esta).
 -- ============================================================================
 

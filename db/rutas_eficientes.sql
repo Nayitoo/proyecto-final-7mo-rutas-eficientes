@@ -1,9 +1,10 @@
 -- ============================================================================
---  APRILON · Tablas de usuarios
+--  RUTAS EFICIENTES · Tablas de usuarios
 -- ----------------------------------------------------------------------------
 --  Este archivo NO crea la base de datos, solo las tablas y los datos.
+--  Es el primero de los tres: rutas_eficientes.sql → rutas.sql → incidentes.sql.
 --  Importalo dentro de una base ya existente:
---    · XAMPP local  → creá la base "aprilon" desde phpMyAdmin y luego importá acá.
+--    · XAMPP local  → creá la base "rutas_eficientes" desde phpMyAdmin y luego importá acá.
 --    · AlwaysData   → creá la base desde el panel (Bases de datos → MySQL),
 --                      abrí phpMyAdmin sobre esa base y ejecutá este archivo.
 --
