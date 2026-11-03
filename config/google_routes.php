@@ -37,7 +37,7 @@ function geocodificar(string $direccion): ?array {
     ]);
     $raw = curl_exec($ch);
     if ($raw === false) throw new GoogleMapsError('No se pudo conectar con Google: ' . curl_error($ch));
-    curl_close($ch);
+    // sin curl_close(): no hace nada desde PHP 8.0 y en PHP 8.5 está obsoleta (imprime un aviso que rompe el JSON)
 
     $data = json_decode($raw, true);
     if (empty($data['results'][0]['location'])) return null;
@@ -157,7 +157,6 @@ function google_compute_routes(array $body, bool $tolerante): ?array {
         if ($tolerante) return null;
         throw new GoogleMapsError('No se pudo conectar con Google Routes API: ' . curl_error($ch));
     }
-    curl_close($ch);
     $data = json_decode($raw, true);
     return is_array($data) ? $data : null;
 }
@@ -175,7 +174,6 @@ function google_http_get(string $url, array $headers = []): array {
     ]);
     $raw = curl_exec($ch);
     if ($raw === false) throw new GoogleMapsError('No se pudo conectar con Google: ' . curl_error($ch));
-    curl_close($ch);
     $data = json_decode($raw, true);
     return is_array($data) ? $data : [];
 }
@@ -199,7 +197,6 @@ function google_autocompletar(string $texto): array {
     ]);
     $raw = curl_exec($ch);
     if ($raw === false) throw new GoogleMapsError('No se pudo conectar con Google: ' . curl_error($ch));
-    curl_close($ch);
 
     $data = json_decode($raw, true);
     $sugerencias = [];
